@@ -66,10 +66,15 @@ int main(void)
 {
 	setup();
     u8 j;
+	uint64_t highStart;
+    uint64_t now;
 	while(1)
 	{
-    delay_ms(1000);
-    PB8.toggle();
+          highStart = micros();
+		  delay_us(200);
+		  now= (micros() - highStart);
+		  uart1.printf("%d,\r\n",now); 
+
 	}
 
 }
