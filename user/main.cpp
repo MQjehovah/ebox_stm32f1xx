@@ -3,86 +3,67 @@ file   : *.cpp
 author : shentq
 version: V1.0
 date   : 2015/7/5
-
 Copyright 2015 shentq. All Rights Reserved.
 */
 
-//STM32 RUN IN eBox
-
-
-
+/*
+本例程为使用输入捕获模式测量一个PWM信号的周期和频率
+*/
 #include "ebox.h"
 
+IN_CAPTURE ic(&PA0);//创建一个输入捕获的对象
+PWM pwm1(&PB8);//创建一个PWM输出对象
 
-uint32_t x;
-uint32_t xx;
-uint8_t flag1;
-uint8_t flag;
+uint16_t value1;
+uint16_t value2;
 
-TIM timer2(TIM2);
-TIMERONE t1;
-
-void t2it()
+void mesure_frq()//输入捕获中断事件
 {
-	xx++;
-	if(xx == 1000)
-	{
-		flag = 1;
-		xx = 0;
-				PB9.write(!PB9.read());
+    ic.set_count(0);
+    if(ic.polarity == TIM_ICPOLARITY_FALLING)//测量高电平时间完成
+    {
+        value1 = ic.get_capture() + 5;
+        ic.set_polarity_rising();//切换至测量低电平时间完成
+    }
+    else//测量低电平时间完成
+    {
+         value2 = ic.get_capture() + 5;
+        ic.set_polarity_falling();//切换至测量高电平时间完成
+   }
 
-	}
 }
-void t1it()
-{
-	x++;
-	if(x == 1000)
-	{
-		flag1 = 1;
-		x = 0;
-				PB8.write(!PB8.read());
-
-	}
-}
+uint16_t p;
 void setup()
 {
 	ebox_init();
 	uart1.begin(9600);
-		PB8.mode(OUTPUT_PP);
-		PB9.mode(OUTPUT_PP);
-
-	timer2.begin(1000);
-	timer2.interrupt(ENABLE);
-	timer2.attach_interrupt(t2it);
-	timer2.start();
-	
-	t1.begin(10000);
-	t1.interrupt(ENABLE);
-	t1.attach_interrupt(t1it);
-	t1.start();
+	PB8.mode(OUTPUT_PP);
+    
+    p = 36;
+    ic.begin(p);//初始化输入捕获参数，p分频
+    ic.attch_interrupt(mesure_frq);//绑定捕获中断事件函数
+    
+    pwm1.begin(1000,250);
+    pwm1.set_oc_polarity(1);
+   
 }
-
 
 int main(void)
 {
 	setup();
 	while(1)
-	{
-		if(flag == 1)
-		{
-			uart1.printf("\r\ntimer2 is triggered 1000 times !",xx);
-			flag = 0;
-		}
-		if(flag1 == 1)
-		{
-			uart1.printf("\r\ntimer1 is triggered 1000 times !",xx);
-			flag1 = 0;
-		}
+    {
+
+        if(value1 && value2)
+        {
+            uart1.printf("value1 = %d\r\n",value1);
+            uart1.printf("value2 = %d\r\n",value2);
+            uart1.printf("frq = %0.0f\r\n",(72000000.0/p)/(value1+value2));
+            uart1.printf("pluse = %0.2f\r\n",value1*100.0/(value1+value2));
+            value1 = 0;
+            value2 = 0;
+        }
 	}
 
 
 }
-
-
-
-
