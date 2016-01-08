@@ -93,6 +93,8 @@ void        shift_out(GPIO *data_pin, GPIO *clock_pin, uint8_t bit_order, uint8_
 uint8_t		shift_in(GPIO *data_pin, GPIO *clock_pin, uint8_t bit_order);
 
 
+
+
 #ifdef __cplusplus
 }
 #endif
