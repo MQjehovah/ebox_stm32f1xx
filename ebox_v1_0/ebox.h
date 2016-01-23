@@ -31,6 +31,7 @@ This specification is preliminary and is subject to change at any time without n
 #include "timerone.h"
 #include "rtc.h"
 #include "iflash.h"
+#include "wdg.h"
 
 
 #include "stdio.h"
@@ -50,6 +51,8 @@ This specification is preliminary and is subject to change at any time without n
 extern USART uart1;
 extern USART uart2;
 extern USART uart3;
+extern USART uart4;
+extern USART uart5;
 
 extern SPI spi1;	
 extern SPI spi2;

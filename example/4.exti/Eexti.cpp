@@ -13,9 +13,9 @@ Copyright 2015 shentq. All Rights Reserved.
 
 uint32_t xx;
 
-EXTIx ex(&PA8,EXTI_Trigger_Falling);//创建一个检测下降沿的外部中断对象
+EXTIx ex(&PA8,EXTI_Trigger_Falling);
 
-void exit()//中断调用用户事件
+void exit()
 {
 	xx++;
 	uart1.printf("\r\nxx = %d",xx);
@@ -24,9 +24,9 @@ void setup()
 {
 	ebox_init();
 	uart1.begin(9600);
-	ex.begin();//初始化外部中断配置
-	ex.attachInterrupt(exit);//绑定中断用户事件
-	ex.interrupt(ENABLE);//开启中断
+	ex.begin();
+	ex.attachInterrupt(exit);
+	ex.interrupt(ENABLE);
 }
 
 
