@@ -28,7 +28,6 @@ This specification is preliminary and is subject to change at any time without n
 	4.支持强大的printf
 	5.暂时不支持引脚的remap
     注意：
-        串口默认开启接收、发送完成中断
         发送缓冲区溢出可能导致单片机出现异常，
         串口4，5没有使用DMA；
 */
@@ -47,7 +46,6 @@ class USART
         void    attach_tx_interrupt(void (*callback_fun)(void));
 
         int 	put_char(uint16_t ch);
-        void    put_string(const char *str,uint16_t length);
         void 	put_string(const char *str);
         void    printf_length(const char *str,uint16_t length);
         void    printf(const char *fmt,...);//需要注意缓冲区溢出
@@ -60,6 +58,7 @@ class USART
         DMA_Channel_TypeDef *_DMA1_Channelx;
         char                send_buf[UART_MAX_SEND_BUF];
         uint16_t            dma_send_string(const char *str,uint16_t length);
+        void                put_string(const char *str,uint16_t length);
         void                set_busy();
         void                interrupt(FunctionalState enable);
 
