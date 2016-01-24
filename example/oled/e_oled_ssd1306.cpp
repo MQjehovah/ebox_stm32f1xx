@@ -8,18 +8,18 @@ Copyright 2015 shentq. All Rights Reserved.
 */
 
 /*
- *  硬件环境:                                                                                 
- *     	0.96寸oled，4线SPI，128*64
- * 	OLED 4接口演示例程(STM32系列)
- *             说明: SPI协议
+ *  Ӳ������:                                                                                 
+ *     	0.96��oled��4��SPI��128*64
+ * 	OLED 4�ӿ���ʾ����(STM32ϵ��)
+ *             ˵��: SPIЭ��
  *             ----------------------------------------------------------------
- *              GND    接
- *              VCC  接5V或3.3v电源
- *              D0   接PD6(SCL)
- *              D1   接PD7(SDA)
- *              RES  接PD4
- *              DC   接PD5
- *              CS   接PD3  
+ *              GND    ��
+ *              VCC  ��5V��3.3v��Դ
+ *              D0   ��PD6(SCL)
+ *              D1   ��PD7(SDA)
+ *              RES  ��PD4
+ *              DC   ��PD5
+ *              CS   ��PD3  
 */
 #include "ebox.h"
 #include "oled_ssd1306.h"
@@ -35,46 +35,46 @@ int main(void)
 {
 	uint8_t t;
 	setup();
-	oled.clear();
-	oled.show_string(30,0,(uint8_t*)"OLED TEST");
-	oled.show_string(30,0,(uint8_t*)"OLED TEST");
-	oled.show_string(8,2,(uint8_t*)"ZHONGJINGYUAN");  
-	oled.show_string(20,4,(uint8_t*)"2014/05/01");  
-	oled.show_string(0,6,(uint8_t*)"ASCII:");  
-	oled.show_string(63,6,(uint8_t*)"CODE:");  
+	oled.OLED_Clear();
+	oled.OLED_ShowString(30,0,(uint8_t*)"OLED TEST");
+	oled.OLED_ShowString(30,0,(uint8_t*)"OLED TEST");
+	oled.OLED_ShowString(8,2,(uint8_t*)"ZHONGJINGYUAN");  
+	oled.OLED_ShowString(20,4,(uint8_t*)"2014/05/01");  
+	oled.OLED_ShowString(0,6,(uint8_t*)"ASCII:");  
+	oled.OLED_ShowString(63,6,(uint8_t*)"CODE:");  
 	t=' '; 
-	oled.show_chinese(0,0,0);//中
-	oled.show_chinese(18,0,1);//景
-	oled.show_chinese(36,0,2);//园
-	oled.show_chinese(54,0,3);//电
-	oled.show_chinese(72,0,4);//子
-	oled.show_chinese(90,0,5);//科
-	oled.show_chinese(108,0,6);//技
+	oled.OLED_ShowCHinese(0,0,0);//��
+	oled.OLED_ShowCHinese(18,0,1);//��
+	oled.OLED_ShowCHinese(36,0,2);//԰
+	oled.OLED_ShowCHinese(54,0,3);//��
+	oled.OLED_ShowCHinese(72,0,4);//��
+	oled.OLED_ShowCHinese(90,0,5);//��
+	oled.OLED_ShowCHinese(108,0,6);//��
 	while(1)
     {
-		oled.clear();
-		oled.show_chinese(0,0,0);//中
-		oled.show_chinese(18,0,1);//景
-		oled.show_chinese(36,0,2);//园
-		oled.show_chinese(54,0,3);//电
-		oled.show_chinese(72,0,4);//子
-		oled.show_chinese(90,0,5);//科
-		oled.show_chinese(108,0,6);//技
-		oled.show_string(0,3,(uint8_t*)"1.3' OLED TEST");
-		oled.show_string(0,6,(uint8_t*)"ASCII:");  
-		oled.show_string(63,6,(uint8_t*)"CODE:");  
-		oled.show_char(48,6,t);//显示ASCII字符	   
+		oled.OLED_Clear();
+		oled.OLED_ShowCHinese(0,0,0);//��
+		oled.OLED_ShowCHinese(18,0,1);//��
+		oled.OLED_ShowCHinese(36,0,2);//԰
+		oled.OLED_ShowCHinese(54,0,3);//��
+		oled.OLED_ShowCHinese(72,0,4);//��
+		oled.OLED_ShowCHinese(90,0,5);//��
+		oled.OLED_ShowCHinese(108,0,6);//��
+		oled.OLED_ShowString(0,3,(uint8_t*)"1.3' OLED TEST");
+		oled.OLED_ShowString(0,6,(uint8_t*)"ASCII:");  
+		oled.OLED_ShowString(63,6,(uint8_t*)"CODE:");  
+		oled.OLED_ShowChar(48,6,t);//��ʾASCII�ַ�	   
 		t++;
 		if(t>'~')t=' ';
-		oled.show_num(103,6,t,3,16);//显示ASCII字符的码值 	
+		oled.OLED_ShowNum(103,6,t,3,16);//��ʾASCII�ַ�����ֵ 	
 			
 		
 		delay_ms(1000);
-		oled.clear();
+		oled.OLED_Clear();
 		delay_ms(800);
-		oled.draw_bmp(0,0,128,8,BMP1);  //图片显示(图片显示慎用，生成的字表较大，会占用较多空间，FLASH空间8K以下慎用)
+		oled.OLED_DrawBMP(0,0,128,8,BMP1);  //ͼƬ��ʾ(ͼƬ��ʾ���ã����ɵ��ֱ��ϴ󣬻�ռ�ý϶�ռ䣬FLASH�ռ�8K��������)
 		delay_ms(800);
-		oled.draw_bmp(0,0,128,8,BMP2);
+		oled.OLED_DrawBMP(0,0,128,8,BMP2);
 		delay_ms(800);
 	}
 
