@@ -14,9 +14,7 @@ This specification is preliminary and is subject to change at any time without n
 */
 #ifndef __COMMON_H
 #define __COMMON_H
-#ifdef __cplusplus
-extern "C"{
-#endif
+
 	
 #include "core.h"                  // Device header
 
@@ -73,6 +71,17 @@ class GPIO
         GPIO_TypeDef* port;
         uint16_t pin;	
 };
+class PARALLEL_GPIO
+{
+    public:
+        GPIO *bit[8];
+    public:
+        void    all_mode(PIN_MODE mode);
+        void    write(uint8_t data);
+        void    write_low_4_4bit(uint8_t data);
+        uint8_t read();
+        uint8_t read_low_4_bit();
+};
 class SYSTEM
 {
     public:
@@ -92,11 +101,11 @@ uint16_t	analog_read_voltage(GPIO *pin);
 void        shift_out(GPIO *data_pin, GPIO *clock_pin, uint8_t bit_order, uint8_t val);
 uint8_t		shift_in(GPIO *data_pin, GPIO *clock_pin, uint8_t bit_order);
 
+void        random_seed(uint16_t seed);
+uint16_t    random();
+uint16_t    random(uint16_t max);
+uint16_t    random(uint16_t min,uint16_t max);
 
 
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
