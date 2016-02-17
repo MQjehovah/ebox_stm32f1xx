@@ -369,7 +369,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\ebox_v1_0;..\util;..\edriver;..\network;..\fat;..\user;..\other;..\os\FreeRTOS\Source\include;..\os\FreeRTOS\Source\portable\RVDS\ARM_CM3</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\ebox_v1_1;..\util;..\edriver;..\network;..\fat;..\user;..\other;..\os\FreeRTOS\Source\include;..\os\FreeRTOS\Source\portable\RVDS\ARM_CM3</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -558,14 +558,14 @@
           <GroupName>ebox</GroupName>
           <Files>
             <File>
-              <FileName>ebox_v1_0.lib</FileName>
+              <FileName>ebox_v1_1.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\ebox_v1_0\ebox_v1_0.lib</FilePath>
+              <FilePath>..\ebox_v1_1\ebox_v1_1.lib</FilePath>
             </File>
             <File>
               <FileName>object.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\ebox_v1_0\object.cpp</FilePath>
+              <FilePath>..\ebox_v1_1\object.cpp</FilePath>
             </File>
           </Files>
         </Group>

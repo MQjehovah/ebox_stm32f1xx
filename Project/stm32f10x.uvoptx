@@ -674,8 +674,8 @@
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\ebox_v1_0\ebox_v1_0.lib</PathWithFileName>
-      <FilenameWithoutPath>ebox_v1_0.lib</FilenameWithoutPath>
+      <PathWithFileName>..\ebox_v1_1\ebox_v1_1.lib</PathWithFileName>
+      <FilenameWithoutPath>ebox_v1_1.lib</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -687,7 +687,7 @@
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\ebox_v1_0\object.cpp</PathWithFileName>
+      <PathWithFileName>..\ebox_v1_1\object.cpp</PathWithFileName>
       <FilenameWithoutPath>object.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -696,7 +696,7 @@
 
   <Group>
     <GroupName>util</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
