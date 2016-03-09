@@ -590,36 +590,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\os\FreeRTOS\Source\list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\os\FreeRTOS\Source\queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\os\FreeRTOS\Source\tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\os\FreeRTOS\Source\portable\RVDS\ARM_CM3\port.c</FilePath>
-            </File>
-            <File>
-              <FileName>heap_2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\os\FreeRTOS\Source\portable\MemMang\heap_2.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>edriver</GroupName>
           <Files>
             <File>
@@ -731,6 +701,21 @@
               <FileName>OLED.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\edriver\OLED.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dht11.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\edriver\dht11.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ir_decoder.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\edriver\ir_decoder.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ir_encoder.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\edriver\ir_encoder.cpp</FilePath>
             </File>
           </Files>
         </Group>

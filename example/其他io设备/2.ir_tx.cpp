@@ -11,21 +11,25 @@ Copyright 2015 shentq. All Rights Reserved.
 
 
 #include "ebox.h"
+#include "ir_encoder.h"
+
+PWM nec_tx(&PA0);
+IR_ENCODER nec;
 void setup()
 {
     ebox_init();
-    uart1.begin(9600);	
+    nec_tx.begin(38000,0);
+	nec.begin(&nec_tx);
+		
 }
-char buf[] = "hello world !\r\n";
 int main(void)
 {
-    setup();
-    while(1)
-    {
-        uart1.printf("hello World !\r\n");
-        uart1.printf_length(buf,sizeof(buf));
-        delay_ms(1000);
-    }
+	setup();
+	while(1)
+	{
+		nec.send(0x00ff55aa);
+		delay_ms(1000);		
+	}
 }
 
 
