@@ -1,3 +1,17 @@
+/*
+file   : wdg.h
+author : shentq
+version: V1.1
+date   : 2016/4/6
+
+Copyright 2015 shentq. All Rights Reserved.
+
+Copyright Notice
+No part of this software may be used for any commercial activities by any form or means, without the prior written consent of shentq.
+
+Disclaimer
+This specification is preliminary and is subject to change at any time without notice. shentq assumes no responsibility for any errors contained herein.
+*/
 #ifndef __WDG_H
 #define __WDG_H
 #include "common.h"
@@ -14,10 +28,10 @@
  */
 class EBOX_IWDG
 {
-    public:
-        EBOX_IWDG(){};
-        void begin(uint16_t ms);
-        void feed();
+public:
+    EBOX_IWDG() {};
+    void begin(uint16_t ms);
+    void feed();
 };
 
 #endif

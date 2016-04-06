@@ -1,8 +1,8 @@
 /*
 file   : ebox.h
 author : shentq
-version: V1.0
-date   : 2015/7/5
+version: V1.1
+date   : 2016/4/6
 
 Copyright 2015 shentq. All Rights Reserved.
 
@@ -16,11 +16,12 @@ This specification is preliminary and is subject to change at any time without n
 #define __EBOX_H
 
 
-	 
+
 #include "common.h"
 
 
 
+#include "can.h"
 #include "exti.h"
 #include "gtimer.h"
 #include "pwm.h"
@@ -28,11 +29,12 @@ This specification is preliminary and is subject to change at any time without n
 #include "i2c.h"
 #include "spi.h"
 #include "uart.h"
-#include "timerone.h"
+#include "timer_one.h"
 #include "rtc.h"
 #include "iflash.h"
 #include "dac.h"
 #include "wdg.h"
+
 
 
 #include "stdio.h"
@@ -42,10 +44,10 @@ This specification is preliminary and is subject to change at any time without n
 ////////系统debug支持////////////////////////////////////////////////////////////////
 #define EBOX_DEBUG 1
 #if EBOX_DEBUG
-  extern USART uart1;//根据不同的串口名称此处需要做相应的修改
-	#define DBG(...) uart1.printf(__VA_ARGS__)
+extern USART uart1;//根据不同的串口名称此处需要做相应的修改
+#define DBG(...) uart1.printf(__VA_ARGS__)
 #else
-	#define  DBG(...) 
+#define  DBG(...)
 #endif
 ////////////////////////////////////////////////////////////////////////////////
 //创建所有引脚对象和宏定义其指针
@@ -55,14 +57,17 @@ extern USART uart3;
 extern USART uart4;
 extern USART uart5;
 
-extern SPI spi1;	
+extern SPI spi1;
 extern SPI spi2;
 extern SOFTSPI sspi1;
+
 extern I2C i2c1;
 extern I2C i2c2;
 extern SOFTI2C si2c;
 extern SOFTI2C si2c1;
 extern SOFTI2C si2c2;
+
+extern CAN can1;
 
 extern GPIO PA0;
 extern GPIO PA1;
@@ -318,5 +323,5 @@ extern GPIO PG15;
 
 
 
- #endif
- 
+#endif
+

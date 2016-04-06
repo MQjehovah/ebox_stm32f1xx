@@ -11,12 +11,10 @@ Copyright 2015 shentq. All Rights Reserved.
 
 
 #include "ebox.h"
-RTC_CLOCK clock;
 
 void rtcsecit()
 {
-   clock.sec_event();
-   uart1.printf("time=%02d:%02d:%02d\r\n", clock.hour, clock.min, clock.sec);
+   uart1.printf("count = %x\r\n", rtc.get_counter());
 
 }
 void alarm_event()
@@ -33,11 +31,16 @@ void setup()
     uart1.begin(115200);
     
     rtc.begin();
-    clock.set_clock(23,59,55);
-    rtc.attach_sec_interrupt(rtcsecit);
 
+    rtc.set_counter(0xfffffffa);
+    rtc.set_alarm(5);
+    rtc.attach_sec_interrupt(rtcsecit);
+    rtc.attach_alarm_interrupt(alarm_event);
+    rtc.attach_overflow_interrupt(overflow_event);
     
     rtc.sec_interrupt(ENABLE);
+    rtc.alarm_interrupt(ENABLE);
+    rtc.overflow_interrupt(ENABLE);
 
 }
 
