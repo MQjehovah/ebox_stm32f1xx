@@ -1,57 +1,66 @@
 /*
 file   : *.cpp
 author : shentq
-version: V1.0
-date   : 2015/7/5
+version: V1.1
+date   : 2016/03/26
 
-Copyright 2015 shentq. All Rights Reserved.
+Copyright 2016 shentq. All Rights Reserved.
 */
 
 //STM32 RUN IN eBox
-
-
 #include "ebox.h"
-RTC_CLOCK clock;
+#include "ultrasonic_wave.h"
+float value;
+float value_2;
 
-void rtcsecit()
-{
-   clock.sec_event();
-   uart1.printf("time=%02d:%02d:%02d\r\n", clock.hour, clock.min, clock.sec);
+ULTRA ultra(&PA0,&PA1);
+ULTRA ultra_2(&PA2,&PA3);
 
-}
-void alarm_event()
+void ultra_event()
 {
-    uart1.printf("alarm event\r\n");
+	ultra.mesure_event();
 }
-void overflow_event()
+void ultra_event_2()
 {
-    uart1.printf("overflow event\r\n");
+	ultra_2.mesure_event();
 }
+
 void setup()
 {
     ebox_init();
     uart1.begin(115200);
-    
-    rtc.begin();
-    clock.set_clock(23,59,55);
-    rtc.attach_sec_interrupt(rtcsecit);
-
-    
-    rtc.sec_interrupt(ENABLE);
-
+    uart1.printf("ok \r\n");
+    ultra.begin();
+		ultra.attch_mesuer_event(ultra_event);
+	
+    ultra_2.begin();
+		ultra_2.attch_mesuer_event(ultra_event_2);
 }
-
 
 int main(void)
 {
     setup();
-
     while(1)
-    {
-        delay_ms(1000);
+    {       
+        ultra.start();
+        ultra_2.start();
+				if(ultra.avaliable())
+				{
+					value = ultra.read_cm();
+					uart1.printf("value 1 = %0.2fcm\r\n",value);
+				}
+				
+        ultra_2.start();
+				if(ultra_2.avaliable())
+				{
+					value_2 = ultra_2.read_cm();
+					uart1.printf("value 2 = %0.2fcm\r\n",value_2);
+				}
+				
+				
+		delay_ms(1000);
     }
+
 }
-
-
 
 
