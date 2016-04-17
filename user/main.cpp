@@ -8,60 +8,67 @@ Copyright 2015 shentq. All Rights Reserved.
 */
 
 //STM32 RUN IN eBox
-
-
 #include "ebox.h"
-#include "w5500.h"
-#include "socket.h"
-#include "dhcp.h"
-
-u8 mac[6] = {0x01,0x01,0x01,0x01,0x01,0x01};
+#include "mmc_sd.h"
+#include "wrapperdiskio.h"
+#include "ff.h"
 
 
-u8 ip[6];
-u8 buf[100];
 
-W5500 w5500(&PC13, &PC14, &PC15, &spi2);
+static FATFS fs;            // Work area (file system object) for logical drive
+FATFS *fss;
+DIR DirObject;       //目录结构
+FRESULT res;
+u8 ret;
 
-DHCP dhcp;
+SD sd(&PB12, &spi2);
+
+void dirOpt()
+{
+    res = f_mkdir("0:123"); //新建目录只能一级一级的建，即调用一次f_mkdir(),建一层目录而已，目录名不能以数字开头
+    if(res == FR_OK)
+        uart1.printf("\r\ncreat dir ok !");
+    else if(res == FR_EXIST)
+        uart1.printf("\r\ndir is exist !");
+    else
+        uart1.printf("\r\ncreate failed~~~~(>_<)~~~~");
+
+    res = f_opendir(&DirObject, "0:123"); //打开目录
+    if(res == FR_OK)
+    {
+        uart1.printf("\r\nopen dir ok !");
+        uart1.printf("\r\nclust  num：%d", DirObject.clust);
+        uart1.printf("\r\nsect num：%d", DirObject.sect);
+    }
+    else if(res == FR_NO_PATH)
+        uart1.printf("\r\ndir is not exist");
+    else
+        uart1.printf("\r\nopen dir failed~~~~(>_<)~~~~");
+}
 void setup()
 {
     ebox_init();
     uart1.begin(115200);
-    uart1.printf("\r\nuart1 9600 ok!");
+    ret = sd.begin(3);
+    if(!ret)
+        uart1.printf("\r\nsdcard init ok!");
+    attach_sd_to_fat(&sd);
 
-    w5500.begin(2, mac);
-    attach_eth_to_socket(&w5500);
-
-    dhcp.begin(mac);
-    w5500.setSHAR(dhcp.net.mac);/*配置Mac地址*/
-    w5500.setSIPR(dhcp.net.ip);/*配置Ip地址*/
-    w5500.setSUBR(dhcp.net.subnet);/*配置子网掩码*/
-    w5500.setGAR(dhcp.net.gw);/*配置默认网关*/
-    w5500.getMAC (ip);
-    uart1.printf("\r\nmac : %02x.%02x.%02x.%02x.%02x.%02x\r\n", ip[0], ip[1], ip[2], ip[3], ip[4], ip[5]);
-    w5500.getIP (ip);
-    uart1.printf("IP : %d.%d.%d.%d\r\n", ip[0], ip[1], ip[2], ip[3]);
-    w5500.getSubnet(ip);
-    uart1.printf("mask : %d.%d.%d.%d\r\n", ip[0], ip[1], ip[2], ip[3]);
-    w5500.getGateway(ip);
-    uart1.printf("GW : %d.%d.%d.%d\r\n", ip[0], ip[1], ip[2], ip[3]);
-    uart1.printf("Network is ready.\r\n");
-
+    res = f_mount(&fs, "0:", 1);
+    uart1.printf("\r\nres = %d", res);
 }
-u16 len;
+u32 count;
 int main(void)
 {
-  uint8_t dhcpret=0;
     setup();
-
+    dirOpt();
     while(1)
     {
 
-//        uart1.printf("\r\nret = %d",dhcpret);
+        delay_ms(1000);
     }
 
-    
+
 }
 
 
