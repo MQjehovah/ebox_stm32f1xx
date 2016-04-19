@@ -772,6 +772,11 @@
               <FileType>8</FileType>
               <FilePath>..\network\tcp.cpp</FilePath>
             </File>
+            <File>
+              <FileName>dhcp.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\network\dhcp.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -8,61 +8,85 @@ Copyright 2015 shentq. All Rights Reserved.
 */
 
 //STM32 RUN IN eBox
-
-
 #include "ebox.h"
-#include "w5500.h"
-#include "socket.h"
-#include "dhcp.h"
-#include "dns.h"
-u8 mac[6] = {0x01,0x01,0x01,0x01,0x01,0x02};
+#include "mmc_sd.h"
+#include "wrapperdiskio.h"
+#include "ff.h"
 
 
-u8 buf[100];
+static FATFS fs;            // Work area (file system object) for logical drive
+FATFS *fss;
+FRESULT res;
+DIR DirObject;       //Ä¿Â¼½á¹¹
+DWORD free_clust;//¿Õ´Ø£¬¿ÕÉÈÇø´óÐ¡
 
-W5500 w5500(&PC13, &PC14, &PC15, &spi2);
-void setup()
+
+SD sd(&PB12, &spi2);
+
+void getSDCardInfo()
 {
-    int ret;
-    ebox_init();
-    uart1.begin(115200);
-    uart1.printf("\r\nuart1 9600 ok!");
+    u8 ret;
+    uint64_t rl;
+    u8 buf[1024];
+    
+    ret = sd.get_CID(buf);
+    uart1.printf("\r\n========================");
+    uart1.printf("\r\nget CID Info,ret = %d", ret);
+    uart1.printf("\r\n");
+    uart1.printf((const char *)buf);
 
-    w5500.begin(2, mac);
-    attach_eth_to_socket(&w5500);
+    rl = sd.get_capacity();
+    uart1.printf("\r\n========================");
+    uart1.printf("\r\ncapacity = %dMB", rl / 1024 / 1024);
+    uart1.printf("\r\ncapacity = %0.1fGB", rl / 1024 / 1024/1024.0);
 
-    ret = dhcp.begin(mac);
-    if(ret == EOK)
+    uart1.printf("\r\nWaiting...");
+    res = f_getfree("/", &free_clust, &fss);
+    if(res == FR_OK)
     {
-        w5500.setSHAR(dhcp.net.mac);/*ÅäÖÃMacµØÖ·*/
-        w5500.setSIPR(dhcp.net.ip);/*ÅäÖÃIpµØÖ·*/
-        w5500.setSUBR(dhcp.net.subnet);/*ÅäÖÃ×ÓÍøÑÚÂë*/
-        w5500.setGAR(dhcp.net.gw);/*ÅäÖÃÄ¬ÈÏÍø¹Ø*/
-        w5500.getMAC (buf);
-        uart1.printf("\r\nmac : %02x.%02x.%02x.%02x.%02x.%02x\r\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
-        w5500.getIP (buf);
-        uart1.printf("IP : %d.%d.%d.%d\r\n", buf[0], buf[1], buf[2], buf[3]);
-        w5500.getSubnet(buf);
-        uart1.printf("mask : %d.%d.%d.%d\r\n", buf[0], buf[1], buf[2], buf[3]);
-        w5500.getGateway(buf);
-        uart1.printf("GW : %d.%d.%d.%d\r\n", buf[0], buf[1], buf[2], buf[3]);
-        uart1.printf("Network is ready.\r\n");
+        uart1.printf("\r\npartition size£º%dMB", (fss->free_clust) * (fss->csize) / 2048);
+        uart1.printf("\r\npartition free sectors: %d", (fss->free_clust) * (fss->csize));
+        uart1.printf("\r\npartition free clust:%d", free_clust);
+        uart1.printf("\r\npartition free sector:%d", free_clust * (fss->csize));
     }
+    else
+        uart1.printf("\r\nget capacity faile,err = %d", res);
+    uart1.printf("\r\nOVER !");
+
 
 }
-u16 len;
+void setup()
+{
+    u8 ret;
+    ebox_init();
+    uart1.begin(115200);
+    ret = sd.begin(3);
+    if(ret == 0)
+        uart1.printf("sdcard init ok!\r\n");
+    else
+        uart1.printf("sdcard init failed;err = %d\r\n",ret);
+        
+    attach_sd_to_fat(&sd);
+
+    res = f_mount(&fs, "0", 1);
+    if(res == FR_OK)
+        uart1.printf("mount ok!\r\n", res);
+    else
+        uart1.printf("mount err!err = %d\r\n", res);
+
+}
+u32 count;
 int main(void)
 {
-  uint8_t dhcpret=0;
     setup();
-
+    getSDCardInfo();
     while(1)
     {
 
-//        uart1.printf("\r\nret = %d",dhcpret);
+        delay_ms(1000);
     }
 
-    
+
 }
 
 
