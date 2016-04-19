@@ -47,7 +47,6 @@ void getSDCardInfo()
         uart1.printf("\r\npartition size£º%dMB", (fss->free_clust) * (fss->csize) / 2048);
         uart1.printf("\r\npartition free sectors: %d", (fss->free_clust) * (fss->csize));
         uart1.printf("\r\npartition free clust:%d", free_clust);
-        uart1.printf("\r\npartition free sector:%d", free_clust * (fss->csize));
     }
     else
         uart1.printf("\r\nget capacity faile,err = %d", res);
