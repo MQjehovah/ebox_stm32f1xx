@@ -21,12 +21,11 @@ u8 MMC_disk_initialize(void)
 
 u8 MMC_disk_read( u8 *buffer, u32 sector, u8 count)
 {
-	if(count == 1)
-	//if(1)
-	{
-		return(sdCard->read_single_block(sector,buffer));
-	}
-	else
+//	if(count == 1)
+//	{
+//		return(sdCard->read_single_block(sector,buffer));
+//	}
+//	else
 	{
 		return(sdCard->read_multi_block(sector,buffer,count));		
 	}
@@ -35,12 +34,11 @@ u8 MMC_disk_read( u8 *buffer, u32 sector, u8 count)
 
 u8 MMC_disk_write( const u8 *data, u32 sector, u8 count)
 {
-	if(count == 1)
-	//if(1)
-	{
-		return(sdCard->write_single_block(sector,data));
-	}
-	else
+//	if(count == 1)
+//	{
+//		return(sdCard->write_single_block(sector,data));
+//	}
+//	else
 	{
 		return(sdCard->write_multi_block(sector,data,count));
 	}
