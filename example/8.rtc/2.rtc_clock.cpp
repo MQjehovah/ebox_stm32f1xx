@@ -1,17 +1,19 @@
-/*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
+/**
+  ******************************************************************************
+  * @file   : *.cpp
+  * @author : shentq
+  * @version: V1.2
+  * @date   : 2016/08/14
 
-Copyright 2015 shentq. All Rights Reserved.
-*/
-
-//STM32 RUN IN eBox
+  * @brief   ebox application example .
+  *
+  * Copyright 2016 shentq. All Rights Reserved.         
+  ******************************************************************************
+ */
 
 
 #include "ebox.h"
-RTC_CLOCK clock;
+RtcClock clock;
 
 void rtcsecit()
 {
@@ -32,7 +34,7 @@ void setup()
     ebox_init();
     uart1.begin(115200);
     
-    rtc.begin();
+    rtc.begin(1);
     clock.set_clock(23,59,55);
     rtc.attach_sec_interrupt(rtcsecit);
 
