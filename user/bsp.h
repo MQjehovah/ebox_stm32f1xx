@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    exti.h
+  * @file    bsp.h
   * @author  shentq
   * @version V1.2
   * @date    2016/08/14
@@ -17,36 +17,29 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __BSP_H
+#define __BSP_H
+#include "ebox.h"
+#include "button.h"
+#include "w5500.h"
+#include "led.h"
+#include "mmc_sd.h"
+#include "lcd_1.8.h"
+#include "w25x16.h"
+#include "at24c02.h"
 
-#ifndef __EXTI_H
-#define __EXTI_H
-#include "common.h"
-/*
-	1.提供一个io中断
-	*注意：stm32一个中断线EXTI_Linex只能连接到一个port的GPIO_Pin_x，即设置PA0为中断源之后就不能设置PB0，PC0等为中断源
-*/
 
-//EXTITrigger_TypeDef类型值
-//	EXTI_Trigger_Rising
-//	EXTI_Trigger_Falling
-//	EXTI_Trigger_Rising_Falling
-class Exti
-{
-public:
-    Exti(Gpio *exti_pin, EXTITrigger_TypeDef trigger);
-    void begin();
-    void attach_interrupt(void (*callback_fun)(void));
-    void interrupt(FunctionalState enable);
+extern Led      led1;
+extern Led      led2;
+extern Button   btn;
+extern W5500    w5500;
+extern SD       sd;
+extern Lcd      lcd;
+extern W25x16   flash;
+extern At24c02  eeprom;
 
-private:
-    Gpio                *exti_pin;
-    EXTITrigger_TypeDef trigger;
-    uint8_t             port_source;
-    uint8_t             pin_source;
-    uint32_t            exti_line;
-    uint8_t             irq;
+#define led PB8;
 
-    void init_info(Gpio *exti_pin);
-};
 
 #endif
+

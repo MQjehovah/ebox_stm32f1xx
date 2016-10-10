@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    color_convert.h
+  * @file    wdg.h
   * @author  shentq
   * @version V1.2
   * @date    2016/08/14
@@ -17,38 +17,27 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __RING_H
-#define __RING_H
+
+#ifndef __WDG_H
+#define __WDG_H
+#include "ebox_common.h"
+
 /**
-使用方法：
-用户创建一个自定义的unsigned char/uint8_t类型的缓冲区.例如：uint8_t buf[512];
-使用RINGBUF ringbuf(buf,512);创建一个对象；
-用户可以调用ringbuf.write(c);填入数据；返回true成功。
-调用ringbuf.available()。可获得缓冲区可用数据的长度，0表示空；
-如果不为空，可以调用ringbuf.read()读取一个字节，
-也可以调用ringbuf.read(userbuf,length);将读取特定长度的数据，输出到userbuf中。
-*/
-class RINGBUF
+ * 初始化独立看门狗
+   基本计算方法
+ * pr:分频数:0~7(只有低 3 位有效!)
+ * 分频因子=4*2^pr.但最大值只能是 256!
+ * rlr:重装载寄存器值:低 11 位有效.
+ * 时间计算(大概):Tout=((4*2^prer)*rlr)/40 (ms).
+   本函数内部已经做了相关计算；
+    输入参数为ms；1000代表1000ms；请在1s内喂一次狗。否则将会复位
+ */
+class Iwdg
 {
-
-
 public:
-    RINGBUF();
-    void begin(unsigned char *buf, int lenght);
-    void write(unsigned char c);
-    unsigned char read(void);
-    int available();
-    void clear();
-
-private:
-    volatile int head;
-    volatile int tail;
-    int max;
-    unsigned char *buf;
-
-
-
-
-
+    Iwdg() {};
+    void begin(uint16_t ms);
+    void feed();
 };
+
 #endif

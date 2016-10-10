@@ -30,11 +30,11 @@
 #define __COMMON_H
 
 
-#include "core.h" 
-#include "gpio.h"
-#include "analog.h"
+#include "ebox_core.h" 
+#include "ebox_gpio.h"
+#include "ebox_analog.h"
 
-#define EBOX_VERSION "1.2"
+#define EBOX_VERSION "2.0"
 
 #define EOK         0
 #define EWAIT       1
@@ -77,7 +77,7 @@ uint16_t    random(uint16_t max);
 uint16_t    random(uint16_t min, uint16_t max);
 
 void        shift_out(Gpio *data_pin, Gpio *clock_pin, uint8_t bit_order, uint8_t val);
-uint8_t		shift_in(Gpio *data_pin, Gpio *clock_pin, uint8_t bit_order);
+uint8_t     shift_in(Gpio *data_pin, Gpio *clock_pin, uint8_t bit_order);
 
 
 #endif

@@ -21,7 +21,7 @@
 #ifndef __PWM_H
 #define __PWM_H
 
-#include "common.h"
+#include "ebox_common.h"
 /*
 	1.支持TIM2,3,4下的CH1-4通道。
 	2.可以随时调用pwm的参数修改函数。调用setfrq函数不会改变占空比,但是会影响同定时器下其他通道的工作。
@@ -57,7 +57,7 @@ public:
     float   get_accuracy();
 
 private:
-    Gpio *pwm_pin;
+    Gpio        *pwm_pin;
     TIM_TypeDef *TIMx;
     uint32_t    rcc;
     uint8_t     ch;
@@ -69,6 +69,7 @@ private:
     void init_info(Gpio *pwm_pin);
     void base_init(uint16_t Period, uint16_t Prescaler);
     void _set_duty(uint16_t duty);
+//-------------------------------------------------------------
 
 };
 void analog_write(Gpio *pwm_pin, uint16_t duty);

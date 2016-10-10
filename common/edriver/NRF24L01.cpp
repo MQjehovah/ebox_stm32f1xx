@@ -1,5 +1,5 @@
 #include "NRF24L01.h"
-#include "exti.h"
+#include "ebox_exti.h"
 uint8_t tx_addr[TX_ADR_WIDTH] = {0x34, 0x43, 0x10, 0x10, 0x01}; //发送地址
 uint8_t rx_addr_0[RX_ADR_WIDTH] = {0x34, 0x43, 0x10, 0x10, 0x01}; //发送地址
 uint8_t rx_addr_1[RX_ADR_WIDTH] = {0x34, 0x43, 0x10, 0x10, 0x01}; //发送地址
@@ -8,7 +8,7 @@ void exti_callback()
 {
     uart1.printf("exti event");
 }
-NRF24L01::NRF24L01(GPIO *irq, GPIO *ce, GPIO *cs, SPI *spi)
+NRF24L01::NRF24L01(Gpio *irq, Gpio *ce, Gpio *cs, Spi *spi)
 {
     this->irq = irq;
     this->ce = ce;
@@ -227,7 +227,7 @@ void NRF24L01::set_crc(bool crco, bool enable)
 
 int NRF24L01::self_check()
 {
-    u8 buf[5] = {0XA5, 0XA5, 0XA5, 0XA5, 0XA5};
+    uint8_t buf[5] = {0XA5, 0XA5, 0XA5, 0XA5, 0XA5};
     int ret;
     spi->take_spi_right(&spi_dev_nrf24l01);
     cs->reset();

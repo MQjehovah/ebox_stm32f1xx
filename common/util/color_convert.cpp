@@ -1,18 +1,23 @@
-/*
-file   : color_convert.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
+/**
+  ******************************************************************************
+  * @file    Calendar.cpp
+  * @author  shentq
+  * @version V1.2
+  * @date    2016/08/14
+  * @brief   
+  ******************************************************************************
+  * @attention
+  *
+  * No part of this software may be used for any commercial activities by any form 
+  * or means, without the prior written consent of shentq. This specification is 
+  * preliminary and is subject to change at any time without notice. shentq assumes
+  * no responsibility for any errors contained herein.
+  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+  ******************************************************************************
+  */
 
-Copyright 2015 shentq. All Rights Reserved.
 
-Copyright Notice
-No part of this software may be used for any commercial activities by any form or means, without the prior written consent of shentq.
-
-Disclaimer
-This specification is preliminary and is subject to change at any time without notice. shentq assumes no responsibility for any errors contained herein.
-*/
-
+/* Includes ------------------------------------------------------------------*/
 #include "color_convert.h"
 #include "math.h"
 #include "util.h"
@@ -128,7 +133,7 @@ void HSL_to_RGB(const COLOR_HSL &hsl, COLOR_RGB &rgb)
 }
 void RGB_to_HSV(const COLOR_RGB &rgb, COLOR_HSV &hsv )
 {
-    u8 min, max;
+    uint8_t min, max;
     float delta;
     float h;
 
@@ -180,7 +185,7 @@ void HSV_to_RGB(const COLOR_HSV &hsv, COLOR_RGB &rgb)
     float b = 0.0;
     float g = 0.0;
 
-    u8 flag = ( int) abs( h / 60.0 );
+    uint8_t flag = ( int) abs( h / 60.0 );
     float f = h / 60.0 - flag;
     float p = v * (1 - s);
     float q = v * (1 - f * s);
@@ -222,15 +227,15 @@ void HSV_to_RGB(const COLOR_HSV &hsv, COLOR_RGB &rgb)
         break;
     }
 
-    u16 blue = int( b * 255);
+    uint16_t blue = int( b * 255);
     rgb.b = ( blue >= 255) ? 255 : blue;//
     rgb.b = ( blue <= 0) ? 0 : rgb. b;
 
-    u16 green = int( g * 255);
+    uint16_t green = int( g * 255);
     rgb.g = ( green >= 255) ? 255 : green;
     rgb.g = ( green <= 0) ? 0 : rgb. g;
 
-    u16 red = int( r * 255);
+    uint16_t red = int( r * 255);
     rgb.r = ( red >= 255) ? 255 : red;
     rgb.r = ( red <= 0) ? 0 : rgb. r;
 }
@@ -244,10 +249,10 @@ void RGB_to_GRB(COLOR_RGB &rgb, COLOR_GRB &grb)
 }
 void RGB_BUF_to_GRB(COLOR_BUF &c_buf)
 {
-    u8 tmp;
+    uint8_t tmp;
     if(c_buf.color_type == RGB_TYPE)
     {
-        for(u8 i = 0; i < 100; i ++)
+        for(uint8_t i = 0; i < 100; i ++)
         {
             tmp = c_buf.data[i][0];
             c_buf.data[i][0] = c_buf.data[i][1];
@@ -255,7 +260,7 @@ void RGB_BUF_to_GRB(COLOR_BUF &c_buf)
         }
     }
 }
-void rgb_to_565(COLOR_RGB &rgb, u16 &color)
+void rgb_to_565(COLOR_RGB &rgb, uint16_t &color)
 {
     color |= (rgb.r >> 3) << 11;
     color |= (rgb.g >> 2) << 5;

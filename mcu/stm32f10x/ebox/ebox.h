@@ -23,20 +23,22 @@
 
 
 
-#include "common.h"
+#include "ebox_common.h"
 
 
 
-#include "exti.h"
-#include "timer.h"
-#include "pwm.h"
-#include "in_capture.h"
-#include "i2c.h"
-#include "spi.h"
-#include "uart.h"
-#include "rtc.h"
-#include "iflash.h"
-#include "wdg.h"
+#include "ebox_can.h"
+#include "ebox_exti.h"
+#include "ebox_timer.h"
+#include "ebox_pwm.h"
+#include "ebox_in_capture.h"
+#include "ebox_i2c.h"
+#include "ebox_spi.h"
+#include "ebox_uart.h"
+#include "ebox_rtc.h"
+#include "ebox_iflash.h"
+#include "ebox_dac.h"
+#include "ebox_wdg.h"
 
 
 
@@ -69,6 +71,8 @@ extern I2c i2c2;
 extern SoftI2c si2c;
 extern SoftI2c si2c1;
 extern SoftI2c si2c2;
+
+extern Can can1;
 
 extern Gpio PA0;
 extern Gpio PA1;

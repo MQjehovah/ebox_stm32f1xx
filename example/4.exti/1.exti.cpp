@@ -1,10 +1,10 @@
-/**
+ /**
   ******************************************************************************
-  * @file    led.h
+  * @file    main.cpp
   * @author  shentq
   * @version V1.2
   * @date    2016/08/14
-  * @brief   
+  * @brief   ebox application example .
   ******************************************************************************
   * @attention
   *
@@ -16,22 +16,56 @@
   ******************************************************************************
   */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __LED_H
-#define __LED_H
+
+/* Includes ------------------------------------------------------------------*/
+
 #include "ebox.h"
 
-class Led
-{
 
-public:
-    Led(Gpio *pin,uint8_t high_on);
-    void begin();
-    void on();
-    void off();
-    void toggle();
-private:
-    Gpio *pin;
-    uint8_t high_on;
+uint32_t xx;
+
+Exti ex(&PA8, EXTI_Trigger_Falling);
+
+void exit()
+{
+    xx++;
+    uart1.printf("\r\nxx = %d", xx);
+}
+
+
+class Test 
+{
+    public:
+    void event() 
+    {
+        PB8.toggle();
+    }
 };
-#endif
+Test test;
+
+void setup()
+{
+    ebox_init();
+    uart1.begin(115200);
+    PB8.mode(OUTPUT_PP);
+    ex.begin();
+//    ex.attach(exit);
+    ex.attach(&test,&Test::event);
+    ex.interrupt(ENABLE);
+}
+
+
+int main(void)
+{
+    setup();
+    while(1)
+    {
+        ;
+    }
+
+
+}
+
+
+
+
