@@ -34,20 +34,7 @@
 
 
 /*ebox 动态内存接口*/
-#include "heap.h"
-void  *cjson_malloc(size_t xWantedSize)
-{    
-   mem_malloc(xWantedSize,SRAM_IN);       
-}
-void  cjson_free(void *pv)
-{
-       mem_free(pv,SRAM_IN);
-       pv = NULL;
-}
-size_t cjson_get_free()
-{
-    return mem_get_free_size(SRAM_IN);
-}
+#include "ebox_mem.h"
 
 static const char *ep;
 
@@ -60,8 +47,8 @@ static int cJSON_strcasecmp(const char *s1,const char *s2)
 	return tolower(*(const unsigned char *)s1) - tolower(*(const unsigned char *)s2);
 }
 
-static void *(*cJSON_malloc)(size_t sz) = cjson_malloc;
-static void (*cJSON_free)(void *ptr) = cjson_free;
+static void *(*cJSON_malloc)(size_t sz) = ebox_malloc;
+static void (*cJSON_free)(void *ptr) = ebox_free;
 
 static char* cJSON_strdup(const char* str)
 {
