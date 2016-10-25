@@ -24,12 +24,12 @@
 #include <stdlib.h>
 
 
-char ssid[] = "DVmaster";
-char password[] = "dvmaster456";
+char ssid[] = "syzx";
+char password[] = "syzx22213621362";
 
 
-#if 0
-#define ESP_DEBUG(...) uart1.printf(__VA_ARGS__)
+#if 1
+#define ESP_DEBUG(...) uart1.printf("[ESP]"),uart1.printf(__VA_ARGS__)
 #else
 #define  ESP_DEBUG(...)
 #endif
@@ -506,9 +506,20 @@ bool ESP8266::get_joined_DeviceIP(char *list)
  *
  * @return the status.
  */
-bool ESP8266::get_IP_status(char *list)
+WIFI_STATUS_T ESP8266::get_IP_status()
 {
-    return exc_AT_CIPSTATUS(list);
+    char buf[100];
+    char status;
+    if( exc_AT_CIPSTATUS(buf)){
+        if(search_str(buf, "STATUS:") != -1){
+            get_str(buf, "STATUS:", 1, "\r\n", 1, &status);
+            status -= 0x30; 
+        }
+        else
+            status = 0;
+
+    }      
+    return (WIFI_STATUS_T)status;    
 }
 
 /**
@@ -1415,7 +1426,6 @@ bool ESP8266::exc_AT_CIPSTATUS(char *list)
     }
     wifi_mode = NET_MODE;
     return ret;
-    //    return recv_find_filter_str("OK", "\r\r\n", "\r\n\r\nOK", list,2000);
 }
 
 
@@ -1690,6 +1700,9 @@ bool ESP8266::set_AT_CIPSEND_single(const uint8_t *buffer, uint32_t len)
         }
         else
             ret = false;
+    }else{
+        ESP_DEBUG("SEND TIMEOUT!");
+        ret = false;
     }
 
     if (state == 1)
@@ -1988,18 +2001,9 @@ CMD_STATE_T ESP8266::wait_cmd(uint32_t wait_time)
         if(millis() - time > wait_time)
         {
             cmd_state = TIMEOUT;
+            ESP_DEBUG("cmd TIMEOUT\r\n");
             break;
         }
-
-        //        if(
-        //            search_str(rx_cmd_buf,">") != -1                ||\
-        //            search_str(rx_cmd_buf,"OK") != -1               ||\
-        //            search_str(rx_cmd_buf,"FAIL") != -1             ||\
-        //            search_str(rx_cmd_buf,"EEROR") != -1            ||\
-        //            search_str(rx_cmd_buf,"ALREADY CONNECT") != -1  ||\
-        //            search_str(rx_cmd_buf,"Link is not") != -1      ||\
-        //            search_str(rx_cmd_buf,"Link is builded") != -1
-        //          )
         if(
             search_str(rx_cmd_buf, "OK"   ) != -1  || \
             search_str(rx_cmd_buf, "FAIL" ) != -1  || \
@@ -2011,7 +2015,7 @@ CMD_STATE_T ESP8266::wait_cmd(uint32_t wait_time)
             break;
         }
     }
-    print_cmd(cmd_state);
+//    print_cmd(cmd_state);
 
     return cmd_state;
 
@@ -2026,6 +2030,7 @@ CMD_STATE_T ESP8266::wait_cmd(const char *spacial_target, uint32_t wait_time)
         if(millis() - time > wait_time)
         {
             cmd_state = TIMEOUT;
+            ESP_DEBUG("cmd TIMEOUT\r\n");
             break;
         }
 
@@ -2041,7 +2046,7 @@ CMD_STATE_T ESP8266::wait_cmd(const char *spacial_target, uint32_t wait_time)
             break;
         }
     }
-    print_cmd(cmd_state);
+//    print_cmd(cmd_state);
 
     return cmd_state;
 
@@ -2092,6 +2097,17 @@ int  ESP8266::available()
     return net_buf.available();
 }
 /**
+ * read one byte.
+ * @note must Coordinate available() use;!!!!!!!!!!!!
+ * @param buffer - the buffer of data to send.
+ * @param buf - the buffer of data to read.
+ * @retval len - the length of data readed.
+ */
+char ESP8266::read_one()
+{
+   return net_buf.read();
+}
+/**
  * Send data based on TCP or UDP builded already in single mode.
  *
  * @param buffer - the buffer of data to send.
@@ -2115,6 +2131,26 @@ uint16_t ESP8266::read(unsigned char *buf)
     }
     return len;
 }
+///**
+// * Send data based on TCP or UDP builded already in single mode.
+// *
+// * @param buffer - the buffer of data to send.
+// * @param buf - the buffer of data to read.
+// * @retval len - the length of data readed.
+// */
+//uint16_t ESP8266::read_until(unsigned char *buf,char ch)
+//{
+//    int i=0;
+//    uint16_t len=0;
+//    while(buf[i] != ch)
+//    {
+//        if(available()){
+//            buf[i] = net_buf.read();
+//            i++;
+//        }
+//    }
+//    return len;
+//}
 
 /**
  * read data based on one of TCP or UDP builded already in multiple mode.

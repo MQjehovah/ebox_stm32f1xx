@@ -15,6 +15,17 @@
   * <h2><center>&copy; Copyright 2016 shentq. All Rights Reserved.</center></h2>
   ******************************************************************************
   */
+  /*
+	1.支持ebox所有的SPI接口
+	2.支持单条总线挂载多个FLASH
+	3.支持多条总线挂载多少个FLASH
+*/
+
+/**
+ * Modification History:
+ * -shentq                  -version 1.0(2016/10/20)
+ *  *删除全局缓冲区变量，改用动态申请内存
+ */
 
 #include "stdio.h"
 #include "stdlib.h"
@@ -73,8 +84,8 @@ struct flash_port flash_port_table[]=
 //    }
 //};
 /***************************************************************************/
+char log_buf[256];
 
-//void sfud_log_debug(const char *file, const long line, const char *format, ...);
 static sfud_err     spi_write_read(const sfud_spi *spi, const uint8_t *write_buf, size_t write_size, uint8_t *read_buf,size_t read_size);
 static void         spi_lock(const sfud_spi *spi) ;
 static void         spi_unlock(const sfud_spi *spi) ;
@@ -117,7 +128,8 @@ sfud_err sfud_spi_port_init(sfud_flash *flash)
 */    
 static sfud_err spi_write_read(const sfud_spi *sf_spi,const uint8_t *write_buf, size_t write_size, uint8_t *read_buf,size_t read_size)
 {
-    uint8_t     index  =*(uint8_t*) sf_spi->user_data;//传递flash的index
+    uint8_t     *_index  =(uint8_t*) sf_spi->user_data;//传递flash的index
+    uint8_t     index  = *_index;
     sfud_err    result  = SFUD_SUCCESS;
     uint8_t     send_data, read_data;
 
@@ -183,9 +195,10 @@ extern "C"{
 void ebox_printf(const char *fmt , ... )
 {
     char *buf;
+
     size_t size2=128;
     int ret;
-    
+
     va_list va_params;
     va_start(va_params, fmt);
     
@@ -204,7 +217,7 @@ void ebox_printf(const char *fmt , ... )
     va_end(va_params);
     uart1.printf_length((const char*)buf, ret);
     //uart1.printf(" ====%d===", ebox_get_free());
-    uart1.wait_busy();
+    //uart1.wait_busy();
     ebox_free(buf);
 }
 /**
@@ -216,32 +229,15 @@ void ebox_printf(const char *fmt , ... )
  * @param ... args
  */
 void sfud_log_debug(const char *file, const long line, const char *format, ...) {
-    char *buf;
-    size_t size2=128;
-    int ret;
     va_list args;
+
     /* args point to the first variable parameter */
     va_start(args, format);
     ebox_printf("[SFUD](%s:%ld) ", file, line);
     /* must use vprintf to print */
-    do{
-        buf = (char *)ebox_malloc(size2);
-        if(buf == NULL)
-            return ;
-        ret = _vsnprintf(buf, size2,format, args);
-        if((ret == -1) || (ret > size2))
-        {
-            size2+=128;
-            ebox_free(buf);
-            ret = -1;
-        }
-    }while(ret == -1);
-    if(buf == NULL)return;
-    /* must use vprintf to print */
-    ebox_printf("%s\n", buf);
-    
+    vsnprintf(log_buf, sizeof(log_buf), format, args);
+    ebox_printf("%s\n", log_buf);
     va_end(args);
-    ebox_free(buf);
 }
 
 /**
@@ -251,31 +247,14 @@ void sfud_log_debug(const char *file, const long line, const char *format, ...) 
  * @param ... args
  */
 void sfud_log_info(const char *format, ...) {
-    char *buf;
-    size_t size2=128;
-    int ret;
     va_list args;
+
     /* args point to the first variable parameter */
     va_start(args, format);
     ebox_printf("[SFUD]");
-    
-    do{
-        buf = (char *)ebox_malloc(size2);
-        if(buf == NULL)
-            return ;
-        ret = _vsnprintf(buf, size2,format, args);
-        if((ret == -1) || (ret > size2))
-        {
-            size2+=128;
-            ebox_free(buf);
-            ret = -1;
-        }
-    }while(ret == -1);
-    if(buf == NULL)return;
     /* must use vprintf to print */
-    ebox_printf("%s\n", buf);
-    
+    vsnprintf(log_buf, sizeof(log_buf), format, args);
+    ebox_printf("%s\n", log_buf);
     va_end(args);
-    ebox_free(buf);
 }
 }
