@@ -20,17 +20,17 @@ char *out;
 BigIot bigiot(&wifi);
 
 #define     HOST            "www.bigiot.net"
-#define     postingInterval 5000
+#define     postingInterval 10000
 uint16_t    remote_port     = 8181;
 uint16_t    local_port      = 4321;
 //用户、设备接口
 #define  USERID     "897"
-#define  DEVICEID   "931"
-#define  APIKEY     "af1a1fde7"
+#define  DEVICEID   "904"
+#define  APIKEY     "3324c6ab8"
 //实时数据接口
-#define  DATA_ID        "865"
-#define  TEMPERATURE_ID "866"
-#define  HUMIDITY_ID    "867"
+#define  DATA_ID        "839"
+#define  TEMPERATURE_ID "847"
+#define  HUMIDITY_ID    "848"
 
 ///////////////////////////////////
 uint8_t     recv_buf[1024] = {0};
@@ -66,7 +66,6 @@ int main(void)
         if(!bigiot.connected()){
             if(!bigiot.connect(HOST, remote_port, local_port)){
                 uart1.printf("\nTCP connect failed!");
-                return 0;
             }else{
                 uart1.printf("\nTCP connecte success!");
             }
@@ -86,6 +85,7 @@ int main(void)
                 ret = bigiot.send_say(BIGIOT_USER,USERID,"say something");
                 out = make_data();
                 ret = bigiot.send_realtime_data(DEVICEID,(char *)out);
+                ebox_free(out);
             }
             if(millis() - last_get_time > 11000 || last_get_time == 0){
                 last_get_time = millis();
@@ -94,12 +94,12 @@ int main(void)
             }        
         
         }
-//        if(millis() - last_time > 1000)
-//        {
-//            last_time = millis();
-//            uart1.printf("\nfree:%d",ebox_get_free());
-//        
-//        }
+        if(millis() - last_time > 1000)
+        {
+            last_time = millis();
+            uart1.printf("\nfree:%d",ebox_get_free());
+        
+        }
 
 
         
@@ -114,9 +114,9 @@ char *make_data()
     if(NULL == pJsonRoot){
         return NULL;
     }
-    cJSON_AddNumberToObject(pJsonRoot, "865", random(100));
-    cJSON_AddNumberToObject(pJsonRoot, "866", random(100));
-    cJSON_AddNumberToObject(pJsonRoot, "867", random(100));
+    cJSON_AddNumberToObject(pJsonRoot, DATA_ID, random(100));
+    cJSON_AddNumberToObject(pJsonRoot, TEMPERATURE_ID, random(100));
+    cJSON_AddNumberToObject(pJsonRoot, HUMIDITY_ID, random(100));
 
     char *p;
     p = cJSON_PrintUnformatted(pJsonRoot);
@@ -124,6 +124,7 @@ char *make_data()
         cJSON_Delete(pJsonRoot);
         return NULL;
     }
+        cJSON_Delete(pJsonRoot);
     return p;
 }
 
