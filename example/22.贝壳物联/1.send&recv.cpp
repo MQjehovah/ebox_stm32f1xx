@@ -25,12 +25,12 @@ uint16_t    remote_port     = 8181;
 uint16_t    local_port      = 4321;
 //用户、设备接口
 #define  USERID     "897"
-#define  DEVICEID   "904"
-#define  APIKEY     "3324c6ab8"
+#define  DEVICEID   "931"
+#define  APIKEY     "d28fa984b"
 //实时数据接口
-#define  DATA_ID        "839"
-#define  TEMPERATURE_ID "847"
-#define  HUMIDITY_ID    "848"
+#define  DATA_ID        "865"
+#define  TEMPERATURE_ID "866"
+#define  HUMIDITY_ID    "867"
 
 ///////////////////////////////////
 uint8_t     recv_buf[1024] = {0};
@@ -42,11 +42,6 @@ void setup()
 {
     ebox_init();
     uart1.begin(115200);
-    uart1.printf("-------------------------------\r\n");
-    uart1.printf("-------------------------------\r\n");
-    uart1.printf("-------------------------------\r\n");
-    uart1.printf("-------------------------------\r\n");
-    uart1.printf("-------------------------------\r\n");
     uart1.printf("-------------------------------\r\n");
 
     PB8.mode(OUTPUT_PP);
@@ -119,9 +114,9 @@ char *make_data()
     if(NULL == pJsonRoot){
         return NULL;
     }
-    cJSON_AddNumberToObject(pJsonRoot, DATA_ID, random(100));
-    cJSON_AddNumberToObject(pJsonRoot, TEMPERATURE_ID, random(100));
-    cJSON_AddNumberToObject(pJsonRoot, HUMIDITY_ID, random(100));
+    cJSON_AddNumberToObject(pJsonRoot, "865", random(100));
+    cJSON_AddNumberToObject(pJsonRoot, "866", random(100));
+    cJSON_AddNumberToObject(pJsonRoot, "867", random(100));
 
     char *p;
     p = cJSON_PrintUnformatted(pJsonRoot);
