@@ -10,3 +10,7 @@
 *.map
 *.lnp
 *.bin
+*.sct
+JLinkLog.txt
+*.lst
+*.iex
