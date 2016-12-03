@@ -185,7 +185,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\common\edriver\WiFi\ESP8266.cpp</Filename>
+          <Filename>C:\Users\shentq\Documents\ebox_stm32f1xx\common\edriver\WiFi\ESP8266.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\ebox\../../../common/edriver/WiFi/ESP8266.cpp\1704</Expression>
         </Bp>
@@ -201,7 +201,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\common\edriver\WiFi\ESP8266.cpp</Filename>
+          <Filename>C:\Users\shentq\Documents\ebox_stm32f1xx\common\edriver\WiFi\ESP8266.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\ebox\../../../common/edriver/WiFi/ESP8266.cpp\1720</Expression>
         </Bp>
@@ -217,7 +217,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\common\edriver\WiFi\ESP8266.cpp</Filename>
+          <Filename>C:\Users\shentq\Documents\ebox_stm32f1xx\common\edriver\WiFi\ESP8266.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\ebox\../../../common/edriver/WiFi/ESP8266.cpp\1723</Expression>
         </Bp>
@@ -1353,7 +1353,7 @@
   </Group>
 
   <Group>
-    <GroupName>fat</GroupName>
+    <GroupName>USBDevice</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -1361,44 +1361,44 @@
     <File>
       <GroupNumber>8</GroupNumber>
       <FileNumber>77</FileNumber>
-      <FileType>8</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\fat\wrapperdiskio.cpp</PathWithFileName>
-      <FilenameWithoutPath>wrapperdiskio.cpp</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\common\usb_device_stack\USBDevice\usb_regs.c</PathWithFileName>
+      <FilenameWithoutPath>usb_regs.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>8</GroupNumber>
       <FileNumber>78</FileNumber>
-      <FileType>1</FileType>
+      <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\fat\diskio.c</PathWithFileName>
-      <FilenameWithoutPath>diskio.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\common\usb_device_stack\USBDevice\USBDevice.cpp</PathWithFileName>
+      <FilenameWithoutPath>USBDevice.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>8</GroupNumber>
       <FileNumber>79</FileNumber>
-      <FileType>1</FileType>
+      <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\fat\ff.c</PathWithFileName>
-      <FilenameWithoutPath>ff.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\common\usb_device_stack\USBDevice\USBHAL_STM32F1.cpp</PathWithFileName>
+      <FilenameWithoutPath>USBHAL_STM32F1.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
   </Group>
 
   <Group>
-    <GroupName>wifi</GroupName>
-    <tvExp>1</tvExp>
+    <GroupName>USBHID</GroupName>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1409,8 +1409,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\edriver\WiFi\ESP8266.cpp</PathWithFileName>
-      <FilenameWithoutPath>ESP8266.cpp</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\common\usb_device_stack\USBHID\USBMouse.cpp</PathWithFileName>
+      <FilenameWithoutPath>USBMouse.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1421,116 +1421,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\edriver\WiFi\esp8266_tcp.cpp</PathWithFileName>
-      <FilenameWithoutPath>esp8266_tcp.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>9</GroupNumber>
-      <FileNumber>82</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\edriver\WiFi\esp8266_udp.cpp</PathWithFileName>
-      <FilenameWithoutPath>esp8266_udp.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-  </Group>
-
-  <Group>
-    <GroupName>cJSON</GroupName>
-    <tvExp>0</tvExp>
-    <tvExpOptDlg>0</tvExpOptDlg>
-    <cbSel>0</cbSel>
-    <RteFlg>0</RteFlg>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>83</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\cJSON\cJSON.c</PathWithFileName>
-      <FilenameWithoutPath>cJSON.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-  </Group>
-
-  <Group>
-    <GroupName>sfud</GroupName>
-    <tvExp>0</tvExp>
-    <tvExpOptDlg>0</tvExpOptDlg>
-    <cbSel>0</cbSel>
-    <RteFlg>0</RteFlg>
-    <File>
-      <GroupNumber>11</GroupNumber>
-      <FileNumber>84</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\edriver\SFUD\sfud\src\sfud.c</PathWithFileName>
-      <FilenameWithoutPath>sfud.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>11</GroupNumber>
-      <FileNumber>85</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\edriver\SFUD\sfud\src\sfud_sfdp.c</PathWithFileName>
-      <FilenameWithoutPath>sfud_sfdp.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>11</GroupNumber>
-      <FileNumber>86</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\edriver\SFUD\ebox\ebox_sfud_port.cpp</PathWithFileName>
-      <FilenameWithoutPath>ebox_sfud_port.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-  </Group>
-
-  <Group>
-    <GroupName>BigIOT</GroupName>
-    <tvExp>0</tvExp>
-    <tvExpOptDlg>0</tvExpOptDlg>
-    <cbSel>0</cbSel>
-    <RteFlg>0</RteFlg>
-    <File>
-      <GroupNumber>12</GroupNumber>
-      <FileNumber>87</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\bigiot\bigiot.cpp</PathWithFileName>
-      <FilenameWithoutPath>bigiot.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>12</GroupNumber>
-      <FileNumber>88</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\common\bigiot\bigiot_port.cpp</PathWithFileName>
-      <FilenameWithoutPath>bigiot_port.cpp</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\common\usb_device_stack\USBHID\USBHID.cpp</PathWithFileName>
+      <FilenameWithoutPath>USBHID.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1543,8 +1435,8 @@
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
-      <GroupNumber>13</GroupNumber>
-      <FileNumber>89</FileNumber>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>82</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1555,8 +1447,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>13</GroupNumber>
-      <FileNumber>90</FileNumber>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>83</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

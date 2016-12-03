@@ -21,32 +21,7 @@
 #ifndef __GPIO_H
 #define __GPIO_H
 #include "stm32f10x.h"
-/*
-typedef enum
-{
-    OUTPUT_PP    = 0x0,    
-    OUTPUT_PP_PU    ,//NONE
-    OUTPUT_PP_PD    ,//NONE
-    
-    OUTPUT_OD       ,
-    OUTPUT_OD_PU    ,//NONE
-    OUTPUT_OD_PD    ,//NONE
-    
-    AIN             ,
-    
-    INPUT           ,
-    INPUT_PD        ,
-    INPUT_PU        ,
-    
-    AF_OD           ,
-    AF_OD_PU        ,//NONE 
-    AF_OD_PD        ,//NONE
-    
-    AF_PP           ,      
-    AF_PP_PU        ,//NONE
-    AF_PP_PD        ,//NONE
-} PIN_MODE;///<gpioµÄÄ£Ê½
-*/
+
 typedef enum
 {
     OUTPUT_PP    = 0x0,    
