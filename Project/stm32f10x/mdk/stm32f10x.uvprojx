@@ -10,7 +10,7 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060183::V5.06 update 2 (build 183)::ARMCC</pCCUsed>
+      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F103C8</Device>
@@ -330,6 +330,7 @@
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -347,6 +348,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -531,6 +533,11 @@
               <FileName>object.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\mcu\stm32f10x\ebox\object.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ebox_can.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\mcu\stm32f10x\ebox\ebox_can.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -790,41 +797,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>USBDevice</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_regs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\common\usb_device_stack\USBDevice\usb_regs.c</FilePath>
-            </File>
-            <File>
-              <FileName>USBDevice.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\common\usb_device_stack\USBDevice\USBDevice.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USBHAL_STM32F1.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\common\usb_device_stack\USBDevice\USBHAL_STM32F1.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>USBHID</GroupName>
-          <Files>
-            <File>
-              <FileName>USBMouse.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\common\usb_device_stack\USBHID\USBMouse.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USBHID.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\common\usb_device_stack\USBHID\USBHID.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>user</GroupName>
           <Files>
             <File>
@@ -842,5 +814,11 @@
       </Groups>
     </Target>
   </Targets>
+
+  <RTE>
+    <apis/>
+    <components/>
+    <files/>
+  </RTE>
 
 </Project>

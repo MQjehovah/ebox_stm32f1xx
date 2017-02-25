@@ -27,6 +27,7 @@
 
 
 
+#include "ebox_can.h"
 #include "ebox_exti.h"
 #include "ebox_timer.h"
 #include "ebox_pwm.h"
@@ -71,7 +72,7 @@ extern SoftI2c si2c;
 extern SoftI2c si2c1;
 extern SoftI2c si2c2;
 
-//extern Can can1;
+extern Can can1;
 
 extern Gpio PA0;
 extern Gpio PA1;
