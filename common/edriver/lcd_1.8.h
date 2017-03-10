@@ -21,6 +21,7 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 
 #include "ebox.h"
+
 typedef enum
 {
     ENABLE_BACK_COLOR = 0,
