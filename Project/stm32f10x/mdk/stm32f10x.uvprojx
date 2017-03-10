@@ -599,6 +599,11 @@
               <FileType>8</FileType>
               <FilePath>..\..\..\common\util\list.cpp</FilePath>
             </File>
+            <File>
+              <FileName>crc16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\util\crc16.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
