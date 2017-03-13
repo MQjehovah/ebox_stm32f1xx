@@ -1,10 +1,11 @@
+
 /**
   ******************************************************************************
-  * @file    .cpp
+  * @file    list.h
   * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
+  * @version V1.0
+  * @date    2017/03/02
+  * @brief   Listµ•œÚ¡¥±Ì
   ******************************************************************************
   * @attention
   *
@@ -15,42 +16,34 @@
   * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
   ******************************************************************************
   */
-
-
-/* Includes ------------------------------------------------------------------*/
-
+#ifndef __LIST_H
+#define __LIST_H
 #include "ebox.h"
 
-#include "USBmouse.h"
-#include "USBHID.h"
-USBMouse mouse;
-
-
-
-void setup()
+typedef struct _node
 {
-    ebox_init();
-    uart1.begin(115200);
-}
+ void           *data;
+ struct _node   *next;
+}Node;
 
-
-int main(void)
+class List
 {
-    setup();
-    while(1)
-    {
-			mouse.move(20, 0);
-			delay_ms(500);
+    Node *_head;
+    int  _size;
+public:
 
-    }
-
-
-}
-
-
-
-
-
-
-
-
+    List(){_head = NULL;}
+    int  insert(int at,const void *data);
+    int  insert_head(const void *data);
+    int  insert_tail(const void *data);
+    int  remove(int x);
+    void *data(int x);
+    Node *head();
+    Node *tail();
+    int  is_empty();
+    int  clear();
+    int  modify_node(int x,void *data);
+    int  swap(int x,int y);
+    int  size(){return _size;}
+};
+#endif
