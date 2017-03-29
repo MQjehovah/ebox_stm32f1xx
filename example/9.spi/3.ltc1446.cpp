@@ -1,24 +1,24 @@
 /**
-  ******************************************************************************
-  * @file   : *.cpp
-  * @author : shentq
-  * @version: V1.2
-  * @date   : 2016/08/14
-
-  * @brief   ebox application example .
-  *
-  * Copyright 2016 shentq. All Rights Reserved.         
-  ******************************************************************************
+ ******************************************************************************
+ * @file   : *.cpp
+ * @author : shentq
+ * @version: V1.2
+ * @date   : 2016/08/14
+ *
+ * @brief   ebox application example .
+ *
+ * Copyright 2016 shentq. All Rights Reserved.
+ ******************************************************************************
  */
 
 #include "ebox.h"
 #include "encoder.h"
 #include "ltc1446.h"
 
-#define PinA	PA0
-#define PinB	PA1
-#define ADCA	PC0
-#define ADCB	PC1
+#define PinA    PA0
+#define PinB    PA1
+#define ADCA    PC0
+#define ADCB    PC1
 
 Encoder encoder1(&PinA, &PinB);
 //LTCX ltc1(&PB1,&spi1);

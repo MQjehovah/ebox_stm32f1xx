@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -47,11 +47,11 @@ void
 xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits,
                 UCHAR ucValue )
 {
-    USHORT          usWordBuf;
-    USHORT          usMask;
-    USHORT          usByteOffset;
-    USHORT          usNPreBits;
-    USHORT          usValue = ucValue;
+    USHORT usWordBuf;
+    USHORT usMask;
+    USHORT usByteOffset;
+    USHORT usNPreBits;
+    USHORT usValue = ucValue;
 
     assert( ucNBits <= 8 );
     assert( ( size_t )BITS_UCHAR == sizeof( UCHAR ) * 8 );
@@ -85,10 +85,10 @@ xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits,
 UCHAR
 xMBUtilGetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits )
 {
-    USHORT          usWordBuf;
-    USHORT          usMask;
-    USHORT          usByteOffset;
-    USHORT          usNPreBits;
+    USHORT usWordBuf;
+    USHORT usMask;
+    USHORT usByteOffset;
+    USHORT usNPreBits;
 
     /* Calculate byte offset for first byte containing the bit values starting
      * at usBitOffset. */
@@ -116,25 +116,25 @@ xMBUtilGetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits )
 eMBException
 prveMBError2Exception( eMBErrorCode eErrorCode )
 {
-    eMBException    eStatus;
+    eMBException eStatus;
 
     switch ( eErrorCode )
     {
-        case MB_ENOERR:
-            eStatus = MB_EX_NONE;
-            break;
+    case MB_ENOERR:
+        eStatus = MB_EX_NONE;
+        break;
 
-        case MB_ENOREG:
-            eStatus = MB_EX_ILLEGAL_DATA_ADDRESS;
-            break;
+    case MB_ENOREG:
+        eStatus = MB_EX_ILLEGAL_DATA_ADDRESS;
+        break;
 
-        case MB_ETIMEDOUT:
-            eStatus = MB_EX_SLAVE_BUSY;
-            break;
+    case MB_ETIMEDOUT:
+        eStatus = MB_EX_SLAVE_BUSY;
+        break;
 
-        default:
-            eStatus = MB_EX_SLAVE_DEVICE_FAILURE;
-            break;
+    default:
+        eStatus = MB_EX_SLAVE_DEVICE_FAILURE;
+        break;
     }
 
     return eStatus;

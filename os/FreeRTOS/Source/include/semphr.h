@@ -1,86 +1,86 @@
 /*
-    FreeRTOS V8.2.3 - Copyright (C) 2015 Real Time Engineers Ltd.
-    All rights reserved
-
-    VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
-
-    This file is part of the FreeRTOS distribution.
-
-    FreeRTOS is free software; you can redistribute it and/or modify it under
-    the terms of the GNU General Public License (version 2) as published by the
-    Free Software Foundation >>>> AND MODIFIED BY <<<< the FreeRTOS exception.
-
-    ***************************************************************************
-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
-    >>!   obliged to provide the source code for proprietary components     !<<
-    >>!   outside of the FreeRTOS kernel.                                   !<<
-    ***************************************************************************
-
-    FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
-    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
-    link: http://www.freertos.org/a00114.html
-
-    ***************************************************************************
-     *                                                                       *
-     *    FreeRTOS provides completely free yet professionally developed,    *
-     *    robust, strictly quality controlled, supported, and cross          *
-     *    platform software that is more than just the market leader, it     *
-     *    is the industry's de facto standard.                               *
-     *                                                                       *
-     *    Help yourself get started quickly while simultaneously helping     *
-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
-     *    tutorial book, reference manual, or both:                          *
-     *    http://www.FreeRTOS.org/Documentation                              *
-     *                                                                       *
-    ***************************************************************************
-
-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
-    the FAQ page "My application does not run, what could be wrong?".  Have you
-    defined configASSERT()?
-
-    http://www.FreeRTOS.org/support - In return for receiving this top quality
-    embedded software for free we request you assist our global community by
-    participating in the support forum.
-
-    http://www.FreeRTOS.org/training - Investing in training allows your team to
-    be as productive as possible as early as possible.  Now you can receive
-    FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
-    Ltd, and the world's leading authority on the world's leading RTOS.
-
-    http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
-    including FreeRTOS+Trace - an indispensable productivity tool, a DOS
-    compatible FAT file system, and our tiny thread aware UDP/IP stack.
-
-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
-
-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
-    licenses offer ticketed support, indemnification and commercial middleware.
-
-    http://www.SafeRTOS.com - High Integrity Systems also provide a safety
-    engineered and independently SIL3 certified version for use in safety and
-    mission critical applications that require provable dependability.
-
-    1 tab == 4 spaces!
-*/
+ *   FreeRTOS V8.2.3 - Copyright (C) 2015 Real Time Engineers Ltd.
+ *   All rights reserved
+ *
+ *   VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+ *
+ *   This file is part of the FreeRTOS distribution.
+ *
+ *   FreeRTOS is free software; you can redistribute it and/or modify it under
+ *   the terms of the GNU General Public License (version 2) as published by the
+ *   Free Software Foundation >>>> AND MODIFIED BY <<<< the FreeRTOS exception.
+ *
+ ***************************************************************************
+ *   >>!   NOTE: The modification to the GPL is included to allow you to     !<<
+ *   >>!   distribute a combined work that includes FreeRTOS without being   !<<
+ *   >>!   obliged to provide the source code for proprietary components     !<<
+ *   >>!   outside of the FreeRTOS kernel.                                   !<<
+ ***************************************************************************
+ *
+ *   FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+ *   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *   FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+ *   link: http://www.freertos.org/a00114.html
+ *
+ ***************************************************************************
+ *                                                                       *
+ *    FreeRTOS provides completely free yet professionally developed,    *
+ *    robust, strictly quality controlled, supported, and cross          *
+ *    platform software that is more than just the market leader, it     *
+ *    is the industry's de facto standard.                               *
+ *                                                                       *
+ *    Help yourself get started quickly while simultaneously helping     *
+ *    to support the FreeRTOS project by purchasing a FreeRTOS           *
+ *    tutorial book, reference manual, or both:                          *
+ *    http://www.FreeRTOS.org/Documentation                              *
+ *                                                                       *
+ ***************************************************************************
+ *
+ *   http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
+ *   the FAQ page "My application does not run, what could be wrong?".  Have you
+ *   defined configASSERT()?
+ *
+ *   http://www.FreeRTOS.org/support - In return for receiving this top quality
+ *   embedded software for free we request you assist our global community by
+ *   participating in the support forum.
+ *
+ *   http://www.FreeRTOS.org/training - Investing in training allows your team to
+ *   be as productive as possible as early as possible.  Now you can receive
+ *   FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
+ *   Ltd, and the world's leading authority on the world's leading RTOS.
+ *
+ *   http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+ *   including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+ *   compatible FAT file system, and our tiny thread aware UDP/IP stack.
+ *
+ *   http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
+ *   Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
+ *
+ *   http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
+ *   Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
+ *   licenses offer ticketed support, indemnification and commercial middleware.
+ *
+ *   http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+ *   engineered and independently SIL3 certified version for use in safety and
+ *   mission critical applications that require provable dependability.
+ *
+ *   1 tab == 4 spaces!
+ */
 
 #ifndef SEMAPHORE_H
 #define SEMAPHORE_H
 
 #ifndef INC_FREERTOS_H
-	#error "include FreeRTOS.h" must appear in source files before "include semphr.h"
+ #error "include FreeRTOS.h" must appear in source files before "include semphr.h"
 #endif
 
 #include "queue.h"
 
 typedef QueueHandle_t SemaphoreHandle_t;
 
-#define semBINARY_SEMAPHORE_QUEUE_LENGTH	( ( uint8_t ) 1U )
-#define semSEMAPHORE_QUEUE_ITEM_LENGTH		( ( uint8_t ) 0U )
-#define semGIVE_BLOCK_TIME					( ( TickType_t ) 0U )
+#define semBINARY_SEMAPHORE_QUEUE_LENGTH        ( ( uint8_t ) 1U )
+#define semSEMAPHORE_QUEUE_ITEM_LENGTH          ( ( uint8_t ) 0U )
+#define semGIVE_BLOCK_TIME                                      ( ( TickType_t ) 0U )
 
 
 /**
@@ -109,33 +109,33 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * @param xSemaphore Handle to the created semaphore.  Should be of type SemaphoreHandle_t.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xSemaphore = NULL;
-
- void vATask( void * pvParameters )
- {
-    // Semaphore cannot be used before a call to vSemaphoreCreateBinary ().
-    // This is a macro so pass the variable in directly.
-    vSemaphoreCreateBinary( xSemaphore );
-
-    if( xSemaphore != NULL )
-    {
-        // The semaphore was created successfully.
-        // The semaphore can now be used.
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xSemaphore = NULL;
+ *
+ *  void vATask( void * pvParameters )
+ *  {
+ *   // Semaphore cannot be used before a call to vSemaphoreCreateBinary ().
+ *   // This is a macro so pass the variable in directly.
+ *   vSemaphoreCreateBinary( xSemaphore );
+ *
+ *   if( xSemaphore != NULL )
+ *   {
+ *       // The semaphore was created successfully.
+ *       // The semaphore can now be used.
+ *   }
+ *  }
+ *  </pre>
  * \defgroup vSemaphoreCreateBinary vSemaphoreCreateBinary
  * \ingroup Semaphores
  */
-#define vSemaphoreCreateBinary( xSemaphore )																							\
-	{																																	\
-		( xSemaphore ) = xQueueGenericCreate( ( UBaseType_t ) 1, semSEMAPHORE_QUEUE_ITEM_LENGTH, queueQUEUE_TYPE_BINARY_SEMAPHORE );	\
-		if( ( xSemaphore ) != NULL )																									\
-		{																																\
-			( void ) xSemaphoreGive( ( xSemaphore ) );																					\
-		}																																\
-	}
+#define vSemaphoreCreateBinary( xSemaphore )                                                                                                                                                                                    \
+    {                                                                                                                                                                                                                                                                       \
+        ( xSemaphore ) = xQueueGenericCreate( ( UBaseType_t ) 1, semSEMAPHORE_QUEUE_ITEM_LENGTH, queueQUEUE_TYPE_BINARY_SEMAPHORE );    \
+        if( ( xSemaphore ) != NULL )                                                                                                                                                                                                    \
+        {                                                                                                                                                                                                                                                               \
+            ( void ) xSemaphoreGive( ( xSemaphore ) );                                                                                                                                                                      \
+        }                                                                                                                                                                                                                                                               \
+    }
 
 /**
  * semphr. h
@@ -163,22 +163,22 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * @return Handle to the created semaphore.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xSemaphore = NULL;
-
- void vATask( void * pvParameters )
- {
-    // Semaphore cannot be used before a call to vSemaphoreCreateBinary ().
-    // This is a macro so pass the variable in directly.
-    xSemaphore = xSemaphoreCreateBinary();
-
-    if( xSemaphore != NULL )
-    {
-        // The semaphore was created successfully.
-        // The semaphore can now be used.
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xSemaphore = NULL;
+ *
+ *  void vATask( void * pvParameters )
+ *  {
+ *   // Semaphore cannot be used before a call to vSemaphoreCreateBinary ().
+ *   // This is a macro so pass the variable in directly.
+ *   xSemaphore = xSemaphoreCreateBinary();
+ *
+ *   if( xSemaphore != NULL )
+ *   {
+ *       // The semaphore was created successfully.
+ *       // The semaphore can now be used.
+ *   }
+ *  }
+ *  </pre>
  * \defgroup vSemaphoreCreateBinary vSemaphoreCreateBinary
  * \ingroup Semaphores
  */
@@ -208,48 +208,48 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * if xBlockTime expired without the semaphore becoming available.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xSemaphore = NULL;
-
- // A task that creates a semaphore.
- void vATask( void * pvParameters )
- {
-    // Create the semaphore to guard a shared resource.
-    vSemaphoreCreateBinary( xSemaphore );
- }
-
- // A task that uses the semaphore.
- void vAnotherTask( void * pvParameters )
- {
-    // ... Do other things.
-
-    if( xSemaphore != NULL )
-    {
-        // See if we can obtain the semaphore.  If the semaphore is not available
-        // wait 10 ticks to see if it becomes free.
-        if( xSemaphoreTake( xSemaphore, ( TickType_t ) 10 ) == pdTRUE )
-        {
-            // We were able to obtain the semaphore and can now access the
-            // shared resource.
-
-            // ...
-
-            // We have finished accessing the shared resource.  Release the
-            // semaphore.
-            xSemaphoreGive( xSemaphore );
-        }
-        else
-        {
-            // We could not obtain the semaphore and can therefore not access
-            // the shared resource safely.
-        }
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xSemaphore = NULL;
+ *
+ *  // A task that creates a semaphore.
+ *  void vATask( void * pvParameters )
+ *  {
+ *   // Create the semaphore to guard a shared resource.
+ *   vSemaphoreCreateBinary( xSemaphore );
+ *  }
+ *
+ *  // A task that uses the semaphore.
+ *  void vAnotherTask( void * pvParameters )
+ *  {
+ *   // ... Do other things.
+ *
+ *   if( xSemaphore != NULL )
+ *   {
+ *       // See if we can obtain the semaphore.  If the semaphore is not available
+ *       // wait 10 ticks to see if it becomes free.
+ *       if( xSemaphoreTake( xSemaphore, ( TickType_t ) 10 ) == pdTRUE )
+ *       {
+ *           // We were able to obtain the semaphore and can now access the
+ *           // shared resource.
+ *
+ *           // ...
+ *
+ *           // We have finished accessing the shared resource.  Release the
+ *           // semaphore.
+ *           xSemaphoreGive( xSemaphore );
+ *       }
+ *       else
+ *       {
+ *           // We could not obtain the semaphore and can therefore not access
+ *           // the shared resource safely.
+ *       }
+ *   }
+ *  }
+ *  </pre>
  * \defgroup xSemaphoreTake xSemaphoreTake
  * \ingroup Semaphores
  */
-#define xSemaphoreTake( xSemaphore, xBlockTime )		xQueueGenericReceive( ( QueueHandle_t ) ( xSemaphore ), NULL, ( xBlockTime ), pdFALSE )
+#define xSemaphoreTake( xSemaphore, xBlockTime )                xQueueGenericReceive( ( QueueHandle_t ) ( xSemaphore ), NULL, ( xBlockTime ), pdFALSE )
 
 /**
  * semphr. h
@@ -287,62 +287,62 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * expired without the semaphore becoming available.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xMutex = NULL;
-
- // A task that creates a mutex.
- void vATask( void * pvParameters )
- {
-    // Create the mutex to guard a shared resource.
-    xMutex = xSemaphoreCreateRecursiveMutex();
- }
-
- // A task that uses the mutex.
- void vAnotherTask( void * pvParameters )
- {
-    // ... Do other things.
-
-    if( xMutex != NULL )
-    {
-        // See if we can obtain the mutex.  If the mutex is not available
-        // wait 10 ticks to see if it becomes free.
-        if( xSemaphoreTakeRecursive( xSemaphore, ( TickType_t ) 10 ) == pdTRUE )
-        {
-            // We were able to obtain the mutex and can now access the
-            // shared resource.
-
-            // ...
-            // For some reason due to the nature of the code further calls to
-			// xSemaphoreTakeRecursive() are made on the same mutex.  In real
-			// code these would not be just sequential calls as this would make
-			// no sense.  Instead the calls are likely to be buried inside
-			// a more complex call structure.
-            xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
-            xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
-
-            // The mutex has now been 'taken' three times, so will not be
-			// available to another task until it has also been given back
-			// three times.  Again it is unlikely that real code would have
-			// these calls sequentially, but instead buried in a more complex
-			// call structure.  This is just for illustrative purposes.
-            xSemaphoreGiveRecursive( xMutex );
-			xSemaphoreGiveRecursive( xMutex );
-			xSemaphoreGiveRecursive( xMutex );
-
-			// Now the mutex can be taken by other tasks.
-        }
-        else
-        {
-            // We could not obtain the mutex and can therefore not access
-            // the shared resource safely.
-        }
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xMutex = NULL;
+ *
+ *  // A task that creates a mutex.
+ *  void vATask( void * pvParameters )
+ *  {
+ *   // Create the mutex to guard a shared resource.
+ *   xMutex = xSemaphoreCreateRecursiveMutex();
+ *  }
+ *
+ *  // A task that uses the mutex.
+ *  void vAnotherTask( void * pvParameters )
+ *  {
+ *   // ... Do other things.
+ *
+ *   if( xMutex != NULL )
+ *   {
+ *       // See if we can obtain the mutex.  If the mutex is not available
+ *       // wait 10 ticks to see if it becomes free.
+ *       if( xSemaphoreTakeRecursive( xSemaphore, ( TickType_t ) 10 ) == pdTRUE )
+ *       {
+ *           // We were able to obtain the mutex and can now access the
+ *           // shared resource.
+ *
+ *           // ...
+ *           // For some reason due to the nature of the code further calls to
+ *                       // xSemaphoreTakeRecursive() are made on the same mutex.  In real
+ *                       // code these would not be just sequential calls as this would make
+ *                       // no sense.  Instead the calls are likely to be buried inside
+ *                       // a more complex call structure.
+ *           xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
+ *           xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
+ *
+ *           // The mutex has now been 'taken' three times, so will not be
+ *                       // available to another task until it has also been given back
+ *                       // three times.  Again it is unlikely that real code would have
+ *                       // these calls sequentially, but instead buried in a more complex
+ *                       // call structure.  This is just for illustrative purposes.
+ *           xSemaphoreGiveRecursive( xMutex );
+ *                       xSemaphoreGiveRecursive( xMutex );
+ *                       xSemaphoreGiveRecursive( xMutex );
+ *
+ *                       // Now the mutex can be taken by other tasks.
+ *       }
+ *       else
+ *       {
+ *           // We could not obtain the mutex and can therefore not access
+ *           // the shared resource safely.
+ *       }
+ *   }
+ *  }
+ *  </pre>
  * \defgroup xSemaphoreTakeRecursive xSemaphoreTakeRecursive
  * \ingroup Semaphores
  */
-#define xSemaphoreTakeRecursive( xMutex, xBlockTime )	xQueueTakeMutexRecursive( ( xMutex ), ( xBlockTime ) )
+#define xSemaphoreTakeRecursive( xMutex, xBlockTime )   xQueueTakeMutexRecursive( ( xMutex ), ( xBlockTime ) )
 
 
 /*
@@ -357,7 +357,7 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * responsiveness to gain execution speed, whereas the fully featured API
  * sacrifices execution speed to ensure better interrupt responsiveness.
  */
-#define xSemaphoreAltTake( xSemaphore, xBlockTime )		xQueueAltGenericReceive( ( QueueHandle_t ) ( xSemaphore ), NULL, ( xBlockTime ), pdFALSE )
+#define xSemaphoreAltTake( xSemaphore, xBlockTime )             xQueueAltGenericReceive( ( QueueHandle_t ) ( xSemaphore ), NULL, ( xBlockTime ), pdFALSE )
 
 /**
  * semphr. h
@@ -382,45 +382,45 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * semaphore was not first obtained correctly.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xSemaphore = NULL;
-
- void vATask( void * pvParameters )
- {
-    // Create the semaphore to guard a shared resource.
-    vSemaphoreCreateBinary( xSemaphore );
-
-    if( xSemaphore != NULL )
-    {
-        if( xSemaphoreGive( xSemaphore ) != pdTRUE )
-        {
-            // We would expect this call to fail because we cannot give
-            // a semaphore without first "taking" it!
-        }
-
-        // Obtain the semaphore - don't block if the semaphore is not
-        // immediately available.
-        if( xSemaphoreTake( xSemaphore, ( TickType_t ) 0 ) )
-        {
-            // We now have the semaphore and can access the shared resource.
-
-            // ...
-
-            // We have finished accessing the shared resource so can free the
-            // semaphore.
-            if( xSemaphoreGive( xSemaphore ) != pdTRUE )
-            {
-                // We would not expect this call to fail because we must have
-                // obtained the semaphore to get here.
-            }
-        }
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xSemaphore = NULL;
+ *
+ *  void vATask( void * pvParameters )
+ *  {
+ *   // Create the semaphore to guard a shared resource.
+ *   vSemaphoreCreateBinary( xSemaphore );
+ *
+ *   if( xSemaphore != NULL )
+ *   {
+ *       if( xSemaphoreGive( xSemaphore ) != pdTRUE )
+ *       {
+ *           // We would expect this call to fail because we cannot give
+ *           // a semaphore without first "taking" it!
+ *       }
+ *
+ *       // Obtain the semaphore - don't block if the semaphore is not
+ *       // immediately available.
+ *       if( xSemaphoreTake( xSemaphore, ( TickType_t ) 0 ) )
+ *       {
+ *           // We now have the semaphore and can access the shared resource.
+ *
+ *           // ...
+ *
+ *           // We have finished accessing the shared resource so can free the
+ *           // semaphore.
+ *           if( xSemaphoreGive( xSemaphore ) != pdTRUE )
+ *           {
+ *               // We would not expect this call to fail because we must have
+ *               // obtained the semaphore to get here.
+ *           }
+ *       }
+ *   }
+ *  }
+ *  </pre>
  * \defgroup xSemaphoreGive xSemaphoreGive
  * \ingroup Semaphores
  */
-#define xSemaphoreGive( xSemaphore )		xQueueGenericSend( ( QueueHandle_t ) ( xSemaphore ), NULL, semGIVE_BLOCK_TIME, queueSEND_TO_BACK )
+#define xSemaphoreGive( xSemaphore )            xQueueGenericSend( ( QueueHandle_t ) ( xSemaphore ), NULL, semGIVE_BLOCK_TIME, queueSEND_TO_BACK )
 
 /**
  * semphr. h
@@ -448,63 +448,63 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * @return pdTRUE if the semaphore was given.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xMutex = NULL;
-
- // A task that creates a mutex.
- void vATask( void * pvParameters )
- {
-    // Create the mutex to guard a shared resource.
-    xMutex = xSemaphoreCreateRecursiveMutex();
- }
-
- // A task that uses the mutex.
- void vAnotherTask( void * pvParameters )
- {
-    // ... Do other things.
-
-    if( xMutex != NULL )
-    {
-        // See if we can obtain the mutex.  If the mutex is not available
-        // wait 10 ticks to see if it becomes free.
-        if( xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 ) == pdTRUE )
-        {
-            // We were able to obtain the mutex and can now access the
-            // shared resource.
-
-            // ...
-            // For some reason due to the nature of the code further calls to
-			// xSemaphoreTakeRecursive() are made on the same mutex.  In real
-			// code these would not be just sequential calls as this would make
-			// no sense.  Instead the calls are likely to be buried inside
-			// a more complex call structure.
-            xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
-            xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
-
-            // The mutex has now been 'taken' three times, so will not be
-			// available to another task until it has also been given back
-			// three times.  Again it is unlikely that real code would have
-			// these calls sequentially, it would be more likely that the calls
-			// to xSemaphoreGiveRecursive() would be called as a call stack
-			// unwound.  This is just for demonstrative purposes.
-            xSemaphoreGiveRecursive( xMutex );
-			xSemaphoreGiveRecursive( xMutex );
-			xSemaphoreGiveRecursive( xMutex );
-
-			// Now the mutex can be taken by other tasks.
-        }
-        else
-        {
-            // We could not obtain the mutex and can therefore not access
-            // the shared resource safely.
-        }
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xMutex = NULL;
+ *
+ *  // A task that creates a mutex.
+ *  void vATask( void * pvParameters )
+ *  {
+ *   // Create the mutex to guard a shared resource.
+ *   xMutex = xSemaphoreCreateRecursiveMutex();
+ *  }
+ *
+ *  // A task that uses the mutex.
+ *  void vAnotherTask( void * pvParameters )
+ *  {
+ *   // ... Do other things.
+ *
+ *   if( xMutex != NULL )
+ *   {
+ *       // See if we can obtain the mutex.  If the mutex is not available
+ *       // wait 10 ticks to see if it becomes free.
+ *       if( xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 ) == pdTRUE )
+ *       {
+ *           // We were able to obtain the mutex and can now access the
+ *           // shared resource.
+ *
+ *           // ...
+ *           // For some reason due to the nature of the code further calls to
+ *                       // xSemaphoreTakeRecursive() are made on the same mutex.  In real
+ *                       // code these would not be just sequential calls as this would make
+ *                       // no sense.  Instead the calls are likely to be buried inside
+ *                       // a more complex call structure.
+ *           xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
+ *           xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
+ *
+ *           // The mutex has now been 'taken' three times, so will not be
+ *                       // available to another task until it has also been given back
+ *                       // three times.  Again it is unlikely that real code would have
+ *                       // these calls sequentially, it would be more likely that the calls
+ *                       // to xSemaphoreGiveRecursive() would be called as a call stack
+ *                       // unwound.  This is just for demonstrative purposes.
+ *           xSemaphoreGiveRecursive( xMutex );
+ *                       xSemaphoreGiveRecursive( xMutex );
+ *                       xSemaphoreGiveRecursive( xMutex );
+ *
+ *                       // Now the mutex can be taken by other tasks.
+ *       }
+ *       else
+ *       {
+ *           // We could not obtain the mutex and can therefore not access
+ *           // the shared resource safely.
+ *       }
+ *   }
+ *  }
+ *  </pre>
  * \defgroup xSemaphoreGiveRecursive xSemaphoreGiveRecursive
  * \ingroup Semaphores
  */
-#define xSemaphoreGiveRecursive( xMutex )	xQueueGiveMutexRecursive( ( xMutex ) )
+#define xSemaphoreGiveRecursive( xMutex )       xQueueGiveMutexRecursive( ( xMutex ) )
 
 /*
  * xSemaphoreAltGive() is an alternative version of xSemaphoreGive().
@@ -518,15 +518,15 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * responsiveness to gain execution speed, whereas the fully featured API
  * sacrifices execution speed to ensure better interrupt responsiveness.
  */
-#define xSemaphoreAltGive( xSemaphore )		xQueueAltGenericSend( ( QueueHandle_t ) ( xSemaphore ), NULL, semGIVE_BLOCK_TIME, queueSEND_TO_BACK )
+#define xSemaphoreAltGive( xSemaphore )         xQueueAltGenericSend( ( QueueHandle_t ) ( xSemaphore ), NULL, semGIVE_BLOCK_TIME, queueSEND_TO_BACK )
 
 /**
  * semphr. h
  * <pre>
- xSemaphoreGiveFromISR(
-                          SemaphoreHandle_t xSemaphore,
-                          BaseType_t *pxHigherPriorityTaskWoken
-                      )</pre>
+ *  xSemaphoreGiveFromISR(
+ *                         SemaphoreHandle_t xSemaphore,
+ *                         BaseType_t *pxHigherPriorityTaskWoken
+ *                     )</pre>
  *
  * <i>Macro</i> to  release a semaphore.  The semaphore must have previously been
  * created with a call to vSemaphoreCreateBinary() or xSemaphoreCreateCounting().
@@ -548,76 +548,76 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * @return pdTRUE if the semaphore was successfully given, otherwise errQUEUE_FULL.
  *
  * Example usage:
- <pre>
- \#define LONG_TIME 0xffff
- \#define TICKS_TO_WAIT	10
- SemaphoreHandle_t xSemaphore = NULL;
-
- // Repetitive task.
- void vATask( void * pvParameters )
- {
-    for( ;; )
-    {
-        // We want this task to run every 10 ticks of a timer.  The semaphore
-        // was created before this task was started.
-
-        // Block waiting for the semaphore to become available.
-        if( xSemaphoreTake( xSemaphore, LONG_TIME ) == pdTRUE )
-        {
-            // It is time to execute.
-
-            // ...
-
-            // We have finished our task.  Return to the top of the loop where
-            // we will block on the semaphore until it is time to execute
-            // again.  Note when using the semaphore for synchronisation with an
-			// ISR in this manner there is no need to 'give' the semaphore back.
-        }
-    }
- }
-
- // Timer ISR
- void vTimerISR( void * pvParameters )
- {
- static uint8_t ucLocalTickCount = 0;
- static BaseType_t xHigherPriorityTaskWoken;
-
-    // A timer tick has occurred.
-
-    // ... Do other time functions.
-
-    // Is it time for vATask () to run?
-	xHigherPriorityTaskWoken = pdFALSE;
-    ucLocalTickCount++;
-    if( ucLocalTickCount >= TICKS_TO_WAIT )
-    {
-        // Unblock the task by releasing the semaphore.
-        xSemaphoreGiveFromISR( xSemaphore, &xHigherPriorityTaskWoken );
-
-        // Reset the count so we release the semaphore again in 10 ticks time.
-        ucLocalTickCount = 0;
-    }
-
-    if( xHigherPriorityTaskWoken != pdFALSE )
-    {
-        // We can force a context switch here.  Context switching from an
-        // ISR uses port specific syntax.  Check the demo task for your port
-        // to find the syntax required.
-    }
- }
- </pre>
+ *  <pre>
+ *\#define LONG_TIME 0xffff
+ *\#define TICKS_TO_WAIT	10
+ *  SemaphoreHandle_t xSemaphore = NULL;
+ *
+ *  // Repetitive task.
+ *  void vATask( void * pvParameters )
+ *  {
+ *   for( ;; )
+ *   {
+ *       // We want this task to run every 10 ticks of a timer.  The semaphore
+ *       // was created before this task was started.
+ *
+ *       // Block waiting for the semaphore to become available.
+ *       if( xSemaphoreTake( xSemaphore, LONG_TIME ) == pdTRUE )
+ *       {
+ *           // It is time to execute.
+ *
+ *           // ...
+ *
+ *           // We have finished our task.  Return to the top of the loop where
+ *           // we will block on the semaphore until it is time to execute
+ *           // again.  Note when using the semaphore for synchronisation with an
+ *                       // ISR in this manner there is no need to 'give' the semaphore back.
+ *       }
+ *   }
+ *  }
+ *
+ *  // Timer ISR
+ *  void vTimerISR( void * pvParameters )
+ *  {
+ *  static uint8_t ucLocalTickCount = 0;
+ *  static BaseType_t xHigherPriorityTaskWoken;
+ *
+ *   // A timer tick has occurred.
+ *
+ *   // ... Do other time functions.
+ *
+ *   // Is it time for vATask () to run?
+ *       xHigherPriorityTaskWoken = pdFALSE;
+ *   ucLocalTickCount++;
+ *   if( ucLocalTickCount >= TICKS_TO_WAIT )
+ *   {
+ *       // Unblock the task by releasing the semaphore.
+ *       xSemaphoreGiveFromISR( xSemaphore, &xHigherPriorityTaskWoken );
+ *
+ *       // Reset the count so we release the semaphore again in 10 ticks time.
+ *       ucLocalTickCount = 0;
+ *   }
+ *
+ *   if( xHigherPriorityTaskWoken != pdFALSE )
+ *   {
+ *       // We can force a context switch here.  Context switching from an
+ *       // ISR uses port specific syntax.  Check the demo task for your port
+ *       // to find the syntax required.
+ *   }
+ *  }
+ *  </pre>
  * \defgroup xSemaphoreGiveFromISR xSemaphoreGiveFromISR
  * \ingroup Semaphores
  */
-#define xSemaphoreGiveFromISR( xSemaphore, pxHigherPriorityTaskWoken )	xQueueGiveFromISR( ( QueueHandle_t ) ( xSemaphore ), ( pxHigherPriorityTaskWoken ) )
+#define xSemaphoreGiveFromISR( xSemaphore, pxHigherPriorityTaskWoken )  xQueueGiveFromISR( ( QueueHandle_t ) ( xSemaphore ), ( pxHigherPriorityTaskWoken ) )
 
 /**
  * semphr. h
  * <pre>
- xSemaphoreTakeFromISR(
-                          SemaphoreHandle_t xSemaphore,
-                          BaseType_t *pxHigherPriorityTaskWoken
-                      )</pre>
+ *  xSemaphoreTakeFromISR(
+ *                         SemaphoreHandle_t xSemaphore,
+ *                         BaseType_t *pxHigherPriorityTaskWoken
+ *                     )</pre>
  *
  * <i>Macro</i> to  take a semaphore from an ISR.  The semaphore must have
  * previously been created with a call to vSemaphoreCreateBinary() or
@@ -643,7 +643,7 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * @return pdTRUE if the semaphore was successfully taken, otherwise
  * pdFALSE
  */
-#define xSemaphoreTakeFromISR( xSemaphore, pxHigherPriorityTaskWoken )	xQueueReceiveFromISR( ( QueueHandle_t ) ( xSemaphore ), NULL, ( pxHigherPriorityTaskWoken ) )
+#define xSemaphoreTakeFromISR( xSemaphore, pxHigherPriorityTaskWoken )  xQueueReceiveFromISR( ( QueueHandle_t ) ( xSemaphore ), NULL, ( pxHigherPriorityTaskWoken ) )
 
 /**
  * semphr. h
@@ -671,22 +671,22 @@ typedef QueueHandle_t SemaphoreHandle_t;
  *		SemaphoreHandle_t.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xSemaphore;
-
- void vATask( void * pvParameters )
- {
-    // Semaphore cannot be used before a call to xSemaphoreCreateMutex().
-    // This is a macro so pass the variable in directly.
-    xSemaphore = xSemaphoreCreateMutex();
-
-    if( xSemaphore != NULL )
-    {
-        // The semaphore was created successfully.
-        // The semaphore can now be used.
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xSemaphore;
+ *
+ *  void vATask( void * pvParameters )
+ *  {
+ *   // Semaphore cannot be used before a call to xSemaphoreCreateMutex().
+ *   // This is a macro so pass the variable in directly.
+ *   xSemaphore = xSemaphoreCreateMutex();
+ *
+ *   if( xSemaphore != NULL )
+ *   {
+ *       // The semaphore was created successfully.
+ *       // The semaphore can now be used.
+ *   }
+ *  }
+ *  </pre>
  * \defgroup vSemaphoreCreateMutex vSemaphoreCreateMutex
  * \ingroup Semaphores
  */
@@ -726,22 +726,22 @@ typedef QueueHandle_t SemaphoreHandle_t;
  *		SemaphoreHandle_t.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xSemaphore;
-
- void vATask( void * pvParameters )
- {
-    // Semaphore cannot be used before a call to xSemaphoreCreateMutex().
-    // This is a macro so pass the variable in directly.
-    xSemaphore = xSemaphoreCreateRecursiveMutex();
-
-    if( xSemaphore != NULL )
-    {
-        // The semaphore was created successfully.
-        // The semaphore can now be used.
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xSemaphore;
+ *
+ *  void vATask( void * pvParameters )
+ *  {
+ *   // Semaphore cannot be used before a call to xSemaphoreCreateMutex().
+ *   // This is a macro so pass the variable in directly.
+ *   xSemaphore = xSemaphoreCreateRecursiveMutex();
+ *
+ *   if( xSemaphore != NULL )
+ *   {
+ *       // The semaphore was created successfully.
+ *       // The semaphore can now be used.
+ *   }
+ *  }
+ *  </pre>
  * \defgroup vSemaphoreCreateMutex vSemaphoreCreateMutex
  * \ingroup Semaphores
  */
@@ -786,25 +786,25 @@ typedef QueueHandle_t SemaphoreHandle_t;
  *         created.
  *
  * Example usage:
- <pre>
- SemaphoreHandle_t xSemaphore;
-
- void vATask( void * pvParameters )
- {
- SemaphoreHandle_t xSemaphore = NULL;
-
-    // Semaphore cannot be used before a call to xSemaphoreCreateCounting().
-    // The max value to which the semaphore can count should be 10, and the
-    // initial value assigned to the count should be 0.
-    xSemaphore = xSemaphoreCreateCounting( 10, 0 );
-
-    if( xSemaphore != NULL )
-    {
-        // The semaphore was created successfully.
-        // The semaphore can now be used.
-    }
- }
- </pre>
+ *  <pre>
+ *  SemaphoreHandle_t xSemaphore;
+ *
+ *  void vATask( void * pvParameters )
+ *  {
+ *  SemaphoreHandle_t xSemaphore = NULL;
+ *
+ *   // Semaphore cannot be used before a call to xSemaphoreCreateCounting().
+ *   // The max value to which the semaphore can count should be 10, and the
+ *   // initial value assigned to the count should be 0.
+ *   xSemaphore = xSemaphoreCreateCounting( 10, 0 );
+ *
+ *   if( xSemaphore != NULL )
+ *   {
+ *       // The semaphore was created successfully.
+ *       // The semaphore can now be used.
+ *   }
+ *  }
+ *  </pre>
  * \defgroup xSemaphoreCreateCounting xSemaphoreCreateCounting
  * \ingroup Semaphores
  */

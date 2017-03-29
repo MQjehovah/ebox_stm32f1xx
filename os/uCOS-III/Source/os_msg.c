@@ -1,89 +1,89 @@
 /*
-************************************************************************************************************************
-*                                                      uC/OS-III
-*                                                 The Real-Time Kernel
-*
-*                                  (c) Copyright 2009-2012; Micrium, Inc.; Weston, FL
-*                           All rights reserved.  Protected by international copyright laws.
-*
-*                                              MESSAGE HANDLING SERVICES
-*
-* File    : OS_MSG.C
-* By      : JJL
-* Version : V3.03.01
-*
-* LICENSING TERMS:
-* ---------------
-*           uC/OS-III is provided in source form for FREE short-term evaluation, for educational use or 
-*           for peaceful research.  If you plan or intend to use uC/OS-III in a commercial application/
-*           product then, you need to contact Micrium to properly license uC/OS-III for its use in your 
-*           application/product.   We provide ALL the source code for your convenience and to help you 
-*           experience uC/OS-III.  The fact that the source is provided does NOT mean that you can use 
-*           it commercially without paying a licensing fee.
-*
-*           Knowledge of the source code may NOT be used to develop a similar product.
-*
-*           Please help us continue to provide the embedded community with the finest software available.
-*           Your honesty is greatly appreciated.
-*
-*           You can contact us at www.micrium.com, or by phone at +1 (954) 217-2036.
-************************************************************************************************************************
-*/
+ ************************************************************************************************************************
+ *                                                      uC/OS-III
+ *                                                 The Real-Time Kernel
+ *
+ *                                  (c) Copyright 2009-2012; Micrium, Inc.; Weston, FL
+ *                           All rights reserved.  Protected by international copyright laws.
+ *
+ *                                              MESSAGE HANDLING SERVICES
+ *
+ * File    : OS_MSG.C
+ * By      : JJL
+ * Version : V3.03.01
+ *
+ * LICENSING TERMS:
+ * ---------------
+ *           uC/OS-III is provided in source form for FREE short-term evaluation, for educational use or
+ *           for peaceful research.  If you plan or intend to use uC/OS-III in a commercial application/
+ *           product then, you need to contact Micrium to properly license uC/OS-III for its use in your
+ *           application/product.   We provide ALL the source code for your convenience and to help you
+ *           experience uC/OS-III.  The fact that the source is provided does NOT mean that you can use
+ *           it commercially without paying a licensing fee.
+ *
+ *           Knowledge of the source code may NOT be used to develop a similar product.
+ *
+ *           Please help us continue to provide the embedded community with the finest software available.
+ *           Your honesty is greatly appreciated.
+ *
+ *           You can contact us at www.micrium.com, or by phone at +1 (954) 217-2036.
+ ************************************************************************************************************************
+ */
 
 #define  MICRIUM_SOURCE
 #include <os.h>
 
 #ifdef VSC_INCLUDE_SOURCE_FILE_NAMES
-const  CPU_CHAR  *os_msg__c = "$Id: $";
+const CPU_CHAR  *os_msg__c = "$Id: $";
 #endif
 
 
 #if OS_MSG_EN > 0u
-/*$PAGE*/
+/*$PAGE*/
 /*
-************************************************************************************************************************
-*                                            INITIALIZE THE POOL OF 'OS_MSG'
-*
-* Description: This function is called by OSInit() to initialize the free list of OS_MSGs.
-*
-* Argument(s): p_err     is a pointer to a variable that will contain an error code returned by this function.
-*
-*                            OS_ERR_MSG_POOL_NULL_PTR
-*                            OS_ERR_MSG_POOL_EMPTY
-*                            OS_ERR_NONE
-*
-* Returns    : none
-*
-* Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
-************************************************************************************************************************
-*/
+ ************************************************************************************************************************
+ *                                            INITIALIZE THE POOL OF 'OS_MSG'
+ *
+ * Description: This function is called by OSInit() to initialize the free list of OS_MSGs.
+ *
+ * Argument(s): p_err     is a pointer to a variable that will contain an error code returned by this function.
+ *
+ *                            OS_ERR_MSG_POOL_NULL_PTR
+ *                            OS_ERR_MSG_POOL_EMPTY
+ *                            OS_ERR_NONE
+ *
+ * Returns    : none
+ *
+ * Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
+ ************************************************************************************************************************
+ */
 
-void  OS_MsgPoolInit (OS_ERR  *p_err)
+void  OS_MsgPoolInit (OS_ERR *p_err)
 {
     OS_MSG      *p_msg1;
     OS_MSG      *p_msg2;
-    OS_MSG_QTY   i;
-    OS_MSG_QTY   loops;
+    OS_MSG_QTY i;
+    OS_MSG_QTY loops;
 
 
 
-#ifdef OS_SAFETY_CRITICAL
+ #ifdef OS_SAFETY_CRITICAL
     if (p_err == (OS_ERR *)0) {
         OS_SAFETY_CRITICAL_EXCEPTION();
         return;
     }
-#endif
+ #endif
 
-#if OS_CFG_ARG_CHK_EN > 0u
+ #if OS_CFG_ARG_CHK_EN > 0u
     if (OSCfg_MsgPoolBasePtr == (OS_MSG *)0) {
-       *p_err = OS_ERR_MSG_POOL_NULL_PTR;
+        *p_err = OS_ERR_MSG_POOL_NULL_PTR;
         return;
     }
     if (OSCfg_MsgPoolSize == (OS_MSG_QTY)0) {
-       *p_err = OS_ERR_MSG_POOL_EMPTY;
+        *p_err = OS_ERR_MSG_POOL_EMPTY;
         return;
     }
-#endif
+ #endif
 
     p_msg1 = OSCfg_MsgPoolBasePtr;
     p_msg2 = OSCfg_MsgPoolBasePtr;
@@ -106,29 +106,29 @@ void  OS_MsgPoolInit (OS_ERR  *p_err)
     OSMsgPool.NbrFree    =  OSCfg_MsgPoolSize;
     OSMsgPool.NbrUsed    = (OS_MSG_QTY)0;
     OSMsgPool.NbrUsedMax = (OS_MSG_QTY)0;
-   *p_err                =  OS_ERR_NONE;
+    *p_err                =  OS_ERR_NONE;
 }
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-************************************************************************************************************************
-*                                        RELEASE ALL MESSAGE IN MESSAGE QUEUE
-*
-* Description: This function returns all the messages in a message queue to the free list.
-*
-* Arguments  : p_msg_q       is a pointer to the OS_MSG_Q structure containing messages to free.
-*              -------
-*
-* Returns    : the number of OS_MSGs returned to the free list
-*
-* Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
-************************************************************************************************************************
-*/
+ ************************************************************************************************************************
+ *                                        RELEASE ALL MESSAGE IN MESSAGE QUEUE
+ *
+ * Description: This function returns all the messages in a message queue to the free list.
+ *
+ * Arguments  : p_msg_q       is a pointer to the OS_MSG_Q structure containing messages to free.
+ *              -------
+ *
+ * Returns    : the number of OS_MSGs returned to the free list
+ *
+ * Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
+ ************************************************************************************************************************
+ */
 
-OS_MSG_QTY  OS_MsgQFreeAll (OS_MSG_Q  *p_msg_q)
+OS_MSG_QTY  OS_MsgQFreeAll (OS_MSG_Q *p_msg_q)
 {
     OS_MSG      *p_msg;
-    OS_MSG_QTY   qty;
+    OS_MSG_QTY qty;
 
 
 
@@ -147,25 +147,25 @@ OS_MSG_QTY  OS_MsgQFreeAll (OS_MSG_Q  *p_msg_q)
     return (qty);
 }
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-************************************************************************************************************************
-*                                               INITIALIZE A MESSAGE QUEUE
-*
-* Description: This function is called to initialize a message queue
-*
-* Arguments  : p_msg_q      is a pointer to the message queue to initialize
-*              -------
-*
-*              max          is the maximum number of entries that a message queue can have.
-*
-* Returns    : none
-*
-* Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
-************************************************************************************************************************
-*/
+ ************************************************************************************************************************
+ *                                               INITIALIZE A MESSAGE QUEUE
+ *
+ * Description: This function is called to initialize a message queue
+ *
+ * Arguments  : p_msg_q      is a pointer to the message queue to initialize
+ *              -------
+ *
+ *              max          is the maximum number of entries that a message queue can have.
+ *
+ * Returns    : none
+ *
+ * Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
+ ************************************************************************************************************************
+ */
 
-void  OS_MsgQInit (OS_MSG_Q    *p_msg_q,
+void  OS_MsgQInit (OS_MSG_Q *   p_msg_q,
                    OS_MSG_QTY   size)
 {
     p_msg_q->NbrEntriesSize = (OS_MSG_QTY)size;
@@ -175,62 +175,62 @@ void  OS_MsgQInit (OS_MSG_Q    *p_msg_q,
     p_msg_q->OutPtr         = (OS_MSG   *)0;
 }
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-************************************************************************************************************************
-*                                           RETRIEVE MESSAGE FROM MESSAGE QUEUE
-*
-* Description: This function retrieves a message from a message queue
-*
-* Arguments  : p_msg_q     is a pointer to the message queue where we want to extract the message from
-*              -------
-*
-*              p_msg_size  is a pointer to where the size (in bytes) of the message will be placed
-*
-*              p_ts        is a pointer to where the time stamp will be placed
-*
-*              p_err       is a pointer to an error code that will be returned from this call.
-*
-*                              OS_ERR_Q_EMPTY
-*                              OS_ERR_NONE
-*
-* Returns    : The message (a pointer)
-*
-* Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
-************************************************************************************************************************
-*/
+ ************************************************************************************************************************
+ *                                           RETRIEVE MESSAGE FROM MESSAGE QUEUE
+ *
+ * Description: This function retrieves a message from a message queue
+ *
+ * Arguments  : p_msg_q     is a pointer to the message queue where we want to extract the message from
+ *              -------
+ *
+ *              p_msg_size  is a pointer to where the size (in bytes) of the message will be placed
+ *
+ *              p_ts        is a pointer to where the time stamp will be placed
+ *
+ *              p_err       is a pointer to an error code that will be returned from this call.
+ *
+ *                              OS_ERR_Q_EMPTY
+ *                              OS_ERR_NONE
+ *
+ * Returns    : The message (a pointer)
+ *
+ * Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
+ ************************************************************************************************************************
+ */
 
-void  *OS_MsgQGet (OS_MSG_Q     *p_msg_q,
-                   OS_MSG_SIZE  *p_msg_size,
-                   CPU_TS       *p_ts,
-                   OS_ERR       *p_err)
+void  *OS_MsgQGet (OS_MSG_Q *   p_msg_q,
+                   OS_MSG_SIZE *p_msg_size,
+                   CPU_TS *     p_ts,
+                   OS_ERR *     p_err)
 {
     OS_MSG  *p_msg;
     void    *p_void;
 
 
 
-#ifdef OS_SAFETY_CRITICAL
+ #ifdef OS_SAFETY_CRITICAL
     if (p_err == (OS_ERR *)0) {
         OS_SAFETY_CRITICAL_EXCEPTION();
         return ((void *)0);
     }
-#endif
+ #endif
 
     if (p_msg_q->NbrEntries == (OS_MSG_QTY)0) {             /* Is the queue empty?                                    */
-       *p_msg_size = (OS_MSG_SIZE)0;                        /* Yes                                                    */
+        *p_msg_size = (OS_MSG_SIZE)0;                       /* Yes                                                    */
         if (p_ts != (CPU_TS *)0) {
-           *p_ts  = (CPU_TS  )0;
+            *p_ts  = (CPU_TS  )0;
         }
-       *p_err = OS_ERR_Q_EMPTY;
+        *p_err = OS_ERR_Q_EMPTY;
         return ((void *)0);
     }
 
     p_msg           = p_msg_q->OutPtr;                      /* No, get the next message to extract from the queue     */
     p_void          = p_msg->MsgPtr;
-   *p_msg_size      = p_msg->MsgSize;
+    *p_msg_size      = p_msg->MsgSize;
     if (p_ts != (CPU_TS *)0) {
-       *p_ts  = p_msg->MsgTS;
+        *p_ts  = p_msg->MsgTS;
     }
 
     p_msg_q->OutPtr = p_msg->NextPtr;                       /* Point to next message to extract                       */
@@ -247,69 +247,69 @@ void  *OS_MsgQGet (OS_MSG_Q     *p_msg_q,
     OSMsgPool.NbrFree++;
     OSMsgPool.NbrUsed--;
 
-   *p_err             = OS_ERR_NONE;
+    *p_err             = OS_ERR_NONE;
     return (p_void);
 }
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-************************************************************************************************************************
-*                                           DEPOSIT MESSAGE IN MESSAGE QUEUE
-*
-* Description: This function places a message in a message queue
-*
-* Arguments  : p_msg_q     is a pointer to the OS_TCB of the task to post the message to
-*              -------
-*
-*              p_void      is a pointer to the message to send.
-*
-*              msg_size    is the size of the message (in bytes)
-*
-*              opt         specifies whether the message will be posted in FIFO or LIFO order
-*
-*                              OS_OPT_POST_FIFO
-*                              OS_OPT_POST_LIFO
-*
-*              ts          is a timestamp as to when the message was posted
-*
-*              p_err       is a pointer to a variable that will contain an error code returned by this function.
-*
-*                              OS_ERR_Q_MAX           if the queue is full
-*                              OS_ERR_MSG_POOL_EMPTY  if we no longer have any OS_MSG to use
-*                              OS_ERR_NONE            the message was deposited in the queue
-*
-* Returns    : none
-*
-* Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
-************************************************************************************************************************
-*/
+ ************************************************************************************************************************
+ *                                           DEPOSIT MESSAGE IN MESSAGE QUEUE
+ *
+ * Description: This function places a message in a message queue
+ *
+ * Arguments  : p_msg_q     is a pointer to the OS_TCB of the task to post the message to
+ *              -------
+ *
+ *              p_void      is a pointer to the message to send.
+ *
+ *              msg_size    is the size of the message (in bytes)
+ *
+ *              opt         specifies whether the message will be posted in FIFO or LIFO order
+ *
+ *                              OS_OPT_POST_FIFO
+ *                              OS_OPT_POST_LIFO
+ *
+ *              ts          is a timestamp as to when the message was posted
+ *
+ *              p_err       is a pointer to a variable that will contain an error code returned by this function.
+ *
+ *                              OS_ERR_Q_MAX           if the queue is full
+ *                              OS_ERR_MSG_POOL_EMPTY  if we no longer have any OS_MSG to use
+ *                              OS_ERR_NONE            the message was deposited in the queue
+ *
+ * Returns    : none
+ *
+ * Note(s)    : 1) This function is INTERNAL to uC/OS-III and your application MUST NOT call it.
+ ************************************************************************************************************************
+ */
 
-void  OS_MsgQPut (OS_MSG_Q     *p_msg_q,
-                  void         *p_void,
+void  OS_MsgQPut (OS_MSG_Q *    p_msg_q,
+                  void *        p_void,
                   OS_MSG_SIZE   msg_size,
                   OS_OPT        opt,
                   CPU_TS        ts,
-                  OS_ERR       *p_err)
+                  OS_ERR *      p_err)
 {
     OS_MSG  *p_msg;
     OS_MSG  *p_msg_in;
 
 
 
-#ifdef OS_SAFETY_CRITICAL
+ #ifdef OS_SAFETY_CRITICAL
     if (p_err == (OS_ERR *)0) {
         OS_SAFETY_CRITICAL_EXCEPTION();
         return;
     }
-#endif
+ #endif
 
     if (p_msg_q->NbrEntries >= p_msg_q->NbrEntriesSize) {
-       *p_err = OS_ERR_Q_MAX;                               /* Message queue cannot accept any more messages          */
+        *p_err = OS_ERR_Q_MAX;                              /* Message queue cannot accept any more messages          */
         return;
     }
 
     if (OSMsgPool.NbrFree == (OS_MSG_QTY)0) {
-       *p_err = OS_ERR_MSG_POOL_EMPTY;                      /* No more OS_MSG to use                                  */
+        *p_err = OS_ERR_MSG_POOL_EMPTY;                     /* No more OS_MSG to use                                  */
         return;
     }
 
@@ -344,6 +344,6 @@ void  OS_MsgQPut (OS_MSG_Q     *p_msg_q,
     p_msg->MsgPtr  = p_void;                                /* Deposit message in the message queue entry             */
     p_msg->MsgSize = msg_size;
     p_msg->MsgTS   = ts;
-   *p_err          = OS_ERR_NONE;
+    *p_err          = OS_ERR_NONE;
 }
 #endif

@@ -45,11 +45,11 @@
 #ifdef SFUD_USING_SFDP
 
 /* support maximum SFDP major revision by driver */
-#define SUPPORT_MAX_SFDP_MAJOR_REV                  1
+ #define SUPPORT_MAX_SFDP_MAJOR_REV                  1
 /* the JEDEC basic flash parameter table length is 9 DWORDs (288-bit) on JESD216 (V1.0) initial release standard */
-#define BASIC_TABLE_LEN                             9
+ #define BASIC_TABLE_LEN                             9
 /* the smallest eraser in SFDP eraser table */
-#define SMALLEST_ERASER_INDEX                       0
+ #define SMALLEST_ERASER_INDEX                       0
 /**
  *  SFDP parameter header structure
  */
@@ -129,7 +129,7 @@ static bool read_sfdp_header(sfud_flash *flash) {
         return false;
     }
     SFUD_DEBUG("Check SFDP header is OK. The reversion is V%d.%d, NPN is %d.", sfdp->major_rev, sfdp->minor_rev,
-            header[6]);
+               header[6]);
 
     return true;
 }
@@ -163,7 +163,7 @@ static bool read_basic_header(const sfud_flash *flash, sfdp_para_header *basic_h
     /* check JEDEC basic flash parameter header */
     if (basic_header->major_rev > SUPPORT_MAX_SFDP_MAJOR_REV) {
         SFUD_INFO("Error: This reversion(V%d.%d) JEDEC basic flash parameter header is not supported.",
-                basic_header->major_rev, basic_header->minor_rev);
+                  basic_header->major_rev, basic_header->minor_rev);
         return false;
     }
     if (basic_header->len < BASIC_TABLE_LEN) {
@@ -171,8 +171,8 @@ static bool read_basic_header(const sfud_flash *flash, sfdp_para_header *basic_h
         return false;
     }
     SFUD_DEBUG("Check JEDEC basic flash parameter header is OK. The table id is %d, reversion is V%d.%d,"
-            " length is %d, parameter table pointer is 0x%06X.", basic_header->id, basic_header->major_rev,
-            basic_header->minor_rev, basic_header->len, basic_header->ptp);
+               " length is %d, parameter table pointer is 0x%06X.", basic_header->id, basic_header->major_rev,
+               basic_header->minor_rev, basic_header->len, basic_header->ptp);
 
     return true;
 }
@@ -204,7 +204,7 @@ static bool read_basic_table(sfud_flash *flash, sfdp_para_header *basic_header) 
     SFUD_DEBUG("MSB-LSB  3    2    1    0");
     for (i = 0; i < BASIC_TABLE_LEN; i++) {
         SFUD_DEBUG("[%04d] 0x%02X 0x%02X 0x%02X 0x%02X", i + 1, table[i * 4 + 3], table[i * 4 + 2], table[i * 4 + 1],
-                table[i * 4]);
+                   table[i * 4]);
     }
 
     /* get block/sector 4 KB erase supported and command */
@@ -253,12 +253,12 @@ static bool read_basic_table(sfud_flash *flash, sfdp_para_header *basic_header) 
         case 0:
             sfdp->vola_sr_we_cmd = SFUD_VOLATILE_SR_WRITE_ENABLE;
             SFUD_DEBUG("Flash device requires instruction 50h as the write enable prior "
-                    "to performing a volatile write to the status register.");
+                       "to performing a volatile write to the status register.");
             break;
         case 1:
             sfdp->vola_sr_we_cmd = SFUD_CMD_WRITE_ENABLE;
             SFUD_DEBUG("Flash device requires instruction 06h as the write enable prior "
-                    "to performing a volatile write to the status register.");
+                       "to performing a volatile write to the status register.");
             break;
         }
         break;
@@ -309,7 +309,7 @@ static bool read_basic_table(sfud_flash *flash, sfdp_para_header *basic_header) 
             sfdp->eraser[j].size = 1 << table[28 + 2 * i];
             sfdp->eraser[j].cmd = table[28 + 2 * i + 1];
             SFUD_DEBUG("Flash device supports %ldKB block erase. Command is 0x%02X.", sfdp->eraser[j].size / 1024,
-                    sfdp->eraser[j].cmd);
+                       sfdp->eraser[j].cmd);
             j++;
         }
     }
@@ -336,11 +336,11 @@ static bool read_basic_table(sfud_flash *flash, sfdp_para_header *basic_header) 
 
 static sfud_err read_sfdp_data(const sfud_flash *flash, uint32_t addr, uint8_t *read_buf, size_t size) {
     uint8_t cmd[] = {
-            SFUD_CMD_READ_SFDP_REGISTER,
-            (addr >> 16) & 0xFF,
-            (addr >> 8) & 0xFF,
-            (addr >> 0) & 0xFF,
-            SFUD_DUMMY_DATA,
+        SFUD_CMD_READ_SFDP_REGISTER,
+        (addr >> 16) & 0xFF,
+        (addr >> 8) & 0xFF,
+        (addr >> 0) & 0xFF,
+        SFUD_DUMMY_DATA,
     };
 
     SFUD_ASSERT(flash);
@@ -373,7 +373,7 @@ size_t sfud_sfdp_get_suitable_eraser(const sfud_flash *flash, uint32_t addr, siz
      * In order to decrease erase command counts, so the find process is from the end of eraser table. */
     for (i = SFUD_SFDP_ERASE_TYPE_MAX_NUM - 1;; i--) {
         if ((flash->sfdp.eraser[i].size != 0) && (erase_size >= flash->sfdp.eraser[i].size)
-                && (addr % flash->sfdp.eraser[i].size == 0)) {
+            && (addr % flash->sfdp.eraser[i].size == 0)) {
             index = i;
             break;
         }

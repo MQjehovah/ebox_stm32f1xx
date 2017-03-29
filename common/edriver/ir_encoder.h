@@ -26,12 +26,12 @@
 class IR_ENCODER
 {
 public:
-    void begin(Pwm *pwm);
-    void send(uint32_t value);
+    void        begin(Pwm *pwm);
+    void        send(uint32_t value);
 private:
-    void init(void);
-    void send_byte(uint8_t data);
-    Pwm *p_pwm;
+    void        init(void);
+    void        send_byte(uint8_t data);
+    Pwm *       p_pwm;
 
 };
 

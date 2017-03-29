@@ -25,7 +25,7 @@
 /** A class for storing and calling a pointer to a static or member function
  */
 template <typename R, typename A1>
-class FunctionPointerArg1{
+class FunctionPointerArg1 {
 public:
     /** Create a FunctionPointer, attaching a static function
      *
@@ -49,7 +49,7 @@ public:
      *
      *  @param function The static function to attach (default is none)
      */
-    void attach(R (*function)(A1)) {
+    void        attach(R (*function)(A1)) {
         _p.function = function;
         _membercaller = 0;
     }
@@ -60,7 +60,7 @@ public:
      *  @param function The address of the member function to attach
      */
     template<typename T>
-    void attach(T *object, R (T::*member)(A1)) {
+    void        attach(T *object, R (T::*member)(A1)) {
         _p.object = static_cast<void*>(object);
         *reinterpret_cast<R (T::**)(A1)>(_member) = member;
         _membercaller = &FunctionPointerArg1::membercaller<T>;
@@ -68,23 +68,23 @@ public:
 
     /** Call the attached static or member function
      */
-    R call(A1 a) {
+    R        call(A1 a) {
         if (_membercaller == 0 && _p.function) {
-           return _p.function(a);
+            return _p.function(a);
         } else if (_membercaller && _p.object) {
-           return _membercaller(_p.object, _member, a);
+            return _membercaller(_p.object, _member, a);
         }
         return (R)0;
     }
 
     /** Get registered static function
      */
-    R(*get_function(A1))() {
-        return _membercaller ? (R(*)(A1))0 : (R(*)(A1))_p.function;
-    }
+    R(*get_function (A1))() {
+          return _membercaller ? (R (*)(A1)) 0 : (R (*)(A1))_p.function;
+      }
 
 #ifdef MBED_OPERATORS
-    R operator ()(A1 a) {
+      R operator        ()(A1 a) {
         return call(a);
     }
     operator bool(void) const {
@@ -92,10 +92,10 @@ public:
     }
 #endif
 private:
-    template<typename T>
-    static R membercaller(void *object, uintptr_t *member, A1 a) {
-        T* o = static_cast<T*>(object);
-        R (T::**m)(A1) = reinterpret_cast<R (T::**)(A1)>(member);
+      template<typename T>
+      static R        membercaller(void *object, uintptr_t *member, A1 a) {
+        T*       o = static_cast<T*>(object);
+        R (T::**m) (A1) = reinterpret_cast<R (T::**)(A1)>(member);
         return (o->**m)(a);
     }
 
@@ -103,8 +103,8 @@ private:
         R (*function)(A1); // static function pointer
         void *object;      // object this pointer
     } _p;
-    uintptr_t _member[4]; // aligned raw member function pointer storage - converted back by registered _membercaller
-    R (*_membercaller)(void*, uintptr_t*, A1); // registered membercaller function to convert back and call _m.member on _object
+    uintptr_t           _member[4]; // aligned raw member function pointer storage - converted back by registered _membercaller
+    R                   (*_membercaller)(void*, uintptr_t*, A1); // registered membercaller function to convert back and call _m.member on _object
 };
 
 /** A class for storing and calling a pointer to a static or member function (R ()(void))
@@ -134,7 +134,7 @@ public:
      *
      *  @param function The void static function to attach (default is none)
      */
-    void attach(R (*function)(void)) {
+    void        attach(R (*function)(void)) {
         _p.function = function;
         _membercaller = 0;
     }
@@ -145,7 +145,7 @@ public:
      *  @param function The address of the void member function to attach
      */
     template<typename T>
-    void attach(T *object, R (T::*member)(void)) {
+    void        attach(T *object, R (T::*member)(void)) {
         _p.object = static_cast<void*>(object);
         *reinterpret_cast<R (T::**)(void)>(_member) = member;
         _membercaller = &FunctionPointerArg1::membercaller<T>;
@@ -153,7 +153,7 @@ public:
 
     /** Call the attached static or member function
      */
-    R call(){
+    R        call(){
         if (_membercaller == 0 && _p.function) {
             return _p.function();
         } else if (_membercaller && _p.object) {
@@ -164,12 +164,12 @@ public:
 
     /** Get registered static function
      */
-    R(*get_function())() {
-        return _membercaller ? (R(*)())0 : (R(*)())_p.function;
+    R(*get_function()) () {
+        return _membercaller ? (R (*)()) 0 : (R (*)())_p.function;
     }
 
 #ifdef MBED_OPERATORS
-    R operator ()(void) {
+    R operator        ()(void) {
         return call();
     }
     operator bool(void) const {
@@ -179,9 +179,9 @@ public:
 
 private:
     template<typename T>
-    static R membercaller(void *object, uintptr_t *member) {
-        T* o = static_cast<T*>(object);
-        R (T::**m)(void) = reinterpret_cast<R (T::**)(void)>(member);
+    static R        membercaller(void *object, uintptr_t *member) {
+        T*       o = static_cast<T*>(object);
+        R (T::**m) (void) = reinterpret_cast<R (T::**)(void)>(member);
         return (o->**m)();
     }
 
@@ -189,8 +189,8 @@ private:
         R (*function)(void); // static function pointer
         void *object;        // object this pointer
     } _p;
-    uintptr_t _member[4]; // aligned raw member function pointer storage - converted back by registered _membercaller
-    R (*_membercaller)(void*, uintptr_t*); // registered membercaller function to convert back and call _m.member on _object
+    uintptr_t           _member[4]; // aligned raw member function pointer storage - converted back by registered _membercaller
+    R                   (*_membercaller)(void*, uintptr_t*); // registered membercaller function to convert back and call _m.member on _object
 };
 
 typedef FunctionPointerArg1<void, void> FunctionPointer;

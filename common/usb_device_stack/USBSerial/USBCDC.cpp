@@ -1,20 +1,20 @@
 /* Copyright (c) 2010-2011 mbed.org, MIT License
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-* and associated documentation files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use, copy, modify, merge, publish,
-* distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-* BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-* DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 #include "stdint.h"
 #include "USBCDC.h"
@@ -33,7 +33,7 @@ static uint8_t cdc_line_coding[7]= {0x80, 0x25, 0x00, 0x00, 0x00, 0x00, 0x08};
 
 #define MAX_CDC_REPORT_SIZE MAX_PACKET_SIZE_EPBULK
 
-USBCDC::USBCDC(uint16_t vendor_id, uint16_t product_id, uint16_t product_release, bool connect_blocking): USBDevice(vendor_id, product_id, product_release) {
+USBCDC::USBCDC(uint16_t vendor_id, uint16_t product_id, uint16_t product_release, bool connect_blocking) : USBDevice(vendor_id, product_id, product_release) {
     terminal_connected = false;
     USBDevice::connect(connect_blocking);
 }
@@ -48,27 +48,27 @@ bool USBCDC::USBCallback_request(void) {
 
     if (transfer->setup.bmRequestType.Type == CLASS_TYPE) {
         switch (transfer->setup.bRequest) {
-            case CDC_GET_LINE_CODING:
-                transfer->remaining = 7;
-                transfer->ptr = cdc_line_coding;
-                transfer->direction = DEVICE_TO_HOST;
-                success = true;
-                break;
-            case CDC_SET_LINE_CODING:
-                transfer->remaining = 7;
-                transfer->notify = true;
-                success = true;
-                break;
-            case CDC_SET_CONTROL_LINE_STATE:
-                if (transfer->setup.wValue & CLS_DTR) {
-                    terminal_connected = true;
-                } else {
-                    terminal_connected = false;
-                }
-                success = true;
-                break;
-            default:
-                break;
+        case CDC_GET_LINE_CODING:
+            transfer->remaining = 7;
+            transfer->ptr = cdc_line_coding;
+            transfer->direction = DEVICE_TO_HOST;
+            success = true;
+            break;
+        case CDC_SET_LINE_CODING:
+            transfer->remaining = 7;
+            transfer->notify = true;
+            success = true;
+            break;
+        case CDC_SET_CONTROL_LINE_STATE:
+            if (transfer->setup.wValue & CLS_DTR) {
+                terminal_connected = true;
+            } else {
+                terminal_connected = false;
+            }
+            success = true;
+            break;
+        default:
+            break;
         }
     }
 
@@ -90,7 +90,7 @@ void USBCDC::USBCallback_requestCompleted(uint8_t *buf, uint32_t length) {
                 memcpy(cdc_line_coding, buf, 7);
 
                 int baud = buf[0] + (buf[1] << 8)
-                         + (buf[2] << 16) + (buf[3] << 24);
+                           + (buf[2] << 16) + (buf[3] << 24);
                 int stop = buf[4];
                 int bits = buf[6];
                 int parity = buf[5];
@@ -150,7 +150,7 @@ uint8_t * USBCDC::deviceDesc() {
         0,                    // bDeviceProtocol
         MAX_PACKET_SIZE_EP0,  // bMaxPacketSize0
         (uint8_t)(LSB(VENDOR_ID)), (uint8_t)(MSB(VENDOR_ID)),  // idVendor
-        (uint8_t)(LSB(PRODUCT_ID)), (uint8_t)(MSB(PRODUCT_ID)),// idProduct
+        (uint8_t)(LSB(PRODUCT_ID)), (uint8_t)(MSB(PRODUCT_ID)), // idProduct
         0x00, 0x01,           // bcdDevice
         1,                    // iManufacturer
         2,                    // iProduct
@@ -269,8 +269,8 @@ uint8_t * USBCDC::configurationDesc() {
         ENDPOINT_DESCRIPTOR,        // bDescriptorType
         PHY_TO_DESC(EPBULK_IN),     // bEndpointAddress
         E_BULK,                     // bmAttributes (0x02=bulk)
-        LSB(MAX_PACKET_SIZE_EPBULK),// wMaxPacketSize (LSB)
-        MSB(MAX_PACKET_SIZE_EPBULK),// wMaxPacketSize (MSB)
+        LSB(MAX_PACKET_SIZE_EPBULK), // wMaxPacketSize (LSB)
+        MSB(MAX_PACKET_SIZE_EPBULK), // wMaxPacketSize (MSB)
         0,                          // bInterval
 
         // endpoint descriptor, USB spec 9.6.6, page 269-271, Table 9-13
@@ -278,8 +278,8 @@ uint8_t * USBCDC::configurationDesc() {
         ENDPOINT_DESCRIPTOR,        // bDescriptorType
         PHY_TO_DESC(EPBULK_OUT),    // bEndpointAddress
         E_BULK,                     // bmAttributes (0x02=bulk)
-        LSB(MAX_PACKET_SIZE_EPBULK),// wMaxPacketSize (LSB)
-        MSB(MAX_PACKET_SIZE_EPBULK),// wMaxPacketSize (MSB)
+        LSB(MAX_PACKET_SIZE_EPBULK), // wMaxPacketSize (LSB)
+        MSB(MAX_PACKET_SIZE_EPBULK), // wMaxPacketSize (MSB)
         0                           // bInterval
     };
     return configDescriptor;

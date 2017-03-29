@@ -1,20 +1,20 @@
 /* Copyright (c) 2010-2011 mbed.org, MIT License
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-* and associated documentation files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use, copy, modify, merge, publish,
-* distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-* BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-* DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 #include "stdint.h"
 #include "USBAudio.h"
@@ -22,7 +22,7 @@
 
 
 
-USBAudio::USBAudio(uint32_t frequency_in, uint8_t channel_nb_in, uint32_t frequency_out, uint8_t channel_nb_out, uint16_t vendor_id, uint16_t product_id, uint16_t product_release): USBDevice(vendor_id, product_id, product_release) {
+USBAudio::USBAudio(uint32_t frequency_in, uint8_t channel_nb_in, uint32_t frequency_out, uint8_t channel_nb_out, uint16_t vendor_id, uint16_t product_id, uint16_t product_release) : USBDevice(vendor_id, product_id, product_release) {
     mute = 0;
     volCur = 0x0080;
     volMin = 0x0000;
@@ -63,7 +63,7 @@ USBAudio::USBAudio(uint32_t frequency_in, uint8_t channel_nb_in, uint32_t freque
 bool USBAudio::read(uint8_t * buf) {
     buf_stream_in = buf;
     SOF_handler = false;
-    while (!available || !SOF_handler);
+    while (!available || !SOF_handler) ;
     available = false;
     return true;
 }
@@ -71,7 +71,7 @@ bool USBAudio::read(uint8_t * buf) {
 bool USBAudio::readNB(uint8_t * buf) {
     buf_stream_in = buf;
     SOF_handler = false;
-    while (!SOF_handler);
+    while (!SOF_handler) ;
     if (available) {
         available = false;
         buf_stream_in = NULL;
@@ -89,11 +89,11 @@ bool USBAudio::readWrite(uint8_t * buf_read, uint8_t * buf_write) {
     } else {
         buf_stream_out = buf_write;
     }
-    while (!available);
+    while (!available) ;
     if (interruptIN) {
-        while (!writeIN);
+        while (!writeIN) ;
     }
-    while (!SOF_handler);
+    while (!SOF_handler) ;
     return true;
 }
 
@@ -106,9 +106,9 @@ bool USBAudio::write(uint8_t * buf) {
     } else {
         buf_stream_out = buf;
     }
-    while (!SOF_handler);
+    while (!SOF_handler) ;
     if (interruptIN) {
-        while (!writeIN);
+        while (!writeIN) ;
     }
     return true;
 }
@@ -221,80 +221,80 @@ bool USBAudio::USBCallback_request() {
             if ((transfer->setup.wValue & 0xff) == 0) {
 
                 switch (transfer->setup.wValue >> 8) {
-                    case MUTE_CONTROL:
-                        switch (transfer->setup.bRequest) {
-                            case REQUEST_GET_CUR:
-                                transfer->remaining = 1;
-                                transfer->ptr = &mute;
-                                transfer->direction = DEVICE_TO_HOST;
-                                success = true;
-                                break;
-
-                            case REQUEST_SET_CUR:
-                                transfer->remaining = 1;
-                                transfer->notify = true;
-                                transfer->direction = HOST_TO_DEVICE;
-                                success = true;
-                                break;
-                            default:
-                                break;
-                        }
+                case MUTE_CONTROL:
+                    switch (transfer->setup.bRequest) {
+                    case REQUEST_GET_CUR:
+                        transfer->remaining = 1;
+                        transfer->ptr = &mute;
+                        transfer->direction = DEVICE_TO_HOST;
+                        success = true;
                         break;
-                    case VOLUME_CONTROL:
-                        switch (transfer->setup.bRequest) {
-                            case REQUEST_GET_CUR:
-                                transfer->remaining = 2;
-                                transfer->ptr = (uint8_t *)&volCur;
-                                transfer->direction = DEVICE_TO_HOST;
-                                success = true;
-                                break;
-                            case REQUEST_GET_MIN:
-                                transfer->remaining = 2;
-                                transfer->ptr = (uint8_t *)&volMin;
-                                transfer->direction = DEVICE_TO_HOST;
-                                success = true;
-                                break;
-                            case REQUEST_GET_MAX:
-                                transfer->remaining = 2;
-                                transfer->ptr = (uint8_t *)&volMax;
-                                transfer->direction = DEVICE_TO_HOST;
-                                success = true;
-                                break;
-                            case REQUEST_GET_RES:
-                                transfer->remaining = 2;
-                                transfer->ptr = (uint8_t *)&volRes;
-                                transfer->direction = DEVICE_TO_HOST;
-                                success = true;
-                                break;
 
-                            case REQUEST_SET_CUR:
-                                transfer->remaining = 2;
-                                transfer->notify = true;
-                                transfer->direction = HOST_TO_DEVICE;
-                                success = true;
-                                break;
-                            case REQUEST_SET_MIN:
-                                transfer->remaining = 2;
-                                transfer->notify = true;
-                                transfer->direction = HOST_TO_DEVICE;
-                                success = true;
-                                break;
-                            case REQUEST_SET_MAX:
-                                transfer->remaining = 2;
-                                transfer->notify = true;
-                                transfer->direction = HOST_TO_DEVICE;
-                                success = true;
-                                break;
-                            case REQUEST_SET_RES:
-                                transfer->remaining = 2;
-                                transfer->notify = true;
-                                transfer->direction = HOST_TO_DEVICE;
-                                success = true;
-                                break;
-                        }
+                    case REQUEST_SET_CUR:
+                        transfer->remaining = 1;
+                        transfer->notify = true;
+                        transfer->direction = HOST_TO_DEVICE;
+                        success = true;
                         break;
                     default:
                         break;
+                    }
+                    break;
+                case VOLUME_CONTROL:
+                    switch (transfer->setup.bRequest) {
+                    case REQUEST_GET_CUR:
+                        transfer->remaining = 2;
+                        transfer->ptr = (uint8_t *)&volCur;
+                        transfer->direction = DEVICE_TO_HOST;
+                        success = true;
+                        break;
+                    case REQUEST_GET_MIN:
+                        transfer->remaining = 2;
+                        transfer->ptr = (uint8_t *)&volMin;
+                        transfer->direction = DEVICE_TO_HOST;
+                        success = true;
+                        break;
+                    case REQUEST_GET_MAX:
+                        transfer->remaining = 2;
+                        transfer->ptr = (uint8_t *)&volMax;
+                        transfer->direction = DEVICE_TO_HOST;
+                        success = true;
+                        break;
+                    case REQUEST_GET_RES:
+                        transfer->remaining = 2;
+                        transfer->ptr = (uint8_t *)&volRes;
+                        transfer->direction = DEVICE_TO_HOST;
+                        success = true;
+                        break;
+
+                    case REQUEST_SET_CUR:
+                        transfer->remaining = 2;
+                        transfer->notify = true;
+                        transfer->direction = HOST_TO_DEVICE;
+                        success = true;
+                        break;
+                    case REQUEST_SET_MIN:
+                        transfer->remaining = 2;
+                        transfer->notify = true;
+                        transfer->direction = HOST_TO_DEVICE;
+                        success = true;
+                        break;
+                    case REQUEST_SET_MAX:
+                        transfer->remaining = 2;
+                        transfer->notify = true;
+                        transfer->direction = HOST_TO_DEVICE;
+                        success = true;
+                        break;
+                    case REQUEST_SET_RES:
+                        transfer->remaining = 2;
+                        transfer->notify = true;
+                        transfer->direction = HOST_TO_DEVICE;
+                        success = true;
+                        break;
+                    }
+                    break;
+                default:
+                    break;
                 }
             }
         }
@@ -309,29 +309,29 @@ void USBAudio::USBCallback_requestCompleted(uint8_t * buf, uint32_t length) {
         uint16_t data = (length == 1) ? *buf : *((uint16_t *)buf);
         CONTROL_TRANSFER * transfer = getTransferPtr();
         switch (transfer->setup.wValue >> 8) {
-            case MUTE_CONTROL:
-                switch (transfer->setup.bRequest) {
-                    case REQUEST_SET_CUR:
-                        mute = data & 0xff;
-                        updateVol.call();
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case VOLUME_CONTROL:
-                switch (transfer->setup.bRequest) {
-                    case REQUEST_SET_CUR:
-                        volCur = data;
-                        volume = (float)volCur/(float)volMax;
-                        updateVol.call();
-                        break;
-                    default:
-                        break;
-                }
+        case MUTE_CONTROL:
+            switch (transfer->setup.bRequest) {
+            case REQUEST_SET_CUR:
+                mute = data & 0xff;
+                updateVol.call();
                 break;
             default:
                 break;
+            }
+            break;
+        case VOLUME_CONTROL:
+            switch (transfer->setup.bRequest) {
+            case REQUEST_SET_CUR:
+                volCur = data;
+                volume = (float)volCur/(float)volMax;
+                updateVol.call();
+                break;
+            default:
+                break;
+            }
+            break;
+        default:
+            break;
         }
     }
 }
@@ -339,15 +339,15 @@ void USBAudio::USBCallback_requestCompleted(uint8_t * buf, uint32_t length) {
 
 
 #define TOTAL_DESCRIPTOR_LENGTH ((1 * CONFIGURATION_DESCRIPTOR_LENGTH) \
-                               + (5 * INTERFACE_DESCRIPTOR_LENGTH) \
-                               + (1 * CONTROL_INTERFACE_DESCRIPTOR_LENGTH + 1) \
-                               + (2 * INPUT_TERMINAL_DESCRIPTOR_LENGTH) \
-                               + (1 * FEATURE_UNIT_DESCRIPTOR_LENGTH) \
-                               + (2 * OUTPUT_TERMINAL_DESCRIPTOR_LENGTH) \
-                               + (2 * STREAMING_INTERFACE_DESCRIPTOR_LENGTH) \
-                               + (2 * FORMAT_TYPE_I_DESCRIPTOR_LENGTH) \
-                               + (2 * (ENDPOINT_DESCRIPTOR_LENGTH + 2)) \
-                               + (2 * STREAMING_ENDPOINT_DESCRIPTOR_LENGTH) )
+                                 + (5 * INTERFACE_DESCRIPTOR_LENGTH) \
+                                 + (1 * CONTROL_INTERFACE_DESCRIPTOR_LENGTH + 1) \
+                                 + (2 * INPUT_TERMINAL_DESCRIPTOR_LENGTH) \
+                                 + (1 * FEATURE_UNIT_DESCRIPTOR_LENGTH) \
+                                 + (2 * OUTPUT_TERMINAL_DESCRIPTOR_LENGTH) \
+                                 + (2 * STREAMING_INTERFACE_DESCRIPTOR_LENGTH) \
+                                 + (2 * FORMAT_TYPE_I_DESCRIPTOR_LENGTH) \
+                                 + (2 * (ENDPOINT_DESCRIPTOR_LENGTH + 2)) \
+                                 + (2 * STREAMING_ENDPOINT_DESCRIPTOR_LENGTH) )
 
 #define TOTAL_CONTROL_INTF_LENGTH    (CONTROL_INTERFACE_DESCRIPTOR_LENGTH + 1 + \
                                       2*INPUT_TERMINAL_DESCRIPTOR_LENGTH     + \
@@ -380,7 +380,7 @@ uint8_t * USBAudio::configurationDesc() {
 
 
         // Audio Control Interface
-        CONTROL_INTERFACE_DESCRIPTOR_LENGTH + 1,// bLength
+        CONTROL_INTERFACE_DESCRIPTOR_LENGTH + 1, // bLength
         INTERFACE_DESCRIPTOR_TYPE,              // bDescriptorType
         CONTROL_HEADER,                         // bDescriptorSubtype
         LSB(0x0100),                            // bcdADC (LSB)

@@ -1,20 +1,20 @@
 /* Copyright (c) 2010-2011 mbed.org, MIT License
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-* and associated documentation files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use, copy, modify, merge, publish,
-* distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-* BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-* DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 #include "stdint.h"
 #include "USBMSD.h"
@@ -63,7 +63,7 @@ enum Status {
 };
 
 
-USBMSD::USBMSD(uint16_t vendor_id, uint16_t product_id, uint16_t product_release): USBDevice(vendor_id, product_id, product_release) {
+USBMSD::USBMSD(uint16_t vendor_id, uint16_t product_id, uint16_t product_release) : USBDevice(vendor_id, product_id, product_release) {
     stage = READ_CBW;
     memset((void *)&cbw, 0, sizeof(CBW));
     memset((void *)&csw, 0, sizeof(CSW));
@@ -84,18 +84,18 @@ bool USBMSD::USBCallback_request(void) {
 
     if (transfer->setup.bmRequestType.Type == CLASS_TYPE) {
         switch (transfer->setup.bRequest) {
-            case MSC_REQUEST_RESET:
-                reset();
-                success = true;
-                break;
-            case MSC_REQUEST_GET_MAX_LUN:
-                transfer->remaining = 1;
-                transfer->ptr = maxLUN;
-                transfer->direction = DEVICE_TO_HOST;
-                success = true;
-                break;
-            default:
-                break;
+        case MSC_REQUEST_RESET:
+            reset();
+            success = true;
+            break;
+        case MSC_REQUEST_GET_MAX_LUN:
+            transfer->remaining = 1;
+            transfer->ptr = maxLUN;
+            transfer->direction = DEVICE_TO_HOST;
+            success = true;
+            break;
+        default:
+            break;
         }
     }
 
@@ -152,30 +152,30 @@ bool USBMSD::EPBULK_OUT_callback() {
     uint8_t buf[MAX_PACKET_SIZE_EPBULK];
     readEP(EPBULK_OUT, buf, &size, MAX_PACKET_SIZE_EPBULK);
     switch (stage) {
-            // the device has to decode the CBW received
-        case READ_CBW:
-            CBWDecode(buf, size);
-            break;
+    // the device has to decode the CBW received
+    case READ_CBW:
+        CBWDecode(buf, size);
+        break;
 
-            // the device has to receive data from the host
-        case PROCESS_CBW:
-            switch (cbw.CB[0]) {
-                case WRITE10:
-                case WRITE12:
-                    memoryWrite(buf, size);
-                    break;
-                case VERIFY10:
-                    memoryVerify(buf, size);
-                    break;
-            }
+    // the device has to receive data from the host
+    case PROCESS_CBW:
+        switch (cbw.CB[0]) {
+        case WRITE10:
+        case WRITE12:
+            memoryWrite(buf, size);
             break;
+        case VERIFY10:
+            memoryVerify(buf, size);
+            break;
+        }
+        break;
 
-            // an error has occured: stall endpoint and send CSW
-        default:
-            stallEndpoint(EPBULK_OUT);
-            csw.Status = CSW_ERROR;
-            sendCSW();
-            break;
+    // an error has occured: stall endpoint and send CSW
+    default:
+        stallEndpoint(EPBULK_OUT);
+        csw.Status = CSW_ERROR;
+        sendCSW();
+        break;
     }
 
     //reactivate readings on the OUT bulk endpoint
@@ -187,31 +187,31 @@ bool USBMSD::EPBULK_OUT_callback() {
 bool USBMSD::EPBULK_IN_callback() {
     switch (stage) {
 
-            // the device has to send data to the host
-        case PROCESS_CBW:
-            switch (cbw.CB[0]) {
-                case READ10:
-                case READ12:
-                    memoryRead();
-                    break;
-            }
+    // the device has to send data to the host
+    case PROCESS_CBW:
+        switch (cbw.CB[0]) {
+        case READ10:
+        case READ12:
+            memoryRead();
             break;
+        }
+        break;
 
-            //the device has to send a CSW
-        case SEND_CSW:
-            sendCSW();
-            break;
+    //the device has to send a CSW
+    case SEND_CSW:
+        sendCSW();
+        break;
 
-        // the host has received the CSW -> we wait a CBW
-        case WAIT_CSW:
-            stage = READ_CBW;
-            break;
+    // the host has received the CSW -> we wait a CBW
+    case WAIT_CSW:
+        stage = READ_CBW;
+        break;
 
-        // an error has occured
-        default:
-            stallEndpoint(EPBULK_IN);
-            sendCSW();
-            break;
+    // an error has occured
+    default:
+        stallEndpoint(EPBULK_IN);
+        sendCSW();
+        break;
     }
     return true;
 }
@@ -283,8 +283,7 @@ bool USBMSD::inquiryRequest (void) {
                           36 - 4, 0x80, 0x00, 0x00,
                           'M', 'B', 'E', 'D', '.', 'O', 'R', 'G',
                           'M', 'B', 'E', 'D', ' ', 'U', 'S', 'B', ' ', 'D', 'I', 'S', 'K', ' ', ' ', ' ',
-                          '1', '.', '0', ' ',
-                        };
+                          '1', '.', '0', ' ',};
     if (!write(inquiry, sizeof(inquiry))) {
         return false;
     }
@@ -302,8 +301,7 @@ bool USBMSD::readFormatCapacity() {
                            0x02,
                            (uint8_t)((BlockSize >> 16) & 0xff),
                            (uint8_t)((BlockSize >> 8) & 0xff),
-                           (uint8_t)((BlockSize >> 0) & 0xff),
-                         };
+                           (uint8_t)((BlockSize >> 0) & 0xff),};
     if (!write(capacity, sizeof(capacity))) {
         return false;
     }
@@ -405,73 +403,73 @@ void USBMSD::CBWDecode(uint8_t * buf, uint16_t size) {
                 fail();
             } else {
                 switch (cbw.CB[0]) {
-                    case TEST_UNIT_READY:
-                        testUnitReady();
-                        break;
-                    case REQUEST_SENSE:
-                        requestSense();
-                        break;
-                    case INQUIRY:
-                        inquiryRequest();
-                        break;
-                    case MODE_SENSE6:
-                        modeSense6();
-                        break;
-                    case READ_FORMAT_CAPACITIES:
-                        readFormatCapacity();
-                        break;
-                    case READ_CAPACITY:
-                        readCapacity();
-                        break;
-                    case READ10:
-                    case READ12:
-                        if (infoTransfer()) {
-                            if ((cbw.Flags & 0x80)) {
-                                stage = PROCESS_CBW;
-                                memoryRead();
-                            } else {
-                                stallEndpoint(EPBULK_OUT);
-                                csw.Status = CSW_ERROR;
-                                sendCSW();
-                            }
-                        }
-                        break;
-                    case WRITE10:
-                    case WRITE12:
-                        if (infoTransfer()) {
-                            if (!(cbw.Flags & 0x80)) {
-                                stage = PROCESS_CBW;
-                            } else {
-                                stallEndpoint(EPBULK_IN);
-                                csw.Status = CSW_ERROR;
-                                sendCSW();
-                            }
-                        }
-                        break;
-                    case VERIFY10:
-                        if (!(cbw.CB[1] & 0x02)) {
-                            csw.Status = CSW_PASSED;
+                case TEST_UNIT_READY:
+                    testUnitReady();
+                    break;
+                case REQUEST_SENSE:
+                    requestSense();
+                    break;
+                case INQUIRY:
+                    inquiryRequest();
+                    break;
+                case MODE_SENSE6:
+                    modeSense6();
+                    break;
+                case READ_FORMAT_CAPACITIES:
+                    readFormatCapacity();
+                    break;
+                case READ_CAPACITY:
+                    readCapacity();
+                    break;
+                case READ10:
+                case READ12:
+                    if (infoTransfer()) {
+                        if ((cbw.Flags & 0x80)) {
+                            stage = PROCESS_CBW;
+                            memoryRead();
+                        } else {
+                            stallEndpoint(EPBULK_OUT);
+                            csw.Status = CSW_ERROR;
                             sendCSW();
-                            break;
                         }
-                        if (infoTransfer()) {
-                            if (!(cbw.Flags & 0x80)) {
-                                stage = PROCESS_CBW;
-                                memOK = true;
-                            } else {
-                                stallEndpoint(EPBULK_IN);
-                                csw.Status = CSW_ERROR;
-                                sendCSW();
-                            }
+                    }
+                    break;
+                case WRITE10:
+                case WRITE12:
+                    if (infoTransfer()) {
+                        if (!(cbw.Flags & 0x80)) {
+                            stage = PROCESS_CBW;
+                        } else {
+                            stallEndpoint(EPBULK_IN);
+                            csw.Status = CSW_ERROR;
+                            sendCSW();
                         }
-                        break;
-                    case MEDIA_REMOVAL:
+                    }
+                    break;
+                case VERIFY10:
+                    if (!(cbw.CB[1] & 0x02)) {
                         csw.Status = CSW_PASSED;
                         sendCSW();
                         break;
-                    default:
-                        fail();
-                        break;
+                    }
+                    if (infoTransfer()) {
+                        if (!(cbw.Flags & 0x80)) {
+                            stage = PROCESS_CBW;
+                            memOK = true;
+                        } else {
+                            stallEndpoint(EPBULK_IN);
+                            csw.Status = CSW_ERROR;
+                            sendCSW();
+                        }
+                    }
+                    break;
+                case MEDIA_REMOVAL:
+                    csw.Status = CSW_PASSED;
+                    sendCSW();
+                    break;
+                default:
+                    fail();
+                    break;
                 }
             }
         }
@@ -532,16 +530,16 @@ bool USBMSD::infoTransfer (void) {
 
     // Number of Blocks to transfer
     switch (cbw.CB[0]) {
-        case READ10:
-        case WRITE10:
-        case VERIFY10:
-            n = (cbw.CB[7] <<  8) | (cbw.CB[8] <<  0);
-            break;
+    case READ10:
+    case WRITE10:
+    case VERIFY10:
+        n = (cbw.CB[7] <<  8) | (cbw.CB[8] <<  0);
+        break;
 
-        case READ12:
-        case WRITE12:
-            n = (cbw.CB[6] << 24) | (cbw.CB[7] << 16) | (cbw.CB[8] <<  8) | (cbw.CB[9] <<  0);
-            break;
+    case READ12:
+    case WRITE12:
+        n = (cbw.CB[6] << 24) | (cbw.CB[7] << 16) | (cbw.CB[8] <<  8) | (cbw.CB[9] <<  0);
+        break;
     }
 
     length = n * BlockSize;
@@ -638,8 +636,8 @@ uint8_t * USBMSD::configurationDesc() {
         5,                          // bDescriptorType
         PHY_TO_DESC(EPBULK_IN),     // bEndpointAddress
         0x02,                       // bmAttributes (0x02=bulk)
-        LSB(MAX_PACKET_SIZE_EPBULK),// wMaxPacketSize (LSB)
-        MSB(MAX_PACKET_SIZE_EPBULK),// wMaxPacketSize (MSB)
+        LSB(MAX_PACKET_SIZE_EPBULK), // wMaxPacketSize (LSB)
+        MSB(MAX_PACKET_SIZE_EPBULK), // wMaxPacketSize (MSB)
         0,                          // bInterval
 
         // endpoint descriptor, USB spec 9.6.6, page 269-271, Table 9-13
@@ -647,8 +645,8 @@ uint8_t * USBMSD::configurationDesc() {
         5,                          // bDescriptorType
         PHY_TO_DESC(EPBULK_OUT),    // bEndpointAddress
         0x02,                       // bmAttributes (0x02=bulk)
-        LSB(MAX_PACKET_SIZE_EPBULK),// wMaxPacketSize (LSB)
-        MSB(MAX_PACKET_SIZE_EPBULK),// wMaxPacketSize (MSB)
+        LSB(MAX_PACKET_SIZE_EPBULK), // wMaxPacketSize (LSB)
+        MSB(MAX_PACKET_SIZE_EPBULK), // wMaxPacketSize (MSB)
         0                           // bInterval
     };
     return configDescriptor;

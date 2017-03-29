@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 #include "ebox.h"
@@ -31,12 +31,12 @@ void setup()
     ret = wifi.begin(&PA4, &uart2, 115200);
     if(ret)
         uart1.printf("esp8266 AT_CMD OK\r\n");
-    
-	uart1.printf("esp8266 join wifi...\r\n");
+
+    uart1.printf("esp8266 join wifi...\r\n");
     ret = wifi.join_ap();
     if(ret)
-		uart1.printf("esp8266 join wifi OK\r\n");
-		
+        uart1.printf("esp8266 join wifi OK\r\n");
+
 
 }
 
@@ -44,7 +44,7 @@ int main(void)
 {
     setup();
 
-	uart1.printf("esp8266 get ipconfig ...\r\n");
+    uart1.printf("esp8266 get ipconfig ...\r\n");
     ret = wifi.query_sta_ip(recv_buf);
     if(ret)
     {
@@ -62,6 +62,6 @@ int main(void)
     }
 
 
-    while(1);
+    while(1) ;
 
 }

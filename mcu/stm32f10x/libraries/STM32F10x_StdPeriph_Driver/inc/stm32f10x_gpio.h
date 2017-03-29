@@ -1,47 +1,47 @@
 /**
-  ******************************************************************************
-  * @file    stm32f10x_gpio.h
-  * @author  MCD Application Team
-  * @version V3.5.0
-  * @date    11-March-2011
-  * @brief   This file contains all the functions prototypes for the GPIO 
-  *          firmware library.
-  ******************************************************************************
-  * @attention
-  *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-  *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    stm32f10x_gpio.h
+ * @author  MCD Application Team
+ * @version V3.5.0
+ * @date    11-March-2011
+ * @brief   This file contains all the functions prototypes for the GPIO
+ *          firmware library.
+ ******************************************************************************
+ * @attention
+ *
+ * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+ * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
+ * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
+ * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
+ * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
+ * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+ *
+ * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F10x_GPIO_H
 #define __STM32F10x_GPIO_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @addtogroup GPIO
-  * @{
-  */
+ * @{
+ */
 
 /** @defgroup GPIO_Exported_Types
-  * @{
-  */
+ * @{
+ */
 
 #define IS_GPIO_ALL_PERIPH(PERIPH) (((PERIPH) == GPIOA) || \
                                     ((PERIPH) == GPIOB) || \
@@ -50,23 +50,23 @@
                                     ((PERIPH) == GPIOE) || \
                                     ((PERIPH) == GPIOF) || \
                                     ((PERIPH) == GPIOG))
-                                     
-/** 
-  * @brief  Output Maximum frequency selection  
-  */
+
+/**
+ * @brief  Output Maximum frequency selection
+ */
 
 typedef enum
-{ 
-  GPIO_Speed_10MHz = 1,
-  GPIO_Speed_2MHz, 
-  GPIO_Speed_50MHz
+{
+    GPIO_Speed_10MHz = 1,
+    GPIO_Speed_2MHz,
+    GPIO_Speed_50MHz
 }GPIOSpeed_TypeDef;
 #define IS_GPIO_SPEED(SPEED) (((SPEED) == GPIO_Speed_10MHz) || ((SPEED) == GPIO_Speed_2MHz) || \
                               ((SPEED) == GPIO_Speed_50MHz))
 
-/** 
-  * @brief  Configuration Mode enumeration  
-  */
+/**
+ * @brief  Configuration Mode enumeration
+ */
 
 typedef enum
 { GPIO_Mode_AIN = 0x0,
@@ -76,53 +76,51 @@ typedef enum
   GPIO_Mode_Out_OD = 0x14,
   GPIO_Mode_Out_PP = 0x10,
   GPIO_Mode_AF_OD = 0x1C,
-  GPIO_Mode_AF_PP = 0x18
-}GPIOMode_TypeDef;
+  GPIO_Mode_AF_PP = 0x18}GPIOMode_TypeDef;
 
 #define IS_GPIO_MODE(MODE) (((MODE) == GPIO_Mode_AIN) || ((MODE) == GPIO_Mode_IN_FLOATING) || \
                             ((MODE) == GPIO_Mode_IPD) || ((MODE) == GPIO_Mode_IPU) || \
                             ((MODE) == GPIO_Mode_Out_OD) || ((MODE) == GPIO_Mode_Out_PP) || \
                             ((MODE) == GPIO_Mode_AF_OD) || ((MODE) == GPIO_Mode_AF_PP))
 
-/** 
-  * @brief  GPIO Init structure definition  
-  */
+/**
+ * @brief  GPIO Init structure definition
+ */
 
 typedef struct
 {
-  uint16_t GPIO_Pin;             /*!< Specifies the GPIO pins to be configured.
-                                      This parameter can be any value of @ref GPIO_pins_define */
+    uint16_t GPIO_Pin;           /*!< Specifies the GPIO pins to be configured.
+                                  *    This parameter can be any value of @ref GPIO_pins_define */
 
-  GPIOSpeed_TypeDef GPIO_Speed;  /*!< Specifies the speed for the selected pins.
-                                      This parameter can be a value of @ref GPIOSpeed_TypeDef */
+    GPIOSpeed_TypeDef GPIO_Speed; /*!< Specifies the speed for the selected pins.
+                                   *    This parameter can be a value of @ref GPIOSpeed_TypeDef */
 
-  GPIOMode_TypeDef GPIO_Mode;    /*!< Specifies the operating mode for the selected pins.
-                                      This parameter can be a value of @ref GPIOMode_TypeDef */
+    GPIOMode_TypeDef GPIO_Mode;  /*!< Specifies the operating mode for the selected pins.
+                                  *    This parameter can be a value of @ref GPIOMode_TypeDef */
 }GPIO_InitTypeDef;
 
 
-/** 
-  * @brief  Bit_SET and Bit_RESET enumeration  
-  */
+/**
+ * @brief  Bit_SET and Bit_RESET enumeration
+ */
 
 typedef enum
 { Bit_RESET = 0,
-  Bit_SET
-}BitAction;
+  Bit_SET}BitAction;
 
 #define IS_GPIO_BIT_ACTION(ACTION) (((ACTION) == Bit_RESET) || ((ACTION) == Bit_SET))
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup GPIO_Exported_Constants
-  * @{
-  */
+ * @{
+ */
 
-/** @defgroup GPIO_pins_define 
-  * @{
-  */
+/** @defgroup GPIO_pins_define
+ * @{
+ */
 
 #define GPIO_Pin_0                 ((uint16_t)0x0001)  /*!< Pin 0 selected */
 #define GPIO_Pin_1                 ((uint16_t)0x0002)  /*!< Pin 1 selected */
@@ -142,7 +140,7 @@ typedef enum
 #define GPIO_Pin_15                ((uint16_t)0x8000)  /*!< Pin 15 selected */
 #define GPIO_Pin_All               ((uint16_t)0xFFFF)  /*!< All pins selected */
 
-#define IS_GPIO_PIN(PIN) ((((PIN) & (uint16_t)0x00) == 0x00) && ((PIN) != (uint16_t)0x00))
+#define IS_GPIO_PIN(PIN) ((((PIN) &(uint16_t)0x00) == 0x00) && ((PIN) != (uint16_t)0x00))
 
 #define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_Pin_0) || \
                               ((PIN) == GPIO_Pin_1) || \
@@ -162,12 +160,12 @@ typedef enum
                               ((PIN) == GPIO_Pin_15))
 
 /**
-  * @}
-  */
+ * @}
+ */
 
-/** @defgroup GPIO_Remap_define 
-  * @{
-  */
+/** @defgroup GPIO_Remap_define
+ * @{
+ */
 
 #define GPIO_Remap_SPI1             ((uint32_t)0x00000001)  /*!< SPI1 Alternate Function mapping */
 #define GPIO_Remap_I2C1             ((uint32_t)0x00000002)  /*!< I2C1 Alternate Function mapping */
@@ -198,8 +196,8 @@ typedef enum
 #define GPIO_Remap_SWJ_Disable      ((uint32_t)0x00300400)  /*!< Full SWJ Disabled (JTAG-DP + SW-DP) */
 #define GPIO_Remap_SPI3             ((uint32_t)0x00201100)  /*!< SPI3/I2S3 Alternate Function mapping (only for Connectivity line devices) */
 #define GPIO_Remap_TIM2ITR1_PTP_SOF ((uint32_t)0x00202000)  /*!< Ethernet PTP output or USB OTG SOF (Start of Frame) connected
-                                                                 to TIM2 Internal Trigger 1 for calibration
-                                                                 (only for Connectivity line devices) */
+                                                             *    to TIM2 Internal Trigger 1 for calibration
+                                                             *    (only for Connectivity line devices) */
 #define GPIO_Remap_PTP_PPS          ((uint32_t)0x00204000)  /*!< Ethernet MAC PPS_PTS output on PB05 (only for Connectivity line devices) */
 
 #define GPIO_Remap_TIM15            ((uint32_t)0x80000001)  /*!< TIM15 Alternate Function mapping (only for Value line devices) */
@@ -217,8 +215,8 @@ typedef enum
 
 #define GPIO_Remap_TIM67_DAC_DMA    ((uint32_t)0x80000800)  /*!< TIM6/TIM7 and DAC DMA requests remapping (only for High density Value line devices) */
 #define GPIO_Remap_TIM12            ((uint32_t)0x80001000)  /*!< TIM12 Alternate Function mapping (only for High density Value line devices) */
-#define GPIO_Remap_MISC             ((uint32_t)0x80002000)  /*!< Miscellaneous Remap (DMA2 Channel5 Position and DAC Trigger remapping, 
-                                                                 only for High density Value line devices) */                                                       
+#define GPIO_Remap_MISC             ((uint32_t)0x80002000)  /*!< Miscellaneous Remap (DMA2 Channel5 Position and DAC Trigger remapping,
+                                                             *    only for High density Value line devices) */
 
 #define IS_GPIO_REMAP(REMAP) (((REMAP) == GPIO_Remap_SPI1) || ((REMAP) == GPIO_Remap_I2C1) || \
                               ((REMAP) == GPIO_Remap_USART1) || ((REMAP) == GPIO_Remap_USART2) || \
@@ -242,14 +240,14 @@ typedef enum
                               ((REMAP) == GPIO_Remap_TIM13) || ((REMAP) == GPIO_Remap_TIM14) || \
                               ((REMAP) == GPIO_Remap_FSMC_NADV) || ((REMAP) == GPIO_Remap_TIM67_DAC_DMA) || \
                               ((REMAP) == GPIO_Remap_TIM12) || ((REMAP) == GPIO_Remap_MISC))
-                              
-/**
-  * @}
-  */ 
 
-/** @defgroup GPIO_Port_Sources 
-  * @{
-  */
+/**
+ * @}
+ */
+
+/** @defgroup GPIO_Port_Sources
+ * @{
+ */
 
 #define GPIO_PortSourceGPIOA       ((uint8_t)0x00)
 #define GPIO_PortSourceGPIOB       ((uint8_t)0x01)
@@ -273,12 +271,12 @@ typedef enum
                                               ((PORTSOURCE) == GPIO_PortSourceGPIOG))
 
 /**
-  * @}
-  */
+ * @}
+ */
 
-/** @defgroup GPIO_Pin_sources 
-  * @{
-  */
+/** @defgroup GPIO_Pin_sources
+ * @{
+ */
 
 #define GPIO_PinSource0            ((uint8_t)0x00)
 #define GPIO_PinSource1            ((uint8_t)0x01)
@@ -315,55 +313,55 @@ typedef enum
                                        ((PINSOURCE) == GPIO_PinSource15))
 
 /**
-  * @}
-  */
+ * @}
+ */
 
-/** @defgroup Ethernet_Media_Interface 
-  * @{
-  */ 
-#define GPIO_ETH_MediaInterface_MII    ((u32)0x00000000) 
-#define GPIO_ETH_MediaInterface_RMII   ((u32)0x00000001)                                       
+/** @defgroup Ethernet_Media_Interface
+ * @{
+ */
+#define GPIO_ETH_MediaInterface_MII    ((u32)0x00000000)
+#define GPIO_ETH_MediaInterface_RMII   ((u32)0x00000001)
 
 #define IS_GPIO_ETH_MEDIA_INTERFACE(INTERFACE) (((INTERFACE) == GPIO_ETH_MediaInterface_MII) || \
                                                 ((INTERFACE) == GPIO_ETH_MediaInterface_RMII))
 
 /**
-  * @}
-  */                                                
+ * @}
+ */
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup GPIO_Exported_Macros
-  * @{
-  */
+ * @{
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup GPIO_Exported_Functions
-  * @{
-  */
+ * @{
+ */
 
-void GPIO_DeInit(GPIO_TypeDef* GPIOx);
-void GPIO_AFIODeInit(void);
-void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct);
-void GPIO_StructInit(GPIO_InitTypeDef* GPIO_InitStruct);
-uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
-uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx);
-uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
-uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx);
-void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
-void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
-void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal);
-void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal);
-void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
-void GPIO_EventOutputConfig(uint8_t GPIO_PortSource, uint8_t GPIO_PinSource);
-void GPIO_EventOutputCmd(FunctionalState NewState);
-void GPIO_PinRemapConfig(uint32_t GPIO_Remap, FunctionalState NewState);
-void GPIO_EXTILineConfig(uint8_t GPIO_PortSource, uint8_t GPIO_PinSource);
-void GPIO_ETH_MediaInterfaceConfig(uint32_t GPIO_ETH_MediaInterface);
+void            GPIO_DeInit(GPIO_TypeDef* GPIOx);
+void            GPIO_AFIODeInit(void);
+void            GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct);
+void            GPIO_StructInit(GPIO_InitTypeDef* GPIO_InitStruct);
+uint8_t         GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+uint16_t        GPIO_ReadInputData(GPIO_TypeDef* GPIOx);
+uint8_t         GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+uint16_t        GPIO_ReadOutputData(GPIO_TypeDef* GPIOx);
+void            GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+void            GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+void            GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal);
+void            GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal);
+void            GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+void            GPIO_EventOutputConfig(uint8_t GPIO_PortSource, uint8_t GPIO_PinSource);
+void            GPIO_EventOutputCmd(FunctionalState NewState);
+void            GPIO_PinRemapConfig(uint32_t GPIO_Remap, FunctionalState NewState);
+void            GPIO_EXTILineConfig(uint8_t GPIO_PortSource, uint8_t GPIO_PinSource);
+void            GPIO_ETH_MediaInterfaceConfig(uint32_t GPIO_ETH_MediaInterface);
 
 #ifdef __cplusplus
 }
@@ -371,15 +369,15 @@ void GPIO_ETH_MediaInterfaceConfig(uint32_t GPIO_ETH_MediaInterface);
 
 #endif /* __STM32F10x_GPIO_H */
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

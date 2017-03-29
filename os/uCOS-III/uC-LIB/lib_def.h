@@ -1,147 +1,147 @@
 /*
-*********************************************************************************************************
-*                                                uC/LIB
-*                                        CUSTOM LIBRARY MODULES
-*
-*                          (c) Copyright 2004-2012; Micrium, Inc.; Weston, FL
-*
-*               All rights reserved.  Protected by international copyright laws.
-*
-*               uC/LIB is provided in source form to registered licensees ONLY.  It is 
-*               illegal to distribute this source code to any third party unless you receive 
-*               written permission by an authorized Micrium representative.  Knowledge of 
-*               the source code may NOT be used to develop a similar product.
-*
-*               Please help us continue to provide the Embedded community with the finest 
-*               software available.  Your honesty is greatly appreciated.
-*
-*               You can contact us at www.micrium.com.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                                uC/LIB
+ *                                        CUSTOM LIBRARY MODULES
+ *
+ *                          (c) Copyright 2004-2012; Micrium, Inc.; Weston, FL
+ *
+ *               All rights reserved.  Protected by international copyright laws.
+ *
+ *               uC/LIB is provided in source form to registered licensees ONLY.  It is
+ *               illegal to distribute this source code to any third party unless you receive
+ *               written permission by an authorized Micrium representative.  Knowledge of
+ *               the source code may NOT be used to develop a similar product.
+ *
+ *               Please help us continue to provide the Embedded community with the finest
+ *               software available.  Your honesty is greatly appreciated.
+ *
+ *               You can contact us at www.micrium.com.
+ *********************************************************************************************************
+ */
 
 /*
-*********************************************************************************************************
-*
-*                                     CORE CUSTOM LIBRARY MODULE
-*
-* Filename      : lib_def.h
-* Version       : V1.37.01
-* Programmer(s) : ITJ
-*                 FBJ
-*********************************************************************************************************
-* Note(s)       : (1) Assumes the following versions (or more recent) of software modules are included in 
-*                     the project build :
-*
-*                     (a) uC/CPU V1.29.00
-*
-*
-*                 (2) NO compiler-supplied standard library functions are used in library or product software.
-*
-*                     (a) ALL standard library functions are implemented in the custom library modules :
-*
-*                         (1) \<Custom Library Directory>\lib_*.*
-*
-*                         (2) \<Custom Library Directory>\Ports\<cpu>\<compiler>\lib*_a.*
-*
-*                               where
-*                                       <Custom Library Directory>      directory path for custom library software
-*                                       <cpu>                           directory name for specific processor (CPU)
-*                                       <compiler>                      directory name for specific compiler
-*
-*                     (b) Product-specific library functions are implemented in individual products.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *
+ *                                     CORE CUSTOM LIBRARY MODULE
+ *
+ * Filename      : lib_def.h
+ * Version       : V1.37.01
+ * Programmer(s) : ITJ
+ *                 FBJ
+ *********************************************************************************************************
+ * Note(s)       : (1) Assumes the following versions (or more recent) of software modules are included in
+ *                     the project build :
+ *
+ *                     (a) uC/CPU V1.29.00
+ *
+ *
+ *                 (2) NO compiler-supplied standard library functions are used in library or product software.
+ *
+ *                     (a) ALL standard library functions are implemented in the custom library modules :
+ *
+ *                         (1) \<Custom Library Directory>\lib_*.*
+ *
+ *                         (2) \<Custom Library Directory>\Ports\<cpu>\<compiler>\lib*_a.*
+ *
+ *                               where
+ *                                       <Custom Library Directory>      directory path for custom library software
+ *                                       <cpu>                           directory name for specific processor (CPU)
+ *                                       <compiler>                      directory name for specific compiler
+ *
+ *                     (b) Product-specific library functions are implemented in individual products.
+ *********************************************************************************************************
+ */
 
 
 /*
-*********************************************************************************************************
-*                                               MODULE
-*
-* Note(s) : (1) This library definition header file is protected from multiple pre-processor inclusion 
-*               through use of the library definition module present pre-processor macro definition.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                               MODULE
+ *
+ * Note(s) : (1) This library definition header file is protected from multiple pre-processor inclusion
+ *               through use of the library definition module present pre-processor macro definition.
+ *********************************************************************************************************
+ */
 
 #ifndef  LIB_DEF_MODULE_PRESENT
 #define  LIB_DEF_MODULE_PRESENT
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                CUSTOM LIBRARY MODULE VERSION NUMBER
-*
-* Note(s) : (1) (a) The custom library module software version is denoted as follows :
-*
-*                       Vx.yy.zz
-*
-*                           where
-*                                   V               denotes 'Version' label
-*                                   x               denotes     major software version revision number
-*                                   yy              denotes     minor software version revision number
-*                                   zz              denotes sub-minor software version revision number
-*
-*               (b) The software version label #define is formatted as follows :
-*
-*                       ver = x.yyzz * 100 * 100
-*
-*                           where
-*                                   ver             denotes software version number scaled as an integer value
-*                                   x.yyzz          denotes software version number, where the unscaled integer 
-*                                                       portion denotes the major version number & the unscaled 
-*                                                       fractional portion denotes the (concatenated) minor 
-*                                                       version numbers
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                CUSTOM LIBRARY MODULE VERSION NUMBER
+ *
+ * Note(s) : (1) (a) The custom library module software version is denoted as follows :
+ *
+ *                       Vx.yy.zz
+ *
+ *                           where
+ *                                   V               denotes 'Version' label
+ *                                   x               denotes     major software version revision number
+ *                                   yy              denotes     minor software version revision number
+ *                                   zz              denotes sub-minor software version revision number
+ *
+ *               (b) The software version label #define is formatted as follows :
+ *
+ *                       ver = x.yyzz * 100 * 100
+ *
+ *                           where
+ *                                   ver             denotes software version number scaled as an integer value
+ *                                   x.yyzz          denotes software version number, where the unscaled integer
+ *                                                       portion denotes the major version number & the unscaled
+ *                                                       fractional portion denotes the (concatenated) minor
+ *                                                       version numbers
+ *********************************************************************************************************
+ */
 
 #define  LIB_VERSION                                   13700u   /* See Note #1.                                         */
 
 
 /*
-*********************************************************************************************************
-*                                            INCLUDE FILES
-*
-* Note(s) : (1) The custom library software files are located in the following directories :
-*
-*               (a) \<Custom Library Directory>\lib_*.*
-*
-*                       where
-*                               <Custom Library Directory>      directory path for custom library software
-*
-*           (2) CPU-configuration  software files are located in the following directories :
-*
-*               (a) \<CPU-Compiler Directory>\cpu_*.*
-*               (b) \<CPU-Compiler Directory>\<cpu>\<compiler>\cpu*.*
-*
-*                       where
-*                               <CPU-Compiler Directory>        directory path for common CPU-compiler software
-*                               <cpu>                           directory name for specific processor (CPU)
-*                               <compiler>                      directory name for specific compiler
-*
-*           (3) Compiler MUST be configured to include as additional include path directories :
-*
-*               (a) '\<Custom Library Directory>\' directory                            See Note #1a
-*
-*               (b) (1) '\<CPU-Compiler Directory>\'                  directory         See Note #2a
-*                   (2) '\<CPU-Compiler Directory>\<cpu>\<compiler>\' directory         See Note #2b
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                            INCLUDE FILES
+ *
+ * Note(s) : (1) The custom library software files are located in the following directories :
+ *
+ *               (a) \<Custom Library Directory>\lib_*.*
+ *
+ *                       where
+ *                               <Custom Library Directory>      directory path for custom library software
+ *
+ *           (2) CPU-configuration  software files are located in the following directories :
+ *
+ *               (a) \<CPU-Compiler Directory>\cpu_*.*
+ *               (b) \<CPU-Compiler Directory>\<cpu>\<compiler>\cpu*.*
+ *
+ *                       where
+ *                               <CPU-Compiler Directory>        directory path for common CPU-compiler software
+ *                               <cpu>                           directory name for specific processor (CPU)
+ *                               <compiler>                      directory name for specific compiler
+ *
+ *           (3) Compiler MUST be configured to include as additional include path directories :
+ *
+ *               (a) '\<Custom Library Directory>\' directory                            See Note #1a
+ *
+ *               (b) (1) '\<CPU-Compiler Directory>\'                  directory         See Note #2a
+ *                   (2) '\<CPU-Compiler Directory>\<cpu>\<compiler>\' directory         See Note #2b
+ *********************************************************************************************************
+ */
 
 #include  <cpu_def.h>
 #include  <cpu.h>
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                          STANDARD DEFINES
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          STANDARD DEFINES
+ *********************************************************************************************************
+ */
 
 #define  DEF_NULL                                 ((void *)0)
 
 
-                                                                /* ----------------- BOOLEAN DEFINES ------------------ */
+/* ----------------- BOOLEAN DEFINES ------------------ */
 #define  DEF_FALSE                                         0u
 #define  DEF_TRUE                                          1u
 
@@ -167,7 +167,7 @@
 #define  DEF_OK                                            1u
 
 
-                                                                /* ------------------- BIT DEFINES -------------------- */
+/* ------------------- BIT DEFINES -------------------- */
 #define  DEF_BIT_NONE                                   0x00u
 
 #define  DEF_BIT_00                                     0x01u
@@ -205,7 +205,7 @@
 #define  DEF_BIT_29                               0x20000000u
 #define  DEF_BIT_30                               0x40000000u
 #define  DEF_BIT_31                               0x80000000u
-/*$PAGE*/
+/*$PAGE*/
 #define  DEF_BIT_32                       0x0000000100000000u
 #define  DEF_BIT_33                       0x0000000200000000u
 #define  DEF_BIT_34                       0x0000000400000000u
@@ -243,11 +243,11 @@
 #define  DEF_BIT_63                       0x8000000000000000u
 
 
-                                                                /* ------------------ ALIGN DEFINES ------------------- */
+/* ------------------ ALIGN DEFINES ------------------- */
 #define  DEF_ALIGN_MAX_NBR_OCTETS                       4096u
 
 
-                                                                /* ------------------ OCTET DEFINES ------------------- */
+/* ------------------ OCTET DEFINES ------------------- */
 #define  DEF_OCTET_NBR_BITS                                8u
 #define  DEF_OCTET_MASK                                 0xFFu
 
@@ -260,15 +260,15 @@
 #define  DEF_NIBBLE_MASK                                0x0Fu
 
 
-                                                                /* --------------- NUMBER BASE DEFINES ---------------- */
+/* --------------- NUMBER BASE DEFINES ---------------- */
 #define  DEF_NBR_BASE_BIN                                  2u
 #define  DEF_NBR_BASE_OCT                                  8u
 #define  DEF_NBR_BASE_DEC                                 10u
 #define  DEF_NBR_BASE_HEX                                 16u
 
 
-/*$PAGE*/
-                                                                /* ----------------- INTEGER DEFINES ------------------ */
+/*$PAGE*/
+/* ----------------- INTEGER DEFINES ------------------ */
 #define  DEF_INT_08_NBR_BITS                               8u
 #define  DEF_INT_08_MASK                                0xFFu
 
@@ -349,8 +349,8 @@
 
 
 
-/*$PAGE*/
-                                                                /* --------------- CPU INTEGER DEFINES ---------------- */
+/*$PAGE*/
+/* --------------- CPU INTEGER DEFINES ---------------- */
 #define  DEF_INT_CPU_NBR_BITS                           (CPU_CFG_DATA_SIZE     * DEF_OCTET_NBR_BITS)
 #define  DEF_INT_CPU_NBR_BITS_MAX                       (CPU_CFG_DATA_SIZE_MAX * DEF_OCTET_NBR_BITS)
 
@@ -359,78 +359,78 @@
 #if     (DEF_INT_CPU_NBR_BITS == DEF_INT_08_NBR_BITS)
 
 
-#define  DEF_INT_CPU_MASK                                DEF_INT_08_MASK
+ #define  DEF_INT_CPU_MASK                                DEF_INT_08_MASK
 
-#define  DEF_INT_CPU_U_MIN_VAL                           DEF_INT_08U_MIN_VAL
-#define  DEF_INT_CPU_U_MAX_VAL                           DEF_INT_08U_MAX_VAL
+ #define  DEF_INT_CPU_U_MIN_VAL                           DEF_INT_08U_MIN_VAL
+ #define  DEF_INT_CPU_U_MAX_VAL                           DEF_INT_08U_MAX_VAL
 
-#define  DEF_INT_CPU_S_MIN_VAL                           DEF_INT_08S_MIN_VAL
-#define  DEF_INT_CPU_S_MAX_VAL                           DEF_INT_08S_MAX_VAL
+ #define  DEF_INT_CPU_S_MIN_VAL                           DEF_INT_08S_MIN_VAL
+ #define  DEF_INT_CPU_S_MAX_VAL                           DEF_INT_08S_MAX_VAL
 
-#define  DEF_INT_CPU_S_MIN_VAL_ONES_CPL                  DEF_INT_08S_MIN_VAL_ONES_CPL
-#define  DEF_INT_CPU_S_MAX_VAL_ONES_CPL                  DEF_INT_08S_MAX_VAL_ONES_CPL
+ #define  DEF_INT_CPU_S_MIN_VAL_ONES_CPL                  DEF_INT_08S_MIN_VAL_ONES_CPL
+ #define  DEF_INT_CPU_S_MAX_VAL_ONES_CPL                  DEF_INT_08S_MAX_VAL_ONES_CPL
 
 
 
 #elif   (DEF_INT_CPU_NBR_BITS == DEF_INT_16_NBR_BITS)
 
 
-#define  DEF_INT_CPU_MASK                                DEF_INT_16_MASK
+ #define  DEF_INT_CPU_MASK                                DEF_INT_16_MASK
 
-#define  DEF_INT_CPU_U_MIN_VAL                           DEF_INT_16U_MIN_VAL
-#define  DEF_INT_CPU_U_MAX_VAL                           DEF_INT_16U_MAX_VAL
+ #define  DEF_INT_CPU_U_MIN_VAL                           DEF_INT_16U_MIN_VAL
+ #define  DEF_INT_CPU_U_MAX_VAL                           DEF_INT_16U_MAX_VAL
 
-#define  DEF_INT_CPU_S_MIN_VAL                           DEF_INT_16S_MIN_VAL
-#define  DEF_INT_CPU_S_MAX_VAL                           DEF_INT_16S_MAX_VAL
+ #define  DEF_INT_CPU_S_MIN_VAL                           DEF_INT_16S_MIN_VAL
+ #define  DEF_INT_CPU_S_MAX_VAL                           DEF_INT_16S_MAX_VAL
 
-#define  DEF_INT_CPU_S_MIN_VAL_ONES_CPL                  DEF_INT_16S_MIN_VAL_ONES_CPL
-#define  DEF_INT_CPU_S_MAX_VAL_ONES_CPL                  DEF_INT_16S_MAX_VAL_ONES_CPL
+ #define  DEF_INT_CPU_S_MIN_VAL_ONES_CPL                  DEF_INT_16S_MIN_VAL_ONES_CPL
+ #define  DEF_INT_CPU_S_MAX_VAL_ONES_CPL                  DEF_INT_16S_MAX_VAL_ONES_CPL
 
 
 
 #elif   (DEF_INT_CPU_NBR_BITS == DEF_INT_32_NBR_BITS)
 
 
-#define  DEF_INT_CPU_MASK                                DEF_INT_32_MASK
+ #define  DEF_INT_CPU_MASK                                DEF_INT_32_MASK
 
-#define  DEF_INT_CPU_U_MIN_VAL                           DEF_INT_32U_MIN_VAL
-#define  DEF_INT_CPU_U_MAX_VAL                           DEF_INT_32U_MAX_VAL
+ #define  DEF_INT_CPU_U_MIN_VAL                           DEF_INT_32U_MIN_VAL
+ #define  DEF_INT_CPU_U_MAX_VAL                           DEF_INT_32U_MAX_VAL
 
-#define  DEF_INT_CPU_S_MIN_VAL                           DEF_INT_32S_MIN_VAL
-#define  DEF_INT_CPU_S_MAX_VAL                           DEF_INT_32S_MAX_VAL
+ #define  DEF_INT_CPU_S_MIN_VAL                           DEF_INT_32S_MIN_VAL
+ #define  DEF_INT_CPU_S_MAX_VAL                           DEF_INT_32S_MAX_VAL
 
-#define  DEF_INT_CPU_S_MIN_VAL_ONES_CPL                  DEF_INT_32S_MIN_VAL_ONES_CPL
-#define  DEF_INT_CPU_S_MAX_VAL_ONES_CPL                  DEF_INT_32S_MAX_VAL_ONES_CPL
+ #define  DEF_INT_CPU_S_MIN_VAL_ONES_CPL                  DEF_INT_32S_MIN_VAL_ONES_CPL
+ #define  DEF_INT_CPU_S_MAX_VAL_ONES_CPL                  DEF_INT_32S_MAX_VAL_ONES_CPL
 
 
 
 #elif   (DEF_INT_CPU_NBR_BITS == DEF_INT_64_NBR_BITS)
 
 
-#define  DEF_INT_CPU_MASK                                DEF_INT_64_MASK
+ #define  DEF_INT_CPU_MASK                                DEF_INT_64_MASK
 
-#define  DEF_INT_CPU_U_MIN_VAL                           DEF_INT_64U_MIN_VAL
-#define  DEF_INT_CPU_U_MAX_VAL                           DEF_INT_64U_MAX_VAL
+ #define  DEF_INT_CPU_U_MIN_VAL                           DEF_INT_64U_MIN_VAL
+ #define  DEF_INT_CPU_U_MAX_VAL                           DEF_INT_64U_MAX_VAL
 
-#define  DEF_INT_CPU_S_MIN_VAL                           DEF_INT_64S_MIN_VAL
-#define  DEF_INT_CPU_S_MAX_VAL                           DEF_INT_64S_MAX_VAL
+ #define  DEF_INT_CPU_S_MIN_VAL                           DEF_INT_64S_MIN_VAL
+ #define  DEF_INT_CPU_S_MAX_VAL                           DEF_INT_64S_MAX_VAL
 
-#define  DEF_INT_CPU_S_MIN_VAL_ONES_CPL                  DEF_INT_64S_MIN_VAL_ONES_CPL
-#define  DEF_INT_CPU_S_MAX_VAL_ONES_CPL                  DEF_INT_64S_MAX_VAL_ONES_CPL
+ #define  DEF_INT_CPU_S_MIN_VAL_ONES_CPL                  DEF_INT_64S_MIN_VAL_ONES_CPL
+ #define  DEF_INT_CPU_S_MAX_VAL_ONES_CPL                  DEF_INT_64S_MAX_VAL_ONES_CPL
 
 
 
 #else
 
-#error  "CPU_CFG_DATA_SIZE  illegally #defined in 'cpu.h'      "
-#error  "                   [See 'cpu.h  CONFIGURATION ERRORS']"
+ #error  "CPU_CFG_DATA_SIZE  illegally #defined in 'cpu.h'      "
+ #error  "                   [See 'cpu.h  CONFIGURATION ERRORS']"
 
 #endif
 
 
 
-/*$PAGE*/
-                                                                /* ------------------- TIME DEFINES ------------------- */
+/*$PAGE*/
+/* ------------------- TIME DEFINES ------------------- */
 #define  DEF_TIME_NBR_DAY_PER_WK                           7u
 #define  DEF_TIME_NBR_DAY_PER_YR                         365u
 #define  DEF_TIME_NBR_DAY_PER_YR_LEAP                    366u
@@ -458,14 +458,14 @@
 #define  DEF_TIME_NBR_nS_PER_SEC                  1000000000u
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                             ERROR CODES
-*
-* Note(s) : (1) All library error codes are #define'd in 'lib_def.h';
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                             ERROR CODES
+ *
+ * Note(s) : (1) All library error codes are #define'd in 'lib_def.h';
+ *********************************************************************************************************
+ */
 
 typedef enum lib_err {
 
@@ -498,157 +498,157 @@ typedef enum lib_err {
 } LIB_ERR;
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                             DATA TYPES
-*********************************************************************************************************
-*/
-
-
-/*
-*********************************************************************************************************
-*                                          GLOBAL VARIABLES
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                             DATA TYPES
+ *********************************************************************************************************
+ */
 
 
 /*
-*********************************************************************************************************
-*                                               TRACING
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          GLOBAL VARIABLES
+ *********************************************************************************************************
+ */
 
-                                                                /* Trace level, default to TRACE_LEVEL_OFF.             */
+
+/*
+ *********************************************************************************************************
+ *                                               TRACING
+ *********************************************************************************************************
+ */
+
+/* Trace level, default to TRACE_LEVEL_OFF.             */
 #ifndef  TRACE_LEVEL_OFF
-#define  TRACE_LEVEL_OFF                                   0u
+ #define  TRACE_LEVEL_OFF                                   0u
 #endif
 
 #ifndef  TRACE_LEVEL_INFO
-#define  TRACE_LEVEL_INFO                                  1u
+ #define  TRACE_LEVEL_INFO                                  1u
 #endif
 
 #ifndef  TRACE_LEVEL_DBG
-#define  TRACE_LEVEL_DBG                                   2u
+ #define  TRACE_LEVEL_DBG                                   2u
 #endif
 
 #ifndef  TRACE_LEVEL_LOG
-#define  TRACE_LEVEL_LOG                                   3u
+ #define  TRACE_LEVEL_LOG                                   3u
 #endif
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                             BIT MACRO'S
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                             BIT MACRO'S
+ *********************************************************************************************************
+ */
 
 /*
-*********************************************************************************************************
-*                                              DEF_BIT()
-*
-* Description : Create bit mask with single, specified bit set.
-*
-* Argument(s) : bit         Bit number of bit to set.
-*
-* Return(s)   : Bit mask with single, specified bit set.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'bit' SHOULD be a non-negative integer.
-*
-*               (2) (a) 'bit' values that overflow the target CPU &/or compiler environment (e.g. negative 
-*                       or greater-than-CPU-data-size values) MAY generate compiler warnings &/or errors.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                              DEF_BIT()
+ *
+ * Description : Create bit mask with single, specified bit set.
+ *
+ * Argument(s) : bit         Bit number of bit to set.
+ *
+ * Return(s)   : Bit mask with single, specified bit set.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'bit' SHOULD be a non-negative integer.
+ *
+ *               (2) (a) 'bit' values that overflow the target CPU &/or compiler environment (e.g. negative
+ *                       or greater-than-CPU-data-size values) MAY generate compiler warnings &/or errors.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT(bit)                                                   (1u << (bit))
 
 
 /*
-*********************************************************************************************************
-*                                             DEF_BITxx()
-*
-* Description : Create bit mask of specified bit size with single, specified bit set.
-*
-* Argument(s) : bit         Bit number of bit to set.
-*
-* Return(s)   : Bit mask with single, specified bit set.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'bit' SHOULD be a non-negative integer.
-*
-*               (2) (a) 'bit' values that overflow the target CPU &/or compiler environment (e.g. negative 
-*                       or greater-than-CPU-data-size values) MAY generate compiler warnings &/or errors.
-*
-*                   (b) To avoid overflowing any target CPU &/or compiler's integer data type, unsigned 
-*                       bit constant '1' is cast to specified integer data type size.
-*
-*               (3) Ideally, DEF_BITxx() macro's should be named DEF_BIT_xx(); however, these names already 
-*                   previously-released for bit constant #define's (see 'STANDARD DEFINES  BIT DEFINES').
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                             DEF_BITxx()
+ *
+ * Description : Create bit mask of specified bit size with single, specified bit set.
+ *
+ * Argument(s) : bit         Bit number of bit to set.
+ *
+ * Return(s)   : Bit mask with single, specified bit set.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'bit' SHOULD be a non-negative integer.
+ *
+ *               (2) (a) 'bit' values that overflow the target CPU &/or compiler environment (e.g. negative
+ *                       or greater-than-CPU-data-size values) MAY generate compiler warnings &/or errors.
+ *
+ *                   (b) To avoid overflowing any target CPU &/or compiler's integer data type, unsigned
+ *                       bit constant '1' is cast to specified integer data type size.
+ *
+ *               (3) Ideally, DEF_BITxx() macro's should be named DEF_BIT_xx(); however, these names already
+ *                   previously-released for bit constant #define's (see 'STANDARD DEFINES  BIT DEFINES').
+ *********************************************************************************************************
+ */
 
-#define  DEF_BIT08(bit)                        ((CPU_INT08U)((CPU_INT08U)1u  << (bit)))
+#define  DEF_BIT08(bit)                        ((CPU_INT08U)((CPU_INT08U)1u << (bit)))
 
-#define  DEF_BIT16(bit)                        ((CPU_INT16U)((CPU_INT16U)1u  << (bit)))
+#define  DEF_BIT16(bit)                        ((CPU_INT16U)((CPU_INT16U)1u << (bit)))
 
-#define  DEF_BIT32(bit)                        ((CPU_INT32U)((CPU_INT32U)1u  << (bit)))
+#define  DEF_BIT32(bit)                        ((CPU_INT32U)((CPU_INT32U)1u << (bit)))
 
-#define  DEF_BIT64(bit)                        ((CPU_INT64U)((CPU_INT64U)1u  << (bit)))
+#define  DEF_BIT64(bit)                        ((CPU_INT64U)((CPU_INT64U)1u << (bit)))
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                           DEF_BIT_MASK()
-*
-* Description : Shift a bit mask.
-*
-* Argument(s) : bit_mask    Bit mask to shift.
-*
-*               bit_shift   Number of bit positions to left-shift bit mask.
-*
-* Return(s)   : Shifted bit mask.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) (a) 'bit_mask'  SHOULD be an unsigned    integer.
-*
-*                   (b) 'bit_shift' SHOULD be a non-negative integer.
-*
-*               (2) 'bit_shift' values that overflow the target CPU &/or compiler environment (e.g. negative
-*                   or greater-than-CPU-data-size values) MAY generate compiler warnings &/or errors.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                           DEF_BIT_MASK()
+ *
+ * Description : Shift a bit mask.
+ *
+ * Argument(s) : bit_mask    Bit mask to shift.
+ *
+ *               bit_shift   Number of bit positions to left-shift bit mask.
+ *
+ * Return(s)   : Shifted bit mask.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) (a) 'bit_mask'  SHOULD be an unsigned    integer.
+ *
+ *                   (b) 'bit_shift' SHOULD be a non-negative integer.
+ *
+ *               (2) 'bit_shift' values that overflow the target CPU &/or compiler environment (e.g. negative
+ *                   or greater-than-CPU-data-size values) MAY generate compiler warnings &/or errors.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_MASK(bit_mask, bit_shift)                                     ((bit_mask) << (bit_shift))
 
 
 /*
-*********************************************************************************************************
-*                                          DEF_BIT_MASK_xx()
-*
-* Description : Shift a bit mask of specified bit size.
-*
-* Argument(s) : bit_mask    Bit mask to shift.
-*
-*               bit_shift   Number of bit positions to left-shift bit mask.
-*
-* Return(s)   : Shifted bit mask.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) (a) 'bit_mask'  SHOULD be an unsigned    integer.
-*
-*                   (b) 'bit_shift' SHOULD be a non-negative integer.
-*
-*               (2) 'bit_shift' values that overflow the target CPU &/or compiler environment (e.g. negative
-*                   or greater-than-CPU-data-size values) MAY generate compiler warnings &/or errors.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          DEF_BIT_MASK_xx()
+ *
+ * Description : Shift a bit mask of specified bit size.
+ *
+ * Argument(s) : bit_mask    Bit mask to shift.
+ *
+ *               bit_shift   Number of bit positions to left-shift bit mask.
+ *
+ * Return(s)   : Shifted bit mask.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) (a) 'bit_mask'  SHOULD be an unsigned    integer.
+ *
+ *                   (b) 'bit_shift' SHOULD be a non-negative integer.
+ *
+ *               (2) 'bit_shift' values that overflow the target CPU &/or compiler environment (e.g. negative
+ *                   or greater-than-CPU-data-size values) MAY generate compiler warnings &/or errors.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_MASK_08(bit_mask, bit_shift)         ((CPU_INT08U)((CPU_INT08U)(bit_mask) << (bit_shift)))
 
@@ -659,103 +659,103 @@ typedef enum lib_err {
 #define  DEF_BIT_MASK_64(bit_mask, bit_shift)         ((CPU_INT64U)((CPU_INT64U)(bit_mask) << (bit_shift)))
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                           DEF_BIT_FIELD()
-*
-* Description : Create & shift a contiguous bit field.
-*
-* Argument(s) : bit_field   Number of contiguous bits to set in the bit field.
-*
-*               bit_shift   Number of bit positions   to left-shift bit field.
-*
-* Return(s)   : Shifted bit field.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'bit_field' & 'bit_shift' SHOULD be non-negative integers.
-*
-*               (2) (a) 'bit_field'/'bit_shift' values that overflow the target CPU &/or compiler 
-*                       environment (e.g. negative or greater-than-CPU-data-size values) MAY generate 
-*                       compiler warnings &/or errors.
-*
-*                   (b) To avoid overflowing any target CPU &/or compiler's integer data type, unsigned 
-*                       bit constant '1' is suffixed with 'L'ong integer modifier.
-*
-*                       This may still be insufficient for CPUs &/or compilers that support 'long long' 
-*                       integer data types, in which case 'LL' integer modifier should be suffixed.  
-*                       However, since almost all 16- & 32-bit CPUs & compilers support 'long' integer 
-*                       data types but many may NOT support 'long long' integer data types, only 'long' 
-*                       integer data types & modifiers are supported.
-*
-*                       See also 'DEF_BIT_FIELD_xx()  Note #1b'.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                           DEF_BIT_FIELD()
+ *
+ * Description : Create & shift a contiguous bit field.
+ *
+ * Argument(s) : bit_field   Number of contiguous bits to set in the bit field.
+ *
+ *               bit_shift   Number of bit positions   to left-shift bit field.
+ *
+ * Return(s)   : Shifted bit field.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'bit_field' & 'bit_shift' SHOULD be non-negative integers.
+ *
+ *               (2) (a) 'bit_field'/'bit_shift' values that overflow the target CPU &/or compiler
+ *                       environment (e.g. negative or greater-than-CPU-data-size values) MAY generate
+ *                       compiler warnings &/or errors.
+ *
+ *                   (b) To avoid overflowing any target CPU &/or compiler's integer data type, unsigned
+ *                       bit constant '1' is suffixed with 'L'ong integer modifier.
+ *
+ *                       This may still be insufficient for CPUs &/or compilers that support 'long long'
+ *                       integer data types, in which case 'LL' integer modifier should be suffixed.
+ *                       However, since almost all 16- & 32-bit CPUs & compilers support 'long' integer
+ *                       data types but many may NOT support 'long long' integer data types, only 'long'
+ *                       integer data types & modifiers are supported.
+ *
+ *                       See also 'DEF_BIT_FIELD_xx()  Note #1b'.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_FIELD(bit_field, bit_shift)                                 ((((bit_field) >= DEF_INT_CPU_NBR_BITS) ? (DEF_INT_CPU_U_MAX_VAL)     \
-                                                                                                                     : (DEF_BIT(bit_field) - 1uL)) \
-                                                                                                                            << (bit_shift))
+                                                                               : (DEF_BIT(bit_field) - 1uL)) \
+                                                                              << (bit_shift))
 
 /*
-*********************************************************************************************************
-*                                         DEF_BIT_FIELD_xx()
-*
-* Description : Create & shift a contiguous bit field of specified bit size.
-*
-* Argument(s) : bit_field   Number of contiguous bits to set in the bit field.
-*
-*               bit_shift   Number of bit positions   to left-shift bit field.
-*
-* Return(s)   : Shifted bit field.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'bit_field' & 'bit_shift' SHOULD be non-negative integers.
-*
-*               (2) (a) 'bit_field'/'bit_shift' values that overflow the target CPU &/or compiler 
-*                       environment (e.g. negative or greater-than-CPU-data-size values) MAY generate 
-*                       compiler warnings &/or errors.
-*
-*                   (b) To avoid overflowing any target CPU &/or compiler's integer data type, unsigned 
-*                       bit constant '1' is cast to specified integer data type size.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                         DEF_BIT_FIELD_xx()
+ *
+ * Description : Create & shift a contiguous bit field of specified bit size.
+ *
+ * Argument(s) : bit_field   Number of contiguous bits to set in the bit field.
+ *
+ *               bit_shift   Number of bit positions   to left-shift bit field.
+ *
+ * Return(s)   : Shifted bit field.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'bit_field' & 'bit_shift' SHOULD be non-negative integers.
+ *
+ *               (2) (a) 'bit_field'/'bit_shift' values that overflow the target CPU &/or compiler
+ *                       environment (e.g. negative or greater-than-CPU-data-size values) MAY generate
+ *                       compiler warnings &/or errors.
+ *
+ *                   (b) To avoid overflowing any target CPU &/or compiler's integer data type, unsigned
+ *                       bit constant '1' is cast to specified integer data type size.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_FIELD_08(bit_field, bit_shift)     ((CPU_INT08U)((((CPU_INT08U)(bit_field) >= (CPU_INT08U)DEF_INT_08_NBR_BITS) ? (CPU_INT08U)(DEF_INT_08U_MAX_VAL)                    \
-                                                                                                                                : (CPU_INT08U)(DEF_BIT08(bit_field) - (CPU_INT08U)1u)) \
-                                                                                                                                                     << (bit_shift)))
+                                                                   : (CPU_INT08U)(DEF_BIT08(bit_field) - (CPU_INT08U)1u)) \
+                                                                  << (bit_shift)))
 
 #define  DEF_BIT_FIELD_16(bit_field, bit_shift)     ((CPU_INT16U)((((CPU_INT16U)(bit_field) >= (CPU_INT16U)DEF_INT_16_NBR_BITS) ? (CPU_INT16U)(DEF_INT_16U_MAX_VAL)                    \
-                                                                                                                                : (CPU_INT16U)(DEF_BIT16(bit_field) - (CPU_INT16U)1u)) \
-                                                                                                                                                     << (bit_shift)))
+                                                                   : (CPU_INT16U)(DEF_BIT16(bit_field) - (CPU_INT16U)1u)) \
+                                                                  << (bit_shift)))
 
 #define  DEF_BIT_FIELD_32(bit_field, bit_shift)     ((CPU_INT32U)((((CPU_INT32U)(bit_field) >= (CPU_INT32U)DEF_INT_32_NBR_BITS) ? (CPU_INT32U)(DEF_INT_32U_MAX_VAL)                    \
-                                                                                                                                : (CPU_INT32U)(DEF_BIT32(bit_field) - (CPU_INT32U)1u)) \
-                                                                                                                                                     << (bit_shift)))
+                                                                   : (CPU_INT32U)(DEF_BIT32(bit_field) - (CPU_INT32U)1u)) \
+                                                                  << (bit_shift)))
 
 #define  DEF_BIT_FIELD_64(bit_field, bit_shift)     ((CPU_INT64U)((((CPU_INT64U)(bit_field) >= (CPU_INT64U)DEF_INT_64_NBR_BITS) ? (CPU_INT64U)(DEF_INT_64U_MAX_VAL)                    \
-                                                                                                                                : (CPU_INT64U)(DEF_BIT64(bit_field) - (CPU_INT64U)1u)) \
-                                                                                                                                                     << (bit_shift)))
+                                                                   : (CPU_INT64U)(DEF_BIT64(bit_field) - (CPU_INT64U)1u)) \
+                                                                  << (bit_shift)))
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                          DEF_BIT_SET_xx()
-*
-* Description : Set specified bit(s) in a value of specified bit size.
-*
-* Argument(s) : val         Value to modify by setting specified bit(s).
-*
-*               mask        Mask of bits to set.
-*
-* Return(s)   : Modified value with specified bit(s) set.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          DEF_BIT_SET_xx()
+ *
+ * Description : Set specified bit(s) in a value of specified bit size.
+ *
+ * Argument(s) : val         Value to modify by setting specified bit(s).
+ *
+ *               mask        Mask of bits to set.
+ *
+ * Return(s)   : Modified value with specified bit(s) set.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_SET_08(val, mask)                     ((val) = (CPU_INT08U)(((CPU_INT08U)(val)) | ((CPU_INT08U) (mask))))
 
@@ -767,557 +767,557 @@ typedef enum lib_err {
 
 
 /*
-*********************************************************************************************************
-*                                            DEF_BIT_SET()
-*
-* Description : Set specified bit(s) in a value.
-*
-* Argument(s) : val         Value to modify by setting specified bit(s).
-*
-*               mask        Mask of bits to set.
-*
-* Return(s)   : Modified value with specified bit(s) set.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                            DEF_BIT_SET()
+ *
+ * Description : Set specified bit(s) in a value.
+ *
+ * Argument(s) : val         Value to modify by setting specified bit(s).
+ *
+ *               mask        Mask of bits to set.
+ *
+ * Return(s)   : Modified value with specified bit(s) set.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
+ *********************************************************************************************************
+ */
 
 #if     (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_08)
 
-#define  DEF_BIT_SET(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_SET_08(val, mask) : 0)
+ #define  DEF_BIT_SET(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_SET_08(val, mask) : 0)
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_16)
 
-#define  DEF_BIT_SET(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_SET_08(val, mask) :   \
-                                                ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_SET_16(val, mask) : 0))
+ #define  DEF_BIT_SET(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_SET_08(val, mask) :   \
+                                                  ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_SET_16(val, mask) : 0))
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_32)
 
-#define  DEF_BIT_SET(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_SET_08(val, mask) :    \
-                                                ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_SET_16(val, mask) :    \
-                                                ((sizeof(val) == CPU_WORD_SIZE_32) ? DEF_BIT_SET_32(val, mask) : 0)))
+ #define  DEF_BIT_SET(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_SET_08(val, mask) :    \
+                                                  ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_SET_16(val, mask) :    \
+                                                   ((sizeof(val) == CPU_WORD_SIZE_32) ? DEF_BIT_SET_32(val, mask) : 0)))
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_64)
 
-#define  DEF_BIT_SET(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_SET_08(val, mask) :     \
-                                                ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_SET_16(val, mask) :     \
-                                                ((sizeof(val) == CPU_WORD_SIZE_32) ? DEF_BIT_SET_32(val, mask) :     \
-                                                ((sizeof(val) == CPU_WORD_SIZE_64) ? DEF_BIT_SET_64(val, mask) : 0))))
+ #define  DEF_BIT_SET(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_SET_08(val, mask) :     \
+                                                  ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_SET_16(val, mask) :     \
+                                                   ((sizeof(val) == CPU_WORD_SIZE_32) ? DEF_BIT_SET_32(val, mask) :     \
+                                                  ((sizeof(val) == CPU_WORD_SIZE_64) ? DEF_BIT_SET_64(val, mask) : 0))))
 
 #else
 
-#error  "CPU_CFG_DATA_SIZE_MAX  illegally #defined in 'cpu.h'      "
-#error  "                       [See 'cpu.h  CONFIGURATION ERRORS']"
+ #error  "CPU_CFG_DATA_SIZE_MAX  illegally #defined in 'cpu.h'      "
+ #error  "                       [See 'cpu.h  CONFIGURATION ERRORS']"
 
 #endif
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                          DEF_BIT_CLR_xx()
-*
-* Description : Clear specified bit(s) in a value of specified bit size.
-*
-* Argument(s) : val         Value to modify by clearing specified bit(s).
-*
-*               mask        Mask of bits to clear.
-*
-* Return(s)   : Modified value with specified bit(s) clear.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          DEF_BIT_CLR_xx()
+ *
+ * Description : Clear specified bit(s) in a value of specified bit size.
+ *
+ * Argument(s) : val         Value to modify by clearing specified bit(s).
+ *
+ *               mask        Mask of bits to clear.
+ *
+ * Return(s)   : Modified value with specified bit(s) clear.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
+ *********************************************************************************************************
+ */
 
-#define  DEF_BIT_CLR_08(val, mask)                     ((val) = (CPU_INT08U)(((CPU_INT08U)(val)) & ((CPU_INT08U)~(mask))))
+#define  DEF_BIT_CLR_08(val, mask)                     ((val) = (CPU_INT08U)(((CPU_INT08U)(val)) & ((CPU_INT08U) ~(mask))))
 
-#define  DEF_BIT_CLR_16(val, mask)                     ((val) = (CPU_INT16U)(((CPU_INT16U)(val)) & ((CPU_INT16U)~(mask))))
+#define  DEF_BIT_CLR_16(val, mask)                     ((val) = (CPU_INT16U)(((CPU_INT16U)(val)) & ((CPU_INT16U) ~(mask))))
 
-#define  DEF_BIT_CLR_32(val, mask)                     ((val) = (CPU_INT32U)(((CPU_INT32U)(val)) & ((CPU_INT32U)~(mask))))
+#define  DEF_BIT_CLR_32(val, mask)                     ((val) = (CPU_INT32U)(((CPU_INT32U)(val)) & ((CPU_INT32U) ~(mask))))
 
-#define  DEF_BIT_CLR_64(val, mask)                     ((val) = (CPU_INT64U)(((CPU_INT64U)(val)) & ((CPU_INT64U)~(mask))))
+#define  DEF_BIT_CLR_64(val, mask)                     ((val) = (CPU_INT64U)(((CPU_INT64U)(val)) & ((CPU_INT64U) ~(mask))))
 
 
 /*
-*********************************************************************************************************
-*                                            DEF_BIT_CLR()
-*
-* Description : Clear specified bit(s) in a value.
-*
-* Argument(s) : val         Value to modify by clearing specified bit(s).
-*
-*               mask        Mask of bits to clear.
-*
-* Return(s)   : Modified value with specified bit(s) clear.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                            DEF_BIT_CLR()
+ *
+ * Description : Clear specified bit(s) in a value.
+ *
+ * Argument(s) : val         Value to modify by clearing specified bit(s).
+ *
+ *               mask        Mask of bits to clear.
+ *
+ * Return(s)   : Modified value with specified bit(s) clear.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
+ *********************************************************************************************************
+ */
 
 #if     (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_08)
 
-#define  DEF_BIT_CLR(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_CLR_08(val, mask) : 0)
+ #define  DEF_BIT_CLR(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_CLR_08(val, mask) : 0)
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_16)
 
-#define  DEF_BIT_CLR(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_CLR_08(val, mask) :   \
-                                                ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_CLR_16(val, mask) : 0))
+ #define  DEF_BIT_CLR(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_CLR_08(val, mask) :   \
+                                                  ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_CLR_16(val, mask) : 0))
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_32)
 
-#define  DEF_BIT_CLR(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_CLR_08(val, mask) :    \
-                                                ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_CLR_16(val, mask) :    \
-                                                ((sizeof(val) == CPU_WORD_SIZE_32) ? DEF_BIT_CLR_32(val, mask) : 0)))
+ #define  DEF_BIT_CLR(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_CLR_08(val, mask) :    \
+                                                  ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_CLR_16(val, mask) :    \
+                                                   ((sizeof(val) == CPU_WORD_SIZE_32) ? DEF_BIT_CLR_32(val, mask) : 0)))
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_64)
 
-#define  DEF_BIT_CLR(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_CLR_08(val, mask) :     \
-                                                ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_CLR_16(val, mask) :     \
-                                                ((sizeof(val) == CPU_WORD_SIZE_32) ? DEF_BIT_CLR_32(val, mask) :     \
-                                                ((sizeof(val) == CPU_WORD_SIZE_64) ? DEF_BIT_CLR_64(val, mask) : 0))))
+ #define  DEF_BIT_CLR(val, mask)                 ((sizeof(val) == CPU_WORD_SIZE_08) ? DEF_BIT_CLR_08(val, mask) :     \
+                                                  ((sizeof(val) == CPU_WORD_SIZE_16) ? DEF_BIT_CLR_16(val, mask) :     \
+                                                   ((sizeof(val) == CPU_WORD_SIZE_32) ? DEF_BIT_CLR_32(val, mask) :     \
+                                                  ((sizeof(val) == CPU_WORD_SIZE_64) ? DEF_BIT_CLR_64(val, mask) : 0))))
 
 #else
 
-#error  "CPU_CFG_DATA_SIZE_MAX  illegally #defined in 'cpu.h'      "
-#error  "                       [See 'cpu.h  CONFIGURATION ERRORS']"
+ #error  "CPU_CFG_DATA_SIZE_MAX  illegally #defined in 'cpu.h'      "
+ #error  "                       [See 'cpu.h  CONFIGURATION ERRORS']"
 
 #endif
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                          DEF_BIT_IS_SET()
-*
-* Description : Determine if specified bit(s) in a value are set.
-*
-* Argument(s) : val         Value to check for specified bit(s) set.
-*
-*               mask        Mask of bits to check if set (see Note #2).
-*
-* Return(s)   : DEF_YES, if ALL specified bit(s) are     set in value.
-*
-*               DEF_NO,  if ALL specified bit(s) are NOT set in value.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
-*
-*               (2) NULL 'mask' allowed; returns 'DEF_NO' since NO mask bits specified.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          DEF_BIT_IS_SET()
+ *
+ * Description : Determine if specified bit(s) in a value are set.
+ *
+ * Argument(s) : val         Value to check for specified bit(s) set.
+ *
+ *               mask        Mask of bits to check if set (see Note #2).
+ *
+ * Return(s)   : DEF_YES, if ALL specified bit(s) are     set in value.
+ *
+ *               DEF_NO,  if ALL specified bit(s) are NOT set in value.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
+ *
+ *               (2) NULL 'mask' allowed; returns 'DEF_NO' since NO mask bits specified.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_IS_SET(val, mask)                           ((((mask)  !=  0u)  && \
-                                                      (((val) & (mask)) == (mask))) ? (DEF_YES) : (DEF_NO ))
+                                                               (((val) & (mask)) == (mask))) ? (DEF_YES) : (DEF_NO ))
 
 
 /*
-*********************************************************************************************************
-*                                          DEF_BIT_IS_CLR()
-*
-* Description : Determine if specified bit(s) in a value are clear.
-*
-* Argument(s) : val         Value to check for specified bit(s) clear.
-*
-*               mask        Mask of bits to check if clear (see Note #2).
-*
-* Return(s)   : DEF_YES, if ALL specified bit(s) are     clear in value.
-*
-*               DEF_NO,  if ALL specified bit(s) are NOT clear in value.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
-*
-*               (2) NULL 'mask' allowed; returns 'DEF_NO' since NO mask bits specified.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          DEF_BIT_IS_CLR()
+ *
+ * Description : Determine if specified bit(s) in a value are clear.
+ *
+ * Argument(s) : val         Value to check for specified bit(s) clear.
+ *
+ *               mask        Mask of bits to check if clear (see Note #2).
+ *
+ * Return(s)   : DEF_YES, if ALL specified bit(s) are     clear in value.
+ *
+ *               DEF_NO,  if ALL specified bit(s) are NOT clear in value.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
+ *
+ *               (2) NULL 'mask' allowed; returns 'DEF_NO' since NO mask bits specified.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_IS_CLR(val, mask)                           ((((mask)  !=  0u)  && \
-                                                      (((val) & (mask)) ==  0u))    ? (DEF_YES) : (DEF_NO ))
+                                                               (((val) & (mask)) ==  0u))    ? (DEF_YES) : (DEF_NO ))
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                        DEF_BIT_IS_SET_ANY()
-*
-* Description : Determine if any specified bit(s) in a value are set.
-*
-* Argument(s) : val         Value to check for specified bit(s) set.
-*
-*               mask        Mask of bits to check if set (see Note #2).
-*
-* Return(s)   : DEF_YES, if ANY specified bit(s) are     set in value.
-*
-*               DEF_NO,  if ALL specified bit(s) are NOT set in value.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
-*
-*               (2) NULL 'mask' allowed; returns 'DEF_NO' since NO mask bits specified.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                        DEF_BIT_IS_SET_ANY()
+ *
+ * Description : Determine if any specified bit(s) in a value are set.
+ *
+ * Argument(s) : val         Value to check for specified bit(s) set.
+ *
+ *               mask        Mask of bits to check if set (see Note #2).
+ *
+ * Return(s)   : DEF_YES, if ANY specified bit(s) are     set in value.
+ *
+ *               DEF_NO,  if ALL specified bit(s) are NOT set in value.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
+ *
+ *               (2) NULL 'mask' allowed; returns 'DEF_NO' since NO mask bits specified.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_IS_SET_ANY(val, mask)               ((((val) & (mask)) ==  0u)     ? (DEF_NO ) : (DEF_YES))
 
 
 /*
-*********************************************************************************************************
-*                                        DEF_BIT_IS_CLR_ANY()
-*
-* Description : Determine if any specified bit(s) in a value are clear.
-*
-* Argument(s) : val         Value to check for specified bit(s) clear.
-*
-*               mask        Mask of bits to check if clear (see Note #2).
-*
-* Return(s)   : DEF_YES, if ANY specified bit(s) are     clear in value.
-*
-*               DEF_NO,  if ALL specified bit(s) are NOT clear in value.
-*
-* Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
-*
-*               (2) NULL 'mask' allowed; returns 'DEF_NO' since NO mask bits specified.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                        DEF_BIT_IS_CLR_ANY()
+ *
+ * Description : Determine if any specified bit(s) in a value are clear.
+ *
+ * Argument(s) : val         Value to check for specified bit(s) clear.
+ *
+ *               mask        Mask of bits to check if clear (see Note #2).
+ *
+ * Return(s)   : DEF_YES, if ANY specified bit(s) are     clear in value.
+ *
+ *               DEF_NO,  if ALL specified bit(s) are NOT clear in value.
+ *
+ * Note(s)     : (1) 'val' & 'mask' SHOULD be unsigned integers.
+ *
+ *               (2) NULL 'mask' allowed; returns 'DEF_NO' since NO mask bits specified.
+ *********************************************************************************************************
+ */
 
 #define  DEF_BIT_IS_CLR_ANY(val, mask)               ((((val) & (mask)) == (mask))  ? (DEF_NO ) : (DEF_YES))
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                            VALUE MACRO'S
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                            VALUE MACRO'S
+ *********************************************************************************************************
+ */
 
 /*
-*********************************************************************************************************
-*                                          DEF_CHK_VAL_MIN()
-*
-* Description : Validate a value as greater than or equal to a specified minimum value.
-*
-* Argument(s) : val        Value to validate.
-*
-*               val_min    Minimum value to test.
-*
-* Return(s)   : DEF_OK,    Value is greater than or equal to minimum value.
-*
-*               DEF_FAIL,  otherwise.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) DEF_CHK_VAL_MIN() avoids directly comparing any two values if only one of the values 
-*                   is negative since the negative value might be incorrectly promoted to an arbitrary 
-*                   unsigned value if the other value to compare is unsigned.
-*
-*               (2) Validation of values is limited to the range supported by the compiler &/or target 
-*                   environment.  All other values that underflow/overflow the supported range will 
-*                   modulo/wrap into the supported range as arbitrary signed or unsigned values.
-*
-*                   Therefore, any values that underflow the most negative signed value or overflow 
-*                   the most positive unsigned value supported by the compiler &/or target environment 
-*                   cannot be validated :
-*
-*                           (    N-1       N     ]
-*                           ( -(2   )  ,  2  - 1 ]
-*                           (                    ]
-*
-*                               where
-*                                       N       Number of data word bits supported by the compiler 
-*                                                   &/or target environment
-*
-*                   (a) Note that the most negative value, -2^(N-1), is NOT included in the supported 
-*                       range since many compilers do NOT always correctly handle this value.
-*
-*               (3) 'val' and 'val_min' are compared to 1 instead of 0 to avoid warning generated for
-*                   unsigned numbers.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          DEF_CHK_VAL_MIN()
+ *
+ * Description : Validate a value as greater than or equal to a specified minimum value.
+ *
+ * Argument(s) : val        Value to validate.
+ *
+ *               val_min    Minimum value to test.
+ *
+ * Return(s)   : DEF_OK,    Value is greater than or equal to minimum value.
+ *
+ *               DEF_FAIL,  otherwise.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) DEF_CHK_VAL_MIN() avoids directly comparing any two values if only one of the values
+ *                   is negative since the negative value might be incorrectly promoted to an arbitrary
+ *                   unsigned value if the other value to compare is unsigned.
+ *
+ *               (2) Validation of values is limited to the range supported by the compiler &/or target
+ *                   environment.  All other values that underflow/overflow the supported range will
+ *                   modulo/wrap into the supported range as arbitrary signed or unsigned values.
+ *
+ *                   Therefore, any values that underflow the most negative signed value or overflow
+ *                   the most positive unsigned value supported by the compiler &/or target environment
+ *                   cannot be validated :
+ *
+ *                           (    N-1       N     ]
+ *                           ( -(2   )  ,  2  - 1 ]
+ *                           (                    ]
+ *
+ *                               where
+ *                                       N       Number of data word bits supported by the compiler
+ *                                                   &/or target environment
+ *
+ *                   (a) Note that the most negative value, -2^(N-1), is NOT included in the supported
+ *                       range since many compilers do NOT always correctly handle this value.
+ *
+ *               (3) 'val' and 'val_min' are compared to 1 instead of 0 to avoid warning generated for
+ *                   unsigned numbers.
+ *********************************************************************************************************
+ */
 
 #define  DEF_CHK_VAL_MIN(val, val_min)            (((!(((val)     >= 1) && ((val_min) < 1))) && \
-                                                     ((((val_min) >= 1) && ((val)     < 1))  || \
-                                                       ((val) < (val_min)))) ? DEF_FAIL : DEF_OK)
-
-
-/*$PAGE*/
-/*
-*********************************************************************************************************
-*                                          DEF_CHK_VAL_MAX()
-*
-* Description : Validate a value as less than or equal to a specified maximum value.
-*
-* Argument(s) : val        Value to validate.
-*
-*               val_max    Maximum value to test.
-*
-* Return(s)   : DEF_OK,    Value is less than or equal to maximum value.
-*
-*               DEF_FAIL,  otherwise.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) DEF_CHK_VAL_MAX() avoids directly comparing any two values if only one of the values 
-*                   is negative since the negative value might be incorrectly promoted to an arbitrary 
-*                   unsigned value if the other value to compare is unsigned.
-*
-*               (2) Validation of values is limited to the range supported by the compiler &/or target 
-*                   environment.  All other values that underflow/overflow the supported range will 
-*                   modulo/wrap into the supported range as arbitrary signed or unsigned values.
-*
-*                   Therefore, any values that underflow the most negative signed value or overflow 
-*                   the most positive unsigned value supported by the compiler &/or target environment 
-*                   cannot be validated :
-*
-*                           (    N-1       N     ]
-*                           ( -(2   )  ,  2  - 1 ]
-*                           (                    ]
-*
-*                               where
-*                                       N       Number of data word bits supported by the compiler 
-*                                                   &/or target environment
-*
-*                   (a) Note that the most negative value, -2^(N-1), is NOT included in the supported 
-*                       range since many compilers do NOT always correctly handle this value.
-*
-*               (3) 'val' and 'val_max' are compared to 1 instead of 0 to avoid warning generated for
-*                   unsigned numbers.
-*********************************************************************************************************
-*/
-
-#define  DEF_CHK_VAL_MAX(val, val_max)            (((!(((val_max) >= 1) && ((val)     < 1))) && \
-                                                     ((((val)     >= 1) && ((val_max) < 1))  || \
-                                                       ((val) > (val_max)))) ? DEF_FAIL : DEF_OK)
+                                                    ((((val_min) >= 1) && ((val)     < 1))  || \
+                                                     ((val) < (val_min)))) ? DEF_FAIL : DEF_OK)
 
 
 /*$PAGE*/
 /*
-*********************************************************************************************************
-*                                            DEF_CHK_VAL()
-*
-* Description : Validate a value as greater than or equal to a specified minimum value & less than or 
-*                   equal to a specified maximum value.
-*
-* Argument(s) : val        Value to validate.
-*
-*               val_min    Minimum value to test.
-*
-*               val_max    Maximum value to test.
-*
-* Return(s)   : DEF_OK,    Value is greater than or equal to minimum value AND 
-*                                   less    than or equal to maximum value.
-*
-*               DEF_FAIL,  otherwise.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) DEF_CHK_VAL() avoids directly comparing any two values if only one of the values 
-*                   is negative since the negative value might be incorrectly promoted to an arbitrary 
-*                   unsigned value if the other value to compare is unsigned.
-*
-*               (2) Validation of values is limited to the range supported by the compiler &/or target 
-*                   environment.  All other values that underflow/overflow the supported range will 
-*                   modulo/wrap into the supported range as arbitrary signed or unsigned values.
-*
-*                   Therefore, any values that underflow the most negative signed value or overflow 
-*                   the most positive unsigned value supported by the compiler &/or target environment 
-*                   cannot be validated :
-*
-*                           (    N-1       N     ]
-*                           ( -(2   )  ,  2  - 1 ]
-*                           (                    ]
-*
-*                               where
-*                                       N       Number of data word bits supported by the compiler 
-*                                                   &/or target environment
-*
-*                   (a) Note that the most negative value, -2^(N-1), is NOT included in the supported 
-*                       range since many compilers do NOT always correctly handle this value.
-*
-*               (3) DEF_CHK_VAL() does NOT validate that the maximum value ('val_max') is greater than 
-*                   or equal to the minimum value ('val_min').
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                          DEF_CHK_VAL_MAX()
+ *
+ * Description : Validate a value as less than or equal to a specified maximum value.
+ *
+ * Argument(s) : val        Value to validate.
+ *
+ *               val_max    Maximum value to test.
+ *
+ * Return(s)   : DEF_OK,    Value is less than or equal to maximum value.
+ *
+ *               DEF_FAIL,  otherwise.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) DEF_CHK_VAL_MAX() avoids directly comparing any two values if only one of the values
+ *                   is negative since the negative value might be incorrectly promoted to an arbitrary
+ *                   unsigned value if the other value to compare is unsigned.
+ *
+ *               (2) Validation of values is limited to the range supported by the compiler &/or target
+ *                   environment.  All other values that underflow/overflow the supported range will
+ *                   modulo/wrap into the supported range as arbitrary signed or unsigned values.
+ *
+ *                   Therefore, any values that underflow the most negative signed value or overflow
+ *                   the most positive unsigned value supported by the compiler &/or target environment
+ *                   cannot be validated :
+ *
+ *                           (    N-1       N     ]
+ *                           ( -(2   )  ,  2  - 1 ]
+ *                           (                    ]
+ *
+ *                               where
+ *                                       N       Number of data word bits supported by the compiler
+ *                                                   &/or target environment
+ *
+ *                   (a) Note that the most negative value, -2^(N-1), is NOT included in the supported
+ *                       range since many compilers do NOT always correctly handle this value.
+ *
+ *               (3) 'val' and 'val_max' are compared to 1 instead of 0 to avoid warning generated for
+ *                   unsigned numbers.
+ *********************************************************************************************************
+ */
+
+#define  DEF_CHK_VAL_MAX(val, val_max)            (((!(((val_max) >= 1) && ((val)     < 1))) && \
+                                                    ((((val)     >= 1) && ((val_max) < 1))  || \
+                                                     ((val) > (val_max)))) ? DEF_FAIL : DEF_OK)
+
+
+/*$PAGE*/
+/*
+ *********************************************************************************************************
+ *                                            DEF_CHK_VAL()
+ *
+ * Description : Validate a value as greater than or equal to a specified minimum value & less than or
+ *                   equal to a specified maximum value.
+ *
+ * Argument(s) : val        Value to validate.
+ *
+ *               val_min    Minimum value to test.
+ *
+ *               val_max    Maximum value to test.
+ *
+ * Return(s)   : DEF_OK,    Value is greater than or equal to minimum value AND
+ *                                   less    than or equal to maximum value.
+ *
+ *               DEF_FAIL,  otherwise.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) DEF_CHK_VAL() avoids directly comparing any two values if only one of the values
+ *                   is negative since the negative value might be incorrectly promoted to an arbitrary
+ *                   unsigned value if the other value to compare is unsigned.
+ *
+ *               (2) Validation of values is limited to the range supported by the compiler &/or target
+ *                   environment.  All other values that underflow/overflow the supported range will
+ *                   modulo/wrap into the supported range as arbitrary signed or unsigned values.
+ *
+ *                   Therefore, any values that underflow the most negative signed value or overflow
+ *                   the most positive unsigned value supported by the compiler &/or target environment
+ *                   cannot be validated :
+ *
+ *                           (    N-1       N     ]
+ *                           ( -(2   )  ,  2  - 1 ]
+ *                           (                    ]
+ *
+ *                               where
+ *                                       N       Number of data word bits supported by the compiler
+ *                                                   &/or target environment
+ *
+ *                   (a) Note that the most negative value, -2^(N-1), is NOT included in the supported
+ *                       range since many compilers do NOT always correctly handle this value.
+ *
+ *               (3) DEF_CHK_VAL() does NOT validate that the maximum value ('val_max') is greater than
+ *                   or equal to the minimum value ('val_min').
+ *********************************************************************************************************
+ */
 
 #define  DEF_CHK_VAL(val, val_min, val_max)          (((DEF_CHK_VAL_MIN(val, val_min) == DEF_FAIL) ||                  \
                                                        (DEF_CHK_VAL_MAX(val, val_max) == DEF_FAIL)) ? DEF_FAIL : DEF_OK)
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                         DEF_GET_U_MAX_VAL()
-*
-* Description : Get the maximum unsigned value that can be represented in an unsigned integer variable 
-*                   of the same data type size as an object.
-*
-* Argument(s) : obj         Object or data type to return maximum unsigned value (see Note #1).
-*
-* Return(s)   : Maximum unsigned integer value that can be represented by the object, if NO error(s).
-*
-*               0,                                                                    otherwise.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : (1) 'obj' SHOULD be an integer object or data type but COULD also be a character or 
-*                   pointer object or data type.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                         DEF_GET_U_MAX_VAL()
+ *
+ * Description : Get the maximum unsigned value that can be represented in an unsigned integer variable
+ *                   of the same data type size as an object.
+ *
+ * Argument(s) : obj         Object or data type to return maximum unsigned value (see Note #1).
+ *
+ * Return(s)   : Maximum unsigned integer value that can be represented by the object, if NO error(s).
+ *
+ *               0,                                                                    otherwise.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : (1) 'obj' SHOULD be an integer object or data type but COULD also be a character or
+ *                   pointer object or data type.
+ *********************************************************************************************************
+ */
 
 #if     (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_08)
 
-#define  DEF_GET_U_MAX_VAL(obj)                 ((sizeof(obj) == CPU_WORD_SIZE_08) ? DEF_INT_08U_MAX_VAL : 0)
+ #define  DEF_GET_U_MAX_VAL(obj)                 ((sizeof(obj) == CPU_WORD_SIZE_08) ? DEF_INT_08U_MAX_VAL : 0)
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_16)
 
-#define  DEF_GET_U_MAX_VAL(obj)                 ((sizeof(obj) == CPU_WORD_SIZE_08) ? DEF_INT_08U_MAX_VAL :   \
-                                                ((sizeof(obj) == CPU_WORD_SIZE_16) ? DEF_INT_16U_MAX_VAL : 0))
+ #define  DEF_GET_U_MAX_VAL(obj)                 ((sizeof(obj) == CPU_WORD_SIZE_08) ? DEF_INT_08U_MAX_VAL :   \
+                                                  ((sizeof(obj) == CPU_WORD_SIZE_16) ? DEF_INT_16U_MAX_VAL : 0))
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_32)
 
-#define  DEF_GET_U_MAX_VAL(obj)                 ((sizeof(obj) == CPU_WORD_SIZE_08) ? DEF_INT_08U_MAX_VAL :    \
-                                                ((sizeof(obj) == CPU_WORD_SIZE_16) ? DEF_INT_16U_MAX_VAL :    \
-                                                ((sizeof(obj) == CPU_WORD_SIZE_32) ? DEF_INT_32U_MAX_VAL : 0)))
+ #define  DEF_GET_U_MAX_VAL(obj)                 ((sizeof(obj) == CPU_WORD_SIZE_08) ? DEF_INT_08U_MAX_VAL :    \
+                                                  ((sizeof(obj) == CPU_WORD_SIZE_16) ? DEF_INT_16U_MAX_VAL :    \
+                                                   ((sizeof(obj) == CPU_WORD_SIZE_32) ? DEF_INT_32U_MAX_VAL : 0)))
 
 
 #elif   (CPU_CFG_DATA_SIZE_MAX == CPU_WORD_SIZE_64)
 
-#define  DEF_GET_U_MAX_VAL(obj)                 ((sizeof(obj) == CPU_WORD_SIZE_08) ? DEF_INT_08U_MAX_VAL :     \
-                                                ((sizeof(obj) == CPU_WORD_SIZE_16) ? DEF_INT_16U_MAX_VAL :     \
-                                                ((sizeof(obj) == CPU_WORD_SIZE_32) ? DEF_INT_32U_MAX_VAL :     \
-                                                ((sizeof(obj) == CPU_WORD_SIZE_64) ? DEF_INT_64U_MAX_VAL : 0))))
+ #define  DEF_GET_U_MAX_VAL(obj)                 ((sizeof(obj) == CPU_WORD_SIZE_08) ? DEF_INT_08U_MAX_VAL :     \
+                                                  ((sizeof(obj) == CPU_WORD_SIZE_16) ? DEF_INT_16U_MAX_VAL :     \
+                                                   ((sizeof(obj) == CPU_WORD_SIZE_32) ? DEF_INT_32U_MAX_VAL :     \
+                                                  ((sizeof(obj) == CPU_WORD_SIZE_64) ? DEF_INT_64U_MAX_VAL : 0))))
 
 #else
 
-#error  "CPU_CFG_DATA_SIZE_MAX  illegally #defined in 'cpu.h'      "
-#error  "                       [See 'cpu.h  CONFIGURATION ERRORS']"
+ #error  "CPU_CFG_DATA_SIZE_MAX  illegally #defined in 'cpu.h'      "
+ #error  "                       [See 'cpu.h  CONFIGURATION ERRORS']"
 
 #endif
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                            MATH MACRO'S
-*
-* Note(s) : (1) Ideally, ALL mathematical macro's & functions SHOULD be defined in the custom mathematics 
-*               library ('lib_math.*').  #### However, to maintain backwards compatibility with previously-
-*               released modules, mathematical macro & function definitions should only be moved to the 
-*               custom mathematics library once all previously-released modules are updated to include the 
-*               custom mathematics library.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                            MATH MACRO'S
+ *
+ * Note(s) : (1) Ideally, ALL mathematical macro's & functions SHOULD be defined in the custom mathematics
+ *               library ('lib_math.*').  #### However, to maintain backwards compatibility with previously-
+ *               released modules, mathematical macro & function definitions should only be moved to the
+ *               custom mathematics library once all previously-released modules are updated to include the
+ *               custom mathematics library.
+ *********************************************************************************************************
+ */
 
 /*
-*********************************************************************************************************
-*                                              DEF_MIN()
-*
-* Description : Determine the minimum of two values.
-*
-* Argument(s) : a           First  value.
-*
-*               b           Second value.
-*
-* Return(s)   : Minimum of the two values.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : none.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                              DEF_MIN()
+ *
+ * Description : Determine the minimum of two values.
+ *
+ * Argument(s) : a           First  value.
+ *
+ *               b           Second value.
+ *
+ * Return(s)   : Minimum of the two values.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : none.
+ *********************************************************************************************************
+ */
 
 #define  DEF_MIN(a, b)                                  (((a) < (b)) ? (a) : (b))
 
 
 /*
-*********************************************************************************************************
-*                                              DEF_MAX()
-*
-* Description : Determine the maximum of two values.
-*
-* Argument(s) : a           First  value.
-*
-*               b           Second value.
-*
-* Return(s)   : Maximum of the two values.
-*
-* Note(s)     : none.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                              DEF_MAX()
+ *
+ * Description : Determine the maximum of two values.
+ *
+ * Argument(s) : a           First  value.
+ *
+ *               b           Second value.
+ *
+ * Return(s)   : Maximum of the two values.
+ *
+ * Note(s)     : none.
+ *********************************************************************************************************
+ */
 
 #define  DEF_MAX(a, b)                                  (((a) > (b)) ? (a) : (b))
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                              DEF_ABS()
-*
-* Description : Determine the absolute value of a value.
-*
-* Argument(s) : a           Value to calculate absolute value.
-*
-* Return(s)   : Absolute value of the value.
-*
-* Caller(s)   : Application.
-*
-* Note(s)     : none.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                              DEF_ABS()
+ *
+ * Description : Determine the absolute value of a value.
+ *
+ * Argument(s) : a           Value to calculate absolute value.
+ *
+ * Return(s)   : Absolute value of the value.
+ *
+ * Caller(s)   : Application.
+ *
+ * Note(s)     : none.
+ *********************************************************************************************************
+ */
 
 #define  DEF_ABS(a)                                     (((a) < 0) ? (-(a)) : (a))
 
 
-/*$PAGE*/
+/*$PAGE*/
 /*
-*********************************************************************************************************
-*                                         FUNCTION PROTOTYPES
-*********************************************************************************************************
-*/
-
-
-/*
-*********************************************************************************************************
-*                                        CONFIGURATION ERRORS
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                         FUNCTION PROTOTYPES
+ *********************************************************************************************************
+ */
 
 
 /*
-*********************************************************************************************************
-*                                    LIBRARY CONFIGURATION ERRORS
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                        CONFIGURATION ERRORS
+ *********************************************************************************************************
+ */
 
-                                                                /* See 'lib_def.h  Note #1a'.                           */
+
+/*
+ *********************************************************************************************************
+ *                                    LIBRARY CONFIGURATION ERRORS
+ *********************************************************************************************************
+ */
+
+/* See 'lib_def.h  Note #1a'.                           */
 #if     (CPU_CORE_VERSION < 12900u)
-#error  "CPU_CORE_VERSION  [SHOULD be >= V1.29.00]"
+ #error  "CPU_CORE_VERSION  [SHOULD be >= V1.29.00]"
 #endif
 
 
 /*
-*********************************************************************************************************
-*                                             MODULE END
-*
-* Note(s) : (1) See 'lib_def.h  MODULE'.
-*********************************************************************************************************
-*/
+ *********************************************************************************************************
+ *                                             MODULE END
+ *
+ * Note(s) : (1) See 'lib_def.h  MODULE'.
+ *********************************************************************************************************
+ */
 
 #endif                                                          /* End of lib def module include.                       */
 

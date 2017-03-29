@@ -3,9 +3,9 @@
 #include "os.h"
 
 
-// TIME STAMP support  
+// TIME STAMP support
 CPU_TS_TMR CPU_TS_TmrRd(void){
-	return  millis();
+    return millis();
 }
 
 void CPU_TS_TmrInit(void){

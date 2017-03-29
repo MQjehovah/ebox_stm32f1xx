@@ -1,71 +1,71 @@
 /**
-  ******************************************************************************
-  * @file    stm32f10x_bkp.h
-  * @author  MCD Application Team
-  * @version V3.5.0
-  * @date    11-March-2011
-  * @brief   This file contains all the functions prototypes for the BKP firmware 
-  *          library.
-  ******************************************************************************
-  * @attention
-  *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-  *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    stm32f10x_bkp.h
+ * @author  MCD Application Team
+ * @version V3.5.0
+ * @date    11-March-2011
+ * @brief   This file contains all the functions prototypes for the BKP firmware
+ *          library.
+ ******************************************************************************
+ * @attention
+ *
+ * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+ * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
+ * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
+ * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
+ * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
+ * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+ *
+ * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F10x_BKP_H
 #define __STM32F10x_BKP_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @addtogroup BKP
-  * @{
-  */
+ * @{
+ */
 
 /** @defgroup BKP_Exported_Types
-  * @{
-  */
+ * @{
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup BKP_Exported_Constants
-  * @{
-  */
+ * @{
+ */
 
-/** @defgroup Tamper_Pin_active_level 
-  * @{
-  */
+/** @defgroup Tamper_Pin_active_level
+ * @{
+ */
 
 #define BKP_TamperPinLevel_High           ((uint16_t)0x0000)
 #define BKP_TamperPinLevel_Low            ((uint16_t)0x0001)
 #define IS_BKP_TAMPER_PIN_LEVEL(LEVEL) (((LEVEL) == BKP_TamperPinLevel_High) || \
                                         ((LEVEL) == BKP_TamperPinLevel_Low))
 /**
-  * @}
-  */
+ * @}
+ */
 
-/** @defgroup RTC_output_source_to_output_on_the_Tamper_pin 
-  * @{
-  */
+/** @defgroup RTC_output_source_to_output_on_the_Tamper_pin
+ * @{
+ */
 
 #define BKP_RTCOutputSource_None          ((uint16_t)0x0000)
 #define BKP_RTCOutputSource_CalibClock    ((uint16_t)0x0080)
@@ -76,12 +76,12 @@
                                           ((SOURCE) == BKP_RTCOutputSource_Alarm) || \
                                           ((SOURCE) == BKP_RTCOutputSource_Second))
 /**
-  * @}
-  */
+ * @}
+ */
 
-/** @defgroup Data_Backup_Register 
-  * @{
-  */
+/** @defgroup Data_Backup_Register
+ * @{
+ */
 
 #define BKP_DR1                           ((uint16_t)0x0004)
 #define BKP_DR2                           ((uint16_t)0x0008)
@@ -143,37 +143,37 @@
 
 #define IS_BKP_CALIBRATION_VALUE(VALUE) ((VALUE) <= 0x7F)
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup BKP_Exported_Macros
-  * @{
-  */
+ * @{
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup BKP_Exported_Functions
-  * @{
-  */
+ * @{
+ */
 
-void BKP_DeInit(void);
-void BKP_TamperPinLevelConfig(uint16_t BKP_TamperPinLevel);
-void BKP_TamperPinCmd(FunctionalState NewState);
-void BKP_ITConfig(FunctionalState NewState);
-void BKP_RTCOutputConfig(uint16_t BKP_RTCOutputSource);
-void BKP_SetRTCCalibrationValue(uint8_t CalibrationValue);
-void BKP_WriteBackupRegister(uint16_t BKP_DR, uint16_t Data);
-uint16_t BKP_ReadBackupRegister(uint16_t BKP_DR);
-FlagStatus BKP_GetFlagStatus(void);
-void BKP_ClearFlag(void);
-ITStatus BKP_GetITStatus(void);
-void BKP_ClearITPendingBit(void);
+void                BKP_DeInit(void);
+void                BKP_TamperPinLevelConfig(uint16_t BKP_TamperPinLevel);
+void                BKP_TamperPinCmd(FunctionalState NewState);
+void                BKP_ITConfig(FunctionalState NewState);
+void                BKP_RTCOutputConfig(uint16_t BKP_RTCOutputSource);
+void                BKP_SetRTCCalibrationValue(uint8_t CalibrationValue);
+void                BKP_WriteBackupRegister(uint16_t BKP_DR, uint16_t Data);
+uint16_t            BKP_ReadBackupRegister(uint16_t BKP_DR);
+FlagStatus          BKP_GetFlagStatus(void);
+void                BKP_ClearFlag(void);
+ITStatus            BKP_GetITStatus(void);
+void                BKP_ClearITPendingBit(void);
 
 #ifdef __cplusplus
 }
@@ -181,15 +181,15 @@ void BKP_ClearITPendingBit(void);
 
 #endif /* __STM32F10x_BKP_H */
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

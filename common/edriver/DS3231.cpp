@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    ds3231.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    ds3231.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -43,7 +43,7 @@ uint8_t DS3231::dec_to_bcd(uint8_t dec)
     return bcd;
 }
 
-void	DS3231::get_date_time(date_time_t *t)
+void DS3231::get_date_time(date_time_t *t)
 {
     uint8_t buf[8];
     i2c->take_i2c_right(speed);
@@ -52,20 +52,20 @@ void	DS3231::get_date_time(date_time_t *t)
 
     //	timer.w_year,timer.w_month,timer.w_date,timer.hour,timer.min,timer.sec
     /******将读取的十六进制数据转换为十进制数据******/
-    t->year 	= bcd_to_dec(buf[6]);
-    t->month	= bcd_to_dec(buf[5]);
-    t->date		= bcd_to_dec(buf[4]);
-    t->week 	= bcd_to_dec(buf[3]);
-    t->hour		= bcd_to_dec(buf[2]);
-    t->min		= bcd_to_dec(buf[1]);
-    t->sec	  = bcd_to_dec(buf[0]);
+    t->year     = bcd_to_dec(buf[6]);
+    t->month    = bcd_to_dec(buf[5]);
+    t->date             = bcd_to_dec(buf[4]);
+    t->week     = bcd_to_dec(buf[3]);
+    t->hour             = bcd_to_dec(buf[2]);
+    t->min              = bcd_to_dec(buf[1]);
+    t->sec        = bcd_to_dec(buf[0]);
 }
 void DS3231::get_date(char *buf)
 {
     uint8_t tmpbuf[3];
     i2c->take_i2c_right(speed);
 
-    i2c->read_byte(DS3231_ADDRESS, DS3231_DAY, tmpbuf, 3);				//日期
+    i2c->read_byte(DS3231_ADDRESS, DS3231_DAY, tmpbuf, 3);                              //日期
     i2c->release_i2c_right();
 
     buf[0] = uint8_t( (tmpbuf[0] >> 4) + 0x30);
@@ -94,7 +94,7 @@ void DS3231::get_time(char *buf)
 
 
 }
-void	DS3231::set_time(void *dt)
+void DS3231::set_time(void *dt)
 {
     date_time_t tBCD;
     date_time_t *t = (date_time_t *)dt;

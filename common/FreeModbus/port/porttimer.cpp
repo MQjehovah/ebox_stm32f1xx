@@ -33,39 +33,39 @@
 #include "freemodbus.h"
 
 
-//TIM timer4(TIM4); 
+//TIM timer4(TIM4);
 void t4it(void);
 /* ----------------------- static functions ---------------------------------*/
 static void prvvTIMERExpiredISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
 /**
-  * @brief  定时器初始化函数
-  * @param  None
-  * @retval None
-  */
+ * @brief  定时器初始化函数
+ * @param  None
+ * @retval None
+ */
 BOOL
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
-	modbus.timer->begin(100); 
-	modbus.timer->interrupt(ENABLE);
-	modbus.timer->attach(t4it);
-	modbus.timer->start();
-  return TRUE;
+    modbus.timer->begin(100);
+    modbus.timer->interrupt(ENABLE);
+    modbus.timer->attach(t4it);
+    modbus.timer->start();
+    return TRUE;
 }
 
 void
 vMBPortTimersEnable(  )
 {
-  /* Enable the timer with the timeout passed to xMBPortTimersInit( ) */
-	modbus.timer->start(); 
+    /* Enable the timer with the timeout passed to xMBPortTimersInit( ) */
+    modbus.timer->start();
 }
 
 void
 vMBPortTimersDisable(  )
 {
-   /* Disable any pending timers. */
-	modbus.timer->stop();
+    /* Disable any pending timers. */
+    modbus.timer->stop();
 }
 
 /* Create an ISR which is called whenever the timer has expired. This function
@@ -78,12 +78,12 @@ static void prvvTIMERExpiredISR( void )
 }
 
 /**
-  * @brief  定时器4中断服务函数
-  * @param  None
-  * @retval None
-  */
+ * @brief  定时器4中断服务函数
+ * @param  None
+ * @retval None
+ */
 
 void t4it(void)
-{ 
-  prvvTIMERExpiredISR( );	
-   }
+{
+    prvvTIMERExpiredISR( );
+}

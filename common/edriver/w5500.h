@@ -1,22 +1,22 @@
 /**
-  ******************************************************************************
-  * @file    w5500.h
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    w5500.h
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 
@@ -25,26 +25,26 @@
 #include "ebox.h"
 
 
-typedef int8_t 			SOCKET;
+typedef int8_t SOCKET;
 
 
 
 
 
-#define	MAX_SOCK_NUM		8	/**< Maxmium number of socket  */
+#define MAX_SOCK_NUM            8       /**< Maxmium number of socket  */
 
-static uint8_t I_STATUS[MAX_SOCK_NUM];
-static uint16_t SSIZE[MAX_SOCK_NUM]; /**< Max Tx buffer size by each channel */
-static uint16_t RSIZE[MAX_SOCK_NUM]; /**< Max Rx buffer size by each channel */
+static uint8_t          I_STATUS[MAX_SOCK_NUM];
+static uint16_t         SSIZE[MAX_SOCK_NUM]; /**< Max Tx buffer size by each channel */
+static uint16_t         RSIZE[MAX_SOCK_NUM]; /**< Max Rx buffer size by each channel */
 
 class W5500
 {
 public:
-    uint8_t mac[6];
-    uint8_t ip[4];
-    uint8_t	subnet[4];
-    uint8_t gw[4];
-    uint8_t dns[4];
+    uint8_t         mac[6];
+    uint8_t         ip[4];
+    uint8_t         subnet[4];
+    uint8_t         gw[4];
+    uint8_t         dns[4];
 
 public:
     W5500(Gpio *cs, Gpio *rst, Gpio *int_pin, Spi *spi)
@@ -54,92 +54,92 @@ public:
         this->int_pin = int_pin;
         this->spi     = spi;
     }
-    void begin(uint8_t dev_num,uint8_t *mac);
-    void begin(uint8_t dev_num, uint8_t *mac, uint8_t *ip, uint8_t *subnet, uint8_t *gateway, uint8_t *dns);
-    void reset();
+    void            begin(uint8_t dev_num,uint8_t *mac);
+    void            begin(uint8_t dev_num, uint8_t *mac, uint8_t *ip, uint8_t *subnet, uint8_t *gateway, uint8_t *dns);
+    void            reset();
 
-    void send_data_processing(SOCKET s, uint8_t *data, uint16_t len);
-    void recv_data_processing(SOCKET s, uint8_t *data, uint16_t len);
+    void            send_data_processing(SOCKET s, uint8_t *data, uint16_t len);
+    void            recv_data_processing(SOCKET s, uint8_t *data, uint16_t len);
 
-    void write(uint32_t addrbsb, uint8_t data);
-    uint8_t   read (uint32_t addrbsb);
-    uint16_t  write(uint32_t addrbsb, uint8_t *buf, uint16_t len);
-    uint16_t  read (uint32_t addrbsb, uint8_t *buf, uint16_t len);
-    void sysinit( uint8_t  *tx_size, uint8_t  *rx_size  );
+    void            write(uint32_t addrbsb, uint8_t data);
+    uint8_t         read (uint32_t addrbsb);
+    uint16_t        write(uint32_t addrbsb, uint8_t *buf, uint16_t len);
+    uint16_t        read (uint32_t addrbsb, uint8_t *buf, uint16_t len);
+    void            sysinit( uint8_t *tx_size, uint8_t  *rx_size  );
 
 
-    uint8_t getISR(SOCKET s);
-    void putISR(SOCKET s, uint8_t val);
-    uint16_t getRxMAX(SOCKET s);
-    uint16_t getTxMAX(SOCKET s);
+    uint8_t         getISR(SOCKET s);
+    void            putISR(SOCKET s, uint8_t val);
+    uint16_t        getRxMAX(SOCKET s);
+    uint16_t        getTxMAX(SOCKET s);
 
     //通用寄存器
-    void setSHAR(uint8_t *addr );//mac
-    void setSIPR(uint8_t *addr );//ip
-    void setSUBR(uint8_t *addr );//mask
-    void setGAR(uint8_t *addr );	//gateway
+    void        setSHAR(uint8_t *addr ); //mac
+    void        setSIPR(uint8_t *addr ); //ip
+    void        setSUBR(uint8_t *addr ); //mask
+    void        setGAR(uint8_t *addr ); //gateway
 
-    void getSHAR(uint8_t  *addr );//mac
-    void getSIPR(uint8_t  *addr);//ip
-    void getSUBR(uint8_t  *addr);//mask
-    void getGWIP(uint8_t  *addr);//gateway
-    void getGAR(uint8_t  *addr);//gateway
+    void        getSHAR(uint8_t *addr ); //mac
+    void        getSIPR(uint8_t *addr); //ip
+    void        getSUBR(uint8_t *addr); //mask
+    void        getGWIP(uint8_t *addr); //gateway
+    void        getGAR(uint8_t *addr); //gateway
 
-    void getMAC(uint8_t  *addr );//mac
-    void getIP(uint8_t  *addr);//ip
-    void getSubnet(uint8_t  *addr);//mask
-    void getGateway(uint8_t  *addr);//gateway
+    void        getMAC(uint8_t *addr ); //mac
+    void        getIP(uint8_t *addr); //ip
+    void        getSubnet(uint8_t *addr); //mask
+    void        getGateway(uint8_t *addr); //gateway
 
-    void setMR(uint8_t val);
+    void        setMR(uint8_t val);
 
-    void setRTR(uint16_t timeout);
-    void setRCR(uint8_t retry);
+    void        setRTR(uint16_t timeout);
+    void        setRCR(uint8_t retry);
 
     //中断屏蔽寄存器
-    void setIMR(uint8_t val);
-    void setSIMR(uint8_t val);
+    void            setIMR(uint8_t val);
+    void            setSIMR(uint8_t val);
     //清除中断标志位
-    void setIR(uint8_t mask);
-    void setSIR(uint8_t mask);
+    void            setIR(uint8_t mask);
+    void            setSIR(uint8_t mask);
     //获取中断状态寄存器
-    uint8_t   getIR( void );
-    uint8_t   getSIR( void );
+    uint8_t         getIR( void );
+    uint8_t         getSIR( void );
 
     //socket寄存器
     //中断屏蔽寄存器
-    void setSn_IMR(SOCKET s, uint8_t mask);
-    uint8_t   getSn_IMR(SOCKET s);
+    void            setSn_IMR(SOCKET s, uint8_t mask);
+    uint8_t         getSn_IMR(SOCKET s);
     //获取中断状态寄存器
-    uint8_t   getSn_IR(SOCKET s);
+    uint8_t         getSn_IR(SOCKET s);
     //清除中断标志位
-    void setSn_IR(SOCKET s, uint8_t val);
+    void            setSn_IR(SOCKET s, uint8_t val);
 
-    void setSn_MSS(SOCKET s, uint16_t Sn_MSSR);
-    void setSn_TTL(SOCKET s, uint8_t ttl);
+    void            setSn_MSS(SOCKET s, uint16_t Sn_MSSR);
+    void            setSn_TTL(SOCKET s, uint8_t ttl);
 
     //获取远端IP和端口
-    void getSn_DIPR(SOCKET s, uint8_t *ip);
-    uint16_t getSn_DPORT(SOCKET s);
+    void            getSn_DIPR(SOCKET s, uint8_t *ip);
+    uint16_t        getSn_DPORT(SOCKET s);
 
-    uint8_t      getSn_SR(SOCKET s);
-    uint16_t     get_tx_free_size(SOCKET s);
-    uint16_t     get_rx_recv_size(SOCKET s);
+    uint8_t         getSn_SR(SOCKET s);
+    uint16_t        get_tx_free_size(SOCKET s);
+    uint16_t        get_rx_recv_size(SOCKET s);
 
 
 
-    void attch_interruput_event(void (*callbackFun)(void))
+    void        attch_interruput_event(void (*callbackFun)(void))
     {
-        Exti ex(int_pin, EXTI_Trigger_Falling);
+        Exti        ex(int_pin, EXTI_Trigger_Falling);
         ex.begin();
         ex.attach_interrupt(callbackFun);
         ex.interrupt(ENABLE);
     }
 private:
-    Gpio *cs;
-    Gpio *rst_pin;
-    Gpio *int_pin;
-    SPI_CONFIG_TYPE spi_dev_w5500;
-    Spi *spi;
+    Gpio *                  cs;
+    Gpio *                  rst_pin;
+    Gpio *                  int_pin;
+    SPI_CONFIG_TYPE         spi_dev_w5500;
+    Spi *                   spi;
 
 
 };
@@ -155,14 +155,14 @@ private:
 #define MR                          (0x000000)
 
 /**
- @brief Gateway IP Register address
+ *  @brief Gateway IP Register address
  */
 #define GAR0                        (0x000100)
 #define GAR1                        (0x000200)
 #define GAR2                        (0x000300)
 #define GAR3                        (0x000400)
 /**
- @brief Subnet mask Register address
+ *  @brief Subnet mask Register address
  */
 #define SUBR0                       (0x000500)
 #define SUBR1                       (0x000600)
@@ -170,7 +170,7 @@ private:
 #define SUBR3                       (0x000800)
 
 /**
- @brief Source MAC Register address
+ *  @brief Source MAC Register address
  */
 #define SHAR0                       (0x000900)
 #define SHAR1                       (0x000A00)
@@ -179,52 +179,52 @@ private:
 #define SHAR4                       (0x000D00)
 #define SHAR5                       (0x000E00)
 /**
- @brief Source IP Register address
+ *  @brief Source IP Register address
  */
 #define SIPR0                       (0x000F00)
 #define SIPR1                       (0x001000)
 #define SIPR2                       (0x001100)
 #define SIPR3                       (0x001200)
 /**
- @brief set Interrupt low level timer register address
+ *  @brief set Interrupt low level timer register address
  */
 #define INTLEVEL0                   (0x001300)
 #define INTLEVEL1                   (0x001400)
 /**
- @brief Interrupt Register
+ *  @brief Interrupt Register
  */
 #define IR                          (0x001500)
 /**
- @brief Interrupt mask register
+ *  @brief Interrupt mask register
  */
 #define IMR                         (0x001600)
 /**
- @brief Socket Interrupt Register
+ *  @brief Socket Interrupt Register
  */
 #define SIR                         (0x001700)
 /**
- @brief Socket Interrupt Mask Register
+ *  @brief Socket Interrupt Mask Register
  */
 #define SIMR                        (0x001800)
 /**
- @brief Timeout register address( 1 is 100us )
+ *  @brief Timeout register address( 1 is 100us )
  */
 #define RTR0                        (0x001900)
 #define RTR1                        (0x001A00)
 /**
- @brief Retry count reigster
+ *  @brief Retry count reigster
  */
 #define WIZ_RCR                         (0x001B00)
 /**
- @briefPPP LCP Request Timer register  in PPPoE mode
+ *  @briefPPP LCP Request Timer register  in PPPoE mode
  */
 #define PTIMER                      (0x001C00)
 /**
- @brief PPP LCP Magic number register  in PPPoE mode
+ *  @brief PPP LCP Magic number register  in PPPoE mode
  */
 #define PMAGIC                      (0x001D00)
 /**
- @brief PPP Destination MAC Register address
+ *  @brief PPP Destination MAC Register address
  */
 #define PDHAR0                      (0x001E00)
 #define PDHAR1                      (0x001F00)
@@ -233,64 +233,64 @@ private:
 #define PDHAR4                      (0x002200)
 #define PDHAR5                      (0x002300)
 /**
- @brief PPP Session Identification Register
+ *  @brief PPP Session Identification Register
  */
 #define PSID0                       (0x002400)
 #define PSID1                       (0x002500)
 /**
- @brief PPP Maximum Segment Size(MSS) register
+ *  @brief PPP Maximum Segment Size(MSS) register
  */
 #define PMR0                        (0x002600)
 #define PMR1                        (0x002700)
 /**
- @brief Unreachable IP register address in UDP mode
+ *  @brief Unreachable IP register address in UDP mode
  */
 #define UIPR0                       (0x002800)
 #define UIPR1                       (0x002900)
 #define UIPR2                       (0x002A00)
 #define UIPR3                       (0x002B00)
 /**
- @brief Unreachable Port register address in UDP mode
+ *  @brief Unreachable Port register address in UDP mode
  */
 #define UPORT0                      (0x002C00)
 #define UPORT1                      (0x002D00)
 /**
- @brief PHY Configuration Register
+ *  @brief PHY Configuration Register
  */
 #define PHYCFGR                      (0x002E00)
 /**
- @brief chip version register address
+ *  @brief chip version register address
  */
 #define VERSIONR                    (0x003900)
 
 
 
 /**
- @brief socket Mode register
+ *  @brief socket Mode register
  */
 #define Sn_MR(ch)                       (0x000008 + (ch<<5))
 
 /**
- @brief channel Sn_CR register
+ *  @brief channel Sn_CR register
  */
 #define Sn_CR(ch)                       (0x000108 + (ch<<5))
 /**
- @brief channel interrupt register
+ *  @brief channel interrupt register
  */
 #define Sn_IR(ch)                       (0x000208 + (ch<<5))
 /**
- @brief channel status register
+ *  @brief channel status register
  */
 #define Sn_SR(ch)                       (0x000308 + (ch<<5))
 
 
 /**
- @brief source port register
+ *  @brief source port register
  */
 #define Sn_PORT0(ch)                    (0x000408 + (ch<<5))
 #define Sn_PORT1(ch)                    (0x000508 + (ch<<5))
 /**
- @brief Peer MAC register address
+ *  @brief Peer MAC register address
  */
 #define Sn_DHAR0(ch)                    (0x000608 + (ch<<5))
 #define Sn_DHAR1(ch)                    (0x000708 + (ch<<5))
@@ -299,78 +299,78 @@ private:
 #define Sn_DHAR4(ch)                    (0x000A08 + (ch<<5))
 #define Sn_DHAR5(ch)                    (0x000B08 + (ch<<5))
 /**
- @brief Peer IP register address
+ *  @brief Peer IP register address
  */
 #define Sn_DIPR0(ch)                    (0x000C08 + (ch<<5))
 #define Sn_DIPR1(ch)                    (0x000D08 + (ch<<5))
 #define Sn_DIPR2(ch)                    (0x000E08 + (ch<<5))
 #define Sn_DIPR3(ch)                    (0x000F08 + (ch<<5))
 /**
- @brief Peer port register address
+ *  @brief Peer port register address
  */
 #define Sn_DPORT0(ch)                   (0x001008 + (ch<<5))
 #define Sn_DPORT1(ch)                   (0x001108 + (ch<<5))
 /**
- @brief Maximum Segment Size(Sn_MSSR0) register address
+ *  @brief Maximum Segment Size(Sn_MSSR0) register address
  */
 #define Sn_MSSR0(ch)                    (0x001208 + (ch<<5))
 #define Sn_MSSR1(ch)                    (0x001308 + (ch<<5))
 /* *
- @brief IP Type of Service(TOS) Register
+ *  @brief IP Type of Service(TOS) Register
  */
 #define Sn_TOS(ch)                      (0x001508 + (ch<<5))
 /**
- @brief IP Time to live(TTL) Register
+ *  @brief IP Time to live(TTL) Register
  */
 #define Sn_TTL(ch)                      (0x001608 + (ch<<5))
 /**
- @brief Receive memory size reigster
+ *  @brief Receive memory size reigster
  */
 #define Sn_RXMEM_SIZE(ch)               (0x001E08 + (ch<<5))
 /**
- @brief Transmit memory size reigster
+ *  @brief Transmit memory size reigster
  */
 #define Sn_TXMEM_SIZE(ch)               (0x001F08 + (ch<<5))
 /**
- @brief Transmit free memory size register
+ *  @brief Transmit free memory size register
  */
 #define Sn_TX_FSR0(ch)                  (0x002008 + (ch<<5))
 #define Sn_TX_FSR1(ch)                  (0x002108 + (ch<<5))
 /**
- @brief Transmit memory read pointer register address
+ *  @brief Transmit memory read pointer register address
  */
 #define Sn_TX_RD0(ch)                   (0x002208 + (ch<<5))
 #define Sn_TX_RD1(ch)                   (0x002308 + (ch<<5))
 /**
- @brief Transmit memory write pointer register address
+ *  @brief Transmit memory write pointer register address
  */
 #define Sn_TX_WR0(ch)                   (0x002408 + (ch<<5))
 #define Sn_TX_WR1(ch)                   (0x002508 + (ch<<5))
 /**
- @brief Received data size register
+ *  @brief Received data size register
  */
 #define Sn_RX_RSR0(ch)                  (0x002608 + (ch<<5))
 #define Sn_RX_RSR1(ch)                  (0x002708 + (ch<<5))
 /**
- @brief Read point of Receive memory
+ *  @brief Read point of Receive memory
  */
 #define Sn_RX_RD0(ch)                   (0x002808 + (ch<<5))
 #define Sn_RX_RD1(ch)                   (0x002908 + (ch<<5))
 /**
- @brief Write point of Receive memory
+ *  @brief Write point of Receive memory
  */
 #define Sn_RX_WR0(ch)                   (0x002A08 + (ch<<5))
 #define Sn_RX_WR1(ch)                   (0x002B08 + (ch<<5))
 /**
- @brief socket interrupt mask register
+ *  @brief socket interrupt mask register
  */
 #define Sn_IMR(ch)                      (0x002C08 + (ch<<5))
 /**
- @brief frag field value in IP header register
+ *  @brief frag field value in IP header register
  */
 #define Sn_FRAG(ch)                     (0x002D08 + (ch<<5))
 /**
- @brief Keep Timer register
+ *  @brief Keep Timer register
  */
 #define Sn_KPALVTR(ch)                  (0x002F08 + (ch<<5))
 
@@ -430,18 +430,18 @@ private:
 #define Sn_CR_RECV                   0x40     /**< update rxbuf pointer, recv data */
 
 #ifdef __DEF_IINCHIP_PPP__
-#define Sn_CR_PCON                0x23
-#define Sn_CR_PDISCON             0x24
-#define Sn_CR_PCR                 0x25
-#define Sn_CR_PCN                 0x26
-#define Sn_CR_PCJ                 0x27
+ #define Sn_CR_PCON                0x23
+ #define Sn_CR_PDISCON             0x24
+ #define Sn_CR_PCR                 0x25
+ #define Sn_CR_PCN                 0x26
+ #define Sn_CR_PCJ                 0x27
 #endif
 
 /*Sn_IR values */
 #ifdef __DEF_IINCHIP_PPP__
-#define Sn_IR_PRECV               0x80
-#define Sn_IR_PFAIL               0x40
-#define Sn_IR_PNEXT               0x20
+ #define Sn_IR_PRECV               0x80
+ #define Sn_IR_PFAIL               0x40
+ #define Sn_IR_PNEXT               0x20
 #endif
 
 #define Sn_IR_SEND_OK                0x10     /**< complete sending */

@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    util.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    util.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -25,13 +25,13 @@
 
 
 /**
-@brief	CONVERT STRING INTO INTEGER
-@return	a integer number
-*/
+ *  @brief	CONVERT STRING INTO INTEGER
+ *  @return	a integer number
+ */
 uint16_t ATOI(
-    char *str,	/**< is a pointer to convert */
-    uint16_t base	/**< is a base value (must be in the range 2 - 16) */
-)
+    char *      str, /**< is a pointer to convert */
+    uint16_t    base    /**< is a base value (must be in the range 2 - 16) */
+    )
 {
     unsigned int num = 0;
     while (*str != 0)
@@ -40,9 +40,9 @@ uint16_t ATOI(
 }
 
 uint32_t ATOI32(
-    char *str,	/**< is a pointer to convert */
-    uint16_t base	/**< is a base value (must be in the range 2 - 16) */
-)
+    char *      str, /**< is a pointer to convert */
+    uint16_t    base    /**< is a base value (must be in the range 2 - 16) */
+    )
 {
     uint32_t num = 0;
     while (*str != 0)
@@ -67,14 +67,14 @@ void itoa(uint16_t n, uint8_t str[5], uint8_t len)
     return;
 }
 /**
-@brief	CONVERT STRING INTO HEX OR DECIMAL
-@return	success - 1, fail - 0
-*/
+ *  @brief	CONVERT STRING INTO HEX OR DECIMAL
+ *  @return	success - 1, fail - 0
+ */
 int ValidATOI(
-    char *str, 	/**< is a pointer to string to be converted */
-    int base, 	/**< is a base value (must be in the range 2 - 16) */
-    int *ret		/**<  is a integer pointer to return */
-)
+    char *  str, /**< is a pointer to string to be converted */
+    int     base, /**< is a base value (must be in the range 2 - 16) */
+    int *   ret         /**<  is a integer pointer to return */
+    )
 {
     int c;
     char *tstr = str;
@@ -83,7 +83,7 @@ int ValidATOI(
     {
         c = C2D(*tstr);
         if( c >= 0 && c < base) tstr++;
-        else    return 0;
+        else return 0;
     }
 
     *ret = ATOI(str, base);
@@ -91,27 +91,27 @@ int ValidATOI(
 }
 
 /**
-@brief	replace the specified character in a string with new character
-*/
+ *  @brief	replace the specified character in a string with new character
+ */
 void replacetochar(
-    char *str, 		/**< pointer to be replaced */
-    char oldchar, 	/**< old character */
-    char newchar	/**< new character */
-)
+    char *  str,        /**< pointer to be replaced */
+    char    oldchar,    /**< old character */
+    char    newchar     /**< new character */
+    )
 {
     int x;
     for (x = 0; str[x]; x++)
         if (str[x] == oldchar) str[x] = newchar;
 }
 /**
-@brief	CONVERT CHAR INTO HEX
-@return	HEX
-
-This function converts HEX(0-F) to a character
-*/
+ *  @brief	CONVERT CHAR INTO HEX
+ *  @return	HEX
+ *
+ *  This function converts HEX(0-F) to a character
+ */
 char C2D(
-    uint8_t c	/**< is a character('0'-'F') to convert to HEX */
-)
+    uint8_t c   /**< is a character('0'-'F') to convert to HEX */
+    )
 {
     if (c >= '0' && c <= '9')
         return c - '0';
@@ -123,7 +123,7 @@ char C2D(
     return (char)c;
 }
 
-uint16_t swaps(uint16_t i16)//交换高低字节
+uint16_t swaps(uint16_t i16) //交换高低字节
 {
     uint16_t ret = 0;
     ret = (i16 & 0xFF) << 8;
@@ -131,7 +131,7 @@ uint16_t swaps(uint16_t i16)//交换高低字节
     return ret;
 }
 
-uint32_t swapl(uint32_t l32)//交换高低字节
+uint32_t swapl(uint32_t l32) //交换高低字节
 {
     uint32_t ret = 0;
     ret = (l32 & 0xFF) << 24;
@@ -152,7 +152,7 @@ void inet_addr_(unsigned char *addr, unsigned char *ip)
     strcpy(taddr, (char *)addr);
 
     nexttok = taddr;
-    for(i = 0; i < 4 ; i++)
+    for(i = 0; i < 4; i++)
     {
         nexttok = strtok(nexttok, ".");
         if(nexttok[0] == '0' && nexttok[1] == 'x') num = ATOI(nexttok + 2, 0x10);
@@ -172,7 +172,7 @@ int find_str(uint8_t *s_str, uint8_t *p_str, uint16_t count, uint16_t &seek)
     uint8_t *temp_char = NULL;
     if(0 == s_str || 0 == p_str)
         return -2;
-    for(temp_str = s_str; *temp_str != '\0'; temp_str++)	 //依次查找字符串
+    for(temp_str = s_str; *temp_str != '\0'; temp_str++)         //依次查找字符串
     {
         temp_char = temp_str; //指向当前字符串
         //比较
@@ -238,7 +238,7 @@ uint16_t get_str(char *source, const char *begin, uint16_t count, uint16_t lengt
 uint16_t get_str(char *source, char *out, uint16_t length)
 {
     uint16_t i = 0;
-    for (i = 0 ; i < length ; i++)
+    for (i = 0; i < length; i++)
     {
         out[i] = source[i];
     }

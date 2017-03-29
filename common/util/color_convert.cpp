@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    Calendar.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    Calendar.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -22,7 +22,7 @@
 #include "math.h"
 #include "util.h"
 
-void RGB_to_HSL(/*[in]*/const COLOR_RGB &rgb, /*[out]*/COLOR_HSL &hsl)
+void RGB_to_HSL(/*[in]*/ const COLOR_RGB &rgb, /*[out]*/ COLOR_HSL &hsl)
 {
     float h = 0, s = 0, l = 0;
     // normalizes red-green-blue values
@@ -178,7 +178,7 @@ void RGB_to_HSV(const COLOR_RGB &rgb, COLOR_HSV &hsv )
 //RGB(BGR: 0~255)?HSV(H: [0~360), S: [0~1], V: [0~1])
 void HSV_to_RGB(const COLOR_HSV &hsv, COLOR_RGB &rgb)
 {
-    int 	h = hsv.h;//
+    int h = hsv.h;        //
     float s = hsv.s;
     float v = hsv.v;
     float r = 0.0;
@@ -191,7 +191,7 @@ void HSV_to_RGB(const COLOR_HSV &hsv, COLOR_RGB &rgb)
     float q = v * (1 - f * s);
     float t = v * (1 - (1 - f) * s);
 
-    switch ( flag)//
+    switch ( flag) //
     {
     case 0:
         b = p;
@@ -228,16 +228,16 @@ void HSV_to_RGB(const COLOR_HSV &hsv, COLOR_RGB &rgb)
     }
 
     uint16_t blue = int( b * 255);
-    rgb.b = ( blue >= 255) ? 255 : blue;//
-    rgb.b = ( blue <= 0) ? 0 : rgb. b;
+    rgb.b = ( blue >= 255) ? 255 : blue; //
+    rgb.b = ( blue <= 0) ? 0 : rgb.b;
 
     uint16_t green = int( g * 255);
     rgb.g = ( green >= 255) ? 255 : green;
-    rgb.g = ( green <= 0) ? 0 : rgb. g;
+    rgb.g = ( green <= 0) ? 0 : rgb.g;
 
     uint16_t red = int( r * 255);
     rgb.r = ( red >= 255) ? 255 : red;
-    rgb.r = ( red <= 0) ? 0 : rgb. r;
+    rgb.r = ( red <= 0) ? 0 : rgb.r;
 }
 void RGB_to_GRB(COLOR_RGB &rgb, COLOR_GRB &grb)
 {
@@ -252,7 +252,7 @@ void RGB_BUF_to_GRB(COLOR_BUF &c_buf)
     uint8_t tmp;
     if(c_buf.color_type == RGB_TYPE)
     {
-        for(uint8_t i = 0; i < 100; i ++)
+        for(uint8_t i = 0; i < 100; i++)
         {
             tmp = c_buf.data[i][0];
             c_buf.data[i][0] = c_buf.data[i][1];

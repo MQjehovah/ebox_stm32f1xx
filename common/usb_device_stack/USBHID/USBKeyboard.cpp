@@ -1,20 +1,20 @@
 /* Copyright (c) 2010-2011 mbed.org, MIT License
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-* and associated documentation files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use, copy, modify, merge, publish,
-* distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-* BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-* DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 #include "stdint.h"
 
@@ -31,7 +31,7 @@ typedef struct {
 
 #ifdef US_KEYBOARD
 /* US keyboard (as HID standard) */
-#define KEYMAP_SIZE (152)
+ #define KEYMAP_SIZE (152)
 const KEYMAP keymap[KEYMAP_SIZE] = {
     {0, 0},             /* NUL */
     {0, 0},             /* SOH */
@@ -192,7 +192,7 @@ const KEYMAP keymap[KEYMAP_SIZE] = {
 
 #else
 /* UK keyboard */
-#define KEYMAP_SIZE (152)
+ #define KEYMAP_SIZE (152)
 const KEYMAP keymap[KEYMAP_SIZE] = {
     {0, 0},             /* NUL */
     {0, 0},             /* SOH */
@@ -497,13 +497,13 @@ bool USBKeyboard::mediaControl(MEDIA_KEY key) {
 
 #define DEFAULT_CONFIGURATION (1)
 #define TOTAL_DESCRIPTOR_LENGTH ((1 * CONFIGURATION_DESCRIPTOR_LENGTH) \
-                               + (1 * INTERFACE_DESCRIPTOR_LENGTH) \
-                               + (1 * HID_DESCRIPTOR_LENGTH) \
-                               + (2 * ENDPOINT_DESCRIPTOR_LENGTH))
+                                 + (1 * INTERFACE_DESCRIPTOR_LENGTH) \
+                                 + (1 * HID_DESCRIPTOR_LENGTH) \
+                                 + (2 * ENDPOINT_DESCRIPTOR_LENGTH))
 
 uint8_t * USBKeyboard::configurationDesc() {
     static uint8_t configurationDescriptor[] = {
-        CONFIGURATION_DESCRIPTOR_LENGTH,// bLength
+        CONFIGURATION_DESCRIPTOR_LENGTH, // bLength
         CONFIGURATION_DESCRIPTOR,       // bDescriptorType
         LSB(TOTAL_DESCRIPTOR_LENGTH),   // wTotalLength (LSB)
         MSB(TOTAL_DESCRIPTOR_LENGTH),   // wTotalLength (MSB)

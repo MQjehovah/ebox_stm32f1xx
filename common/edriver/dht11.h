@@ -29,7 +29,7 @@
  *       * Changed the error codes to an enumeration
  *       * Update the temp/humidity only if the checksum is correct
  *       * Added more comments
- *    - Link                            			  - Version 0.6 (2016/01/03)
+ *    - Link                                          - Version 0.6 (2016/01/03)
  *       * port from ardunio to eBox
  */
 
@@ -47,18 +47,18 @@ class Dht11
 {
 private:
     // The last read humidity value
-    int humidity;
+    int        humidity;
 
     // The last read temperature value
-    int temperature;
+    int        temperature;
 
     // The pin over which we communicate with the sensor
-    Gpio *pin;
+    Gpio *      pin;
 
 
 public:
     // The version of this library
-    static const char *const VERSION;
+    static const char *const        VERSION;
 
     // An enumeration modeling the read status of the sensor.
     enum ReadStatus
@@ -87,14 +87,14 @@ public:
      * waiting for a response from the sensor, or ERROR_CHECKSUM if the
      * calculated checksum doesn't match the checksum provided by the sensor.
      */
-    ReadStatus read();
+    ReadStatus        read();
 
     /*
      * getHumidity
      *
      * Gets the last read relative humidity percentage.
      */
-    inline int getHumidity() const
+    inline int        getHumidity() const
     {
         return this->humidity;
     }
@@ -104,7 +104,7 @@ public:
      *
      * Gets the last read temperature value in degrees Celsius.
      */
-    inline int getTemperature() const
+    inline int        getTemperature() const
     {
         return this->temperature;
     }
@@ -131,9 +131,9 @@ private:
      *
      * This is a private method used only by the Dht11 class.
      */
-    inline ReadStatus waitForPinChange(const int oldValue,
-                                       unsigned  maxIterations =
-                                           MAX_PIN_CHANGE_ITERATIONS) const
+    inline ReadStatus        waitForPinChange(const int oldValue,
+                                              unsigned  maxIterations =
+                                                  MAX_PIN_CHANGE_ITERATIONS) const
     {
         while ((--maxIterations > 0) && (pin->read() == oldValue))
         {

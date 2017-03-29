@@ -1,17 +1,17 @@
 /**
-  ******************************************************************************
-  * @file   : *.cpp
-  * @author : shentq
-  * @version: V1.2
-  * @date   : 2016/08/14
-
-  * @brief   ebox application example .
-  *
-  * Copyright 2016 shentq. All Rights Reserved.         
-  ******************************************************************************
+ ******************************************************************************
+ * @file   : *.cpp
+ * @author : shentq
+ * @version: V1.2
+ * @date   : 2016/08/14
+ *
+ * @brief   ebox application example .
+ *
+ * Copyright 2016 shentq. All Rights Reserved.
+ ******************************************************************************
  */
- 
- 
+
+
 #include "ebox.h"
 #include "bsp.h"
 #include "list.h"
@@ -58,20 +58,20 @@ int main(void)
 
         if(count >= l.size())
         {
-            
+
             if((node = l.head()) != NULL)
             {
                 uart1.printf("head.data = %d\n",*((int *)node->data));
             }
             else
                 uart1.printf("head NULL\n",count,*p);
-            
+
             if((node = l.tail()) != NULL)
                 uart1.printf("tail.data = %d\n",*((int *)node->data));
             else
                 uart1.printf("tail NULL\n",count,*p);
-                
-            while(1);
+
+            while(1) ;
         }
     }
 

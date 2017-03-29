@@ -1,16 +1,16 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 /*
  *  硬件环境:
- *     	0.96寸oled，4线SPI，128*64
- * 	OLED 4接口演示例程(STM32系列)
+ *      0.96寸oled，4线SPI，128*64
+ *  OLED 4接口演示例程(STM32系列)
  *             说明: SPI协议
  *             ----------------------------------------------------------------
  *              GND    接
@@ -20,7 +20,7 @@ Copyright 2015 shentq. All Rights Reserved.
  *              RES  接PD4
  *              DC   接PD5
  *              CS   接PD3
-*/
+ */
 #include "ebox.h"
 #include "oled_ssd1306.h"
 #include "font.h"
@@ -65,7 +65,7 @@ int main(void)
         oled.OLED_ShowString(63, 6, (uint8_t *)"CODE:");
         oled.OLED_ShowChar(48, 6, t); //显示ASCII字符
         t++;
-        if(t > '~')t = ' ';
+        if(t > '~') t = ' ';
         oled.OLED_ShowNum(103, 6, t, 3, 16); //显示ASCII字符的码值
 
 

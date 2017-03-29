@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 #include "ebox.h"
@@ -18,7 +18,7 @@ static FATFS fs;            // Work area (file system object) for logical drive
 FATFS *fss;
 FRESULT res;
 DIR DirObject;       //目录结构
-DWORD free_clust;//空簇，空扇区大小
+DWORD free_clust; //空簇，空扇区大小
 
 
 SD sd(&PB12, &spi2);
@@ -28,7 +28,7 @@ void getSDCardInfo()
     u8 ret;
     uint64_t rl;
     u8 buf[1024];
-    
+
     ret = sd.get_CID(buf);
     uart1.printf("\r\n========================");
     uart1.printf("\r\nget CID Info,ret = %d", ret);
@@ -65,7 +65,7 @@ void setup()
         uart1.printf("sdcard init ok!\r\n");
     else
         uart1.printf("sdcard init failed;err = %d\r\n",ret);
-        
+
     attach_sd_to_fat(&sd);
 
     res = f_mount(&fs, "0", 1);

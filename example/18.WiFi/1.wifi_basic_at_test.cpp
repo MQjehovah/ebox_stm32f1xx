@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 #include "ebox.h"
@@ -15,7 +15,7 @@ Copyright 2015 shentq. All Rights Reserved.
 
 WIFI_UDP udp(&wifi);
 
-char    buf[1024] = {0};
+char buf[1024] = {0};
 
 void setup()
 {
@@ -47,6 +47,6 @@ int main(void)
     else
         uart1.printf("get version failed\r\n");
 
-    while(1);
+    while(1) ;
 
 }

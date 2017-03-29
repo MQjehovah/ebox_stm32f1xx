@@ -1,14 +1,14 @@
 /**
-  ******************************************************************************
-  * @file   : *.cpp
-  * @author : shentq
-  * @version: V1.2
-  * @date   : 2016/08/14
-
-  * @brief   ebox application example .
-  *
-  * Copyright 2016 shentq. All Rights Reserved.         
-  ******************************************************************************
+ ******************************************************************************
+ * @file   : *.cpp
+ * @author : shentq
+ * @version: V1.2
+ * @date   : 2016/08/14
+ *
+ * @brief   ebox application example .
+ *
+ * Copyright 2016 shentq. All Rights Reserved.
+ ******************************************************************************
  */
 
 
@@ -47,14 +47,14 @@ int main(void)
 
     while(1)
     {
-//方法1：        
-    led.color_rgb(0,0,255);
-    delay_ms(100);
-    led.color_rgb(0,255,0);
-    delay_ms(100);
-    led.color_rgb(255,0,0);
-    delay_ms(100);
-        
+//方法1：
+        led.color_rgb(0,0,255);
+        delay_ms(100);
+        led.color_rgb(0,255,0);
+        delay_ms(100);
+        led.color_rgb(255,0,0);
+        delay_ms(100);
+
 //方法2：
 //        hsv.h++;
 //        if(hsv.h>360)hsv.h = 0;
@@ -66,8 +66,8 @@ int main(void)
 //        if(hsl.h > 360)hsl.h = 0;
 //        led.color_hsl(hsl);
 //        delay_ms(10);
-        
-        
+
+
 
 
     }

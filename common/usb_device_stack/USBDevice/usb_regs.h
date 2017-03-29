@@ -18,7 +18,7 @@
 #define __USB_REGS_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 #include "usb_type.h"
@@ -26,18 +26,18 @@
 /* Exported types ------------------------------------------------------------*/
 typedef enum _EP_DBUF_DIR
 {
-  /* double buffered endpoint direction */
-  EP_DBUF_ERR,
-  EP_DBUF_OUT,
-  EP_DBUF_IN
+    /* double buffered endpoint direction */
+    EP_DBUF_ERR,
+    EP_DBUF_OUT,
+    EP_DBUF_IN
 }EP_DBUF_DIR;
 
 /* endpoint buffer number */
 enum EP_BUF_NUM
 {
-  EP_NOBUF,
-  EP_BUF0,
-  EP_BUF1
+    EP_NOBUF,
+    EP_BUF0,
+    EP_BUF1
 };
 
 /* Exported constants --------------------------------------------------------*/
@@ -206,7 +206,7 @@ enum EP_BUF_NUM
 
 /* SetENDPOINT */
 #define _SetENDPOINT(bEpNum,wRegValue)  (*(EP0REG + bEpNum)= \
-    (u16)wRegValue)
+                                             (u16)wRegValue)
 
 /* GetENDPOINT */
 #define _GetENDPOINT(bEpNum)        ((u16)(*(EP0REG + bEpNum)))
@@ -214,18 +214,18 @@ enum EP_BUF_NUM
 /*******************************************************************************
 * Macro Name     : SetEPType
 * Description    : sets the type in the endpoint register(bits EP_TYPE[1:0])
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 *                  wType
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-#define _SetEPType(bEpNum,wType) (_SetENDPOINT(bEpNum,\
-                                  ((_GetENDPOINT(bEpNum) & EP_T_MASK) | wType)))
+#define _SetEPType(bEpNum,wType) (_SetENDPOINT(bEpNum, \
+                                               ((_GetENDPOINT(bEpNum) & EP_T_MASK) | wType)))
 
 /*******************************************************************************
 * Macro Name     : GetEPType
-* Description    : gets the type in the endpoint register(bits EP_TYPE[1:0]) 
-* Input          : bEpNum: Endpoint Number. 
+* Description    : gets the type in the endpoint register(bits EP_TYPE[1:0])
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : Endpoint Type
 *******************************************************************************/
@@ -234,48 +234,48 @@ enum EP_BUF_NUM
 /*******************************************************************************
 * Macro Name     : SetEPTxStatus
 * Description    : sets the status for tx transfer (bits STAT_TX[1:0]).
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 *                  wState: new state
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-#define _SetEPTxStatus(bEpNum,wState) {\
-    register u16 _wRegVal;       \
-    _wRegVal = _GetENDPOINT(bEpNum) & EPTX_DTOGMASK;\
-    /* toggle first bit ? */     \
-    if((EPTX_DTOG1 & wState)!= 0)      \
-      _wRegVal ^= EPTX_DTOG1;        \
-    /* toggle second bit ?  */         \
-    if((EPTX_DTOG2 & wState)!= 0)      \
-      _wRegVal ^= EPTX_DTOG2;        \
-    _SetENDPOINT(bEpNum, _wRegVal);    \
-  } /* _SetEPTxStatus */
+#define _SetEPTxStatus(bEpNum,wState) { \
+        register u16        _wRegVal;       \
+        _wRegVal = _GetENDPOINT(bEpNum) & EPTX_DTOGMASK; \
+        /* toggle first bit ? */     \
+        if((EPTX_DTOG1 & wState)!= 0)      \
+            _wRegVal ^= EPTX_DTOG1;        \
+        /* toggle second bit ?  */         \
+        if((EPTX_DTOG2 & wState)!= 0)      \
+            _wRegVal ^= EPTX_DTOG2;        \
+        _SetENDPOINT(bEpNum, _wRegVal);    \
+}   /* _SetEPTxStatus */
 
 /*******************************************************************************
 * Macro Name     : SetEPRxStatus
 * Description    : sets the status for rx transfer (bits STAT_TX[1:0])
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 *                  wState: new state.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-#define _SetEPRxStatus(bEpNum,wState) {\
-    register u16 _wRegVal;   \
+#define _SetEPRxStatus(bEpNum,wState) { \
+        register u16        _wRegVal;   \
     \
-    _wRegVal = _GetENDPOINT(bEpNum) & EPRX_DTOGMASK;\
-    /* toggle first bit ? */  \
-    if((EPRX_DTOG1 & wState)!= 0) \
-      _wRegVal ^= EPRX_DTOG1;  \
-    /* toggle second bit ? */  \
-    if((EPRX_DTOG2 & wState)!= 0) \
-      _wRegVal ^= EPRX_DTOG2;  \
-    _SetENDPOINT(bEpNum, _wRegVal); \
-  } /* _SetEPRxStatus */
+        _wRegVal = _GetENDPOINT(bEpNum) & EPRX_DTOGMASK; \
+        /* toggle first bit ? */  \
+        if((EPRX_DTOG1 & wState)!= 0) \
+            _wRegVal ^= EPRX_DTOG1;  \
+        /* toggle second bit ? */  \
+        if((EPRX_DTOG2 & wState)!= 0) \
+            _wRegVal ^= EPRX_DTOG2;  \
+        _SetENDPOINT(bEpNum, _wRegVal); \
+}   /* _SetEPRxStatus */
 /*******************************************************************************
-* Macro Name     : GetEPTxStatus / GetEPRxStatus 
+* Macro Name     : GetEPTxStatus / GetEPRxStatus
 * Description    : gets the status for tx/rx transfer (bits STAT_TX[1:0]
 *                  /STAT_RX[1:0])
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : status .
 *******************************************************************************/
@@ -284,9 +284,9 @@ enum EP_BUF_NUM
 #define _GetEPRxStatus(bEpNum) ((u16)_GetENDPOINT(bEpNum) & EPRX_STAT)
 
 /*******************************************************************************
-* Macro Name     : SetEPTxValid / SetEPRxValid 
+* Macro Name     : SetEPTxValid / SetEPRxValid
 * Description    : sets directly the VALID tx/rx-status into the enpoint register
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
@@ -297,7 +297,7 @@ enum EP_BUF_NUM
 /*******************************************************************************
 * Macro Name     : GetTxStallStatus / GetRxStallStatus.
 * Description    : checks stall condition in an endpoint.
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : TRUE = endpoint in stall condition.
 *******************************************************************************/
@@ -309,19 +309,19 @@ enum EP_BUF_NUM
 /*******************************************************************************
 * Macro Name     : SetEP_KIND / ClearEP_KIND.
 * Description    : set & clear EP_KIND bit.
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
 #define _SetEP_KIND(bEpNum)    (_SetENDPOINT(bEpNum, \
-                                (_GetENDPOINT(bEpNum) | EP_KIND) & EPREG_MASK))
+                                             (_GetENDPOINT(bEpNum) | EP_KIND) & EPREG_MASK))
 #define _ClearEP_KIND(bEpNum)  (_SetENDPOINT(bEpNum, \
-                                (_GetENDPOINT(bEpNum) & EPKIND_MASK)))
+                                             (_GetENDPOINT(bEpNum) & EPKIND_MASK)))
 
 /*******************************************************************************
 * Macro Name     : Set_Status_Out / Clear_Status_Out.
 * Description    : Sets/clears directly STATUS_OUT bit in the endpoint register.
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
@@ -331,7 +331,7 @@ enum EP_BUF_NUM
 /*******************************************************************************
 * Macro Name     : SetEPDoubleBuff / ClearEPDoubleBuff.
 * Description    : Sets/clears directly EP_KIND bit in the endpoint register.
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
@@ -341,48 +341,48 @@ enum EP_BUF_NUM
 /*******************************************************************************
 * Macro Name     : ClearEP_CTR_RX / ClearEP_CTR_TX.
 * Description    : Clears bit CTR_RX / CTR_TX in the endpoint register.
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-#define _ClearEP_CTR_RX(bEpNum)   (_SetENDPOINT(bEpNum,\
-                                   _GetENDPOINT(bEpNum) & 0x7FFF & EPREG_MASK))
-#define _ClearEP_CTR_TX(bEpNum)   (_SetENDPOINT(bEpNum,\
-                                   _GetENDPOINT(bEpNum) & 0xFF7F & EPREG_MASK))
+#define _ClearEP_CTR_RX(bEpNum)   (_SetENDPOINT(bEpNum, \
+                                                _GetENDPOINT(bEpNum) & 0x7FFF & EPREG_MASK))
+#define _ClearEP_CTR_TX(bEpNum)   (_SetENDPOINT(bEpNum, \
+                                                _GetENDPOINT(bEpNum) & 0xFF7F & EPREG_MASK))
 
 /*******************************************************************************
 * Macro Name     : ToggleDTOG_RX / ToggleDTOG_TX .
 * Description    : Toggles DTOG_RX / DTOG_TX bit in the endpoint register.
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
 #define _ToggleDTOG_RX(bEpNum)    (_SetENDPOINT(bEpNum, \
-                                   EP_DTOG_RX | _GetENDPOINT(bEpNum) & EPREG_MASK))
+                                                EP_DTOG_RX | _GetENDPOINT(bEpNum) & EPREG_MASK))
 #define _ToggleDTOG_TX(bEpNum)    (_SetENDPOINT(bEpNum, \
-                                   EP_DTOG_TX | _GetENDPOINT(bEpNum) & EPREG_MASK))
+                                                EP_DTOG_TX | _GetENDPOINT(bEpNum) & EPREG_MASK))
 
 /*******************************************************************************
 * Macro Name     : ClearDTOG_RX / ClearDTOG_TX.
 * Description    : Clears DTOG_RX / DTOG_TX bit in the endpoint register.
-* Input          : bEpNum: Endpoint Number. 
+* Input          : bEpNum: Endpoint Number.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-#define _ClearDTOG_RX(bEpNum)  if((_GetENDPOINT(bEpNum) & EP_DTOG_RX) != 0)\
-    _ToggleDTOG_RX(bEpNum)
-#define _ClearDTOG_TX(bEpNum)  if((_GetENDPOINT(bEpNum) & EP_DTOG_TX) != 0)\
-    _ToggleDTOG_TX(bEpNum)
+#define _ClearDTOG_RX(bEpNum)  if((_GetENDPOINT(bEpNum) & EP_DTOG_RX) != 0) \
+        _ToggleDTOG_RX(bEpNum)
+#define _ClearDTOG_TX(bEpNum)  if((_GetENDPOINT(bEpNum) & EP_DTOG_TX) != 0) \
+        _ToggleDTOG_TX(bEpNum)
 /*******************************************************************************
 * Macro Name     : SetEPAddress.
 * Description    : Sets address in an endpoint register.
 * Input          : bEpNum: Endpoint Number.
-*                  bAddr: Address. 
+*                  bAddr: Address.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-#define _SetEPAddress(bEpNum,bAddr) _SetENDPOINT(bEpNum,\
-    _GetENDPOINT(bEpNum) & EPREG_MASK | bAddr)
+#define _SetEPAddress(bEpNum,bAddr) _SetENDPOINT(bEpNum, \
+                                                 _GetENDPOINT(bEpNum) & EPREG_MASK | bAddr)
 
 /*******************************************************************************
 * Macro Name     : GetEPAddress.
@@ -427,32 +427,32 @@ enum EP_BUF_NUM
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-#define _BlocksOf32(dwReg,wCount,wNBlocks) {\
-    wNBlocks = wCount >> 5;\
-    if((wCount & 0x1f) == 0)\
-      wNBlocks--;\
-    *pdwReg = (u32)((wNBlocks << 10) | 0x8000);\
-  }/* _BlocksOf32 */
+#define _BlocksOf32(dwReg,wCount,wNBlocks) { \
+        wNBlocks = wCount >> 5; \
+        if((wCount & 0x1f) == 0) \
+            wNBlocks--; \
+        *pdwReg = (u32)((wNBlocks << 10) | 0x8000); \
+}  /* _BlocksOf32 */
 
-#define _BlocksOf2(dwReg,wCount,wNBlocks) {\
-    wNBlocks = wCount >> 1;\
-    if((wCount & 0x1) != 0)\
-      wNBlocks++;\
-    *pdwReg = (u32)(wNBlocks << 10);\
-  }/* _BlocksOf2 */
+#define _BlocksOf2(dwReg,wCount,wNBlocks) { \
+        wNBlocks = wCount >> 1; \
+        if((wCount & 0x1) != 0) \
+            wNBlocks++; \
+        *pdwReg = (u32)(wNBlocks << 10); \
+}  /* _BlocksOf2 */
 
-#define _SetEPCountRxReg(dwReg,wCount)  {\
-    u16 wNBlocks;\
-    if(wCount > 62){_BlocksOf32(dwReg,wCount,wNBlocks);}\
-    else {_BlocksOf2(dwReg,wCount,wNBlocks);}\
-  }/* _SetEPCountRxReg */
+#define _SetEPCountRxReg(dwReg,wCount)  { \
+        u16        wNBlocks; \
+        if(wCount > 62) {_BlocksOf32(dwReg,wCount,wNBlocks); } \
+        else {_BlocksOf2(dwReg,wCount,wNBlocks); } \
+}  /* _SetEPCountRxReg */
 
 
 
-#define _SetEPRxDblBuf0Count(bEpNum,wCount) {\
-    u32 *pdwReg = _pEPTxCount(bEpNum); \
-    _SetEPCountRxReg(pdwReg, wCount);\
-  }
+#define _SetEPRxDblBuf0Count(bEpNum,wCount) { \
+        u32 *      pdwReg = _pEPTxCount(bEpNum); \
+        _SetEPCountRxReg(pdwReg, wCount); \
+}
 /*******************************************************************************
 * Macro Name     : SetEPTxCount / SetEPRxCount.
 * Description    : sets counter for the tx/rx buffer.
@@ -462,10 +462,10 @@ enum EP_BUF_NUM
 * Return         : None.
 *******************************************************************************/
 #define _SetEPTxCount(bEpNum,wCount) (*_pEPTxCount(bEpNum) = wCount)
-#define _SetEPRxCount(bEpNum,wCount) {\
-    u32 *pdwReg = _pEPRxCount(bEpNum); \
-    _SetEPCountRxReg(pdwReg, wCount);\
-  }
+#define _SetEPRxCount(bEpNum,wCount) { \
+        u32 *      pdwReg = _pEPRxCount(bEpNum); \
+        _SetEPCountRxReg(pdwReg, wCount); \
+}
 /*******************************************************************************
 * Macro Name     : GetEPTxCount / GetEPRxCount.
 * Description    : gets counter of the tx buffer.
@@ -484,8 +484,8 @@ enum EP_BUF_NUM
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-#define _SetEPDblBuf0Addr(bEpNum,wBuf0Addr) {_SetEPTxAddr(bEpNum, wBuf0Addr);}
-#define _SetEPDblBuf1Addr(bEpNum,wBuf1Addr) {_SetEPRxAddr(bEpNum, wBuf1Addr);}
+#define _SetEPDblBuf0Addr(bEpNum,wBuf0Addr) {_SetEPTxAddr(bEpNum, wBuf0Addr); }
+#define _SetEPDblBuf1Addr(bEpNum,wBuf1Addr) {_SetEPRxAddr(bEpNum, wBuf1Addr); }
 
 /*******************************************************************************
 * Macro Name     : SetEPDblBuffAddr.
@@ -497,9 +497,9 @@ enum EP_BUF_NUM
 * Return         : None.
 *******************************************************************************/
 #define _SetEPDblBuffAddr(bEpNum,wBuf0Addr,wBuf1Addr) { \
-    _SetEPDblBuf0Addr(bEpNum, wBuf0Addr);\
-    _SetEPDblBuf1Addr(bEpNum, wBuf1Addr);\
-  } /* _SetEPDblBuffAddr */
+        _SetEPDblBuf0Addr(bEpNum, wBuf0Addr); \
+        _SetEPDblBuf1Addr(bEpNum, wBuf1Addr); \
+}   /* _SetEPDblBuffAddr */
 
 /*******************************************************************************
 * Macro Name     : GetEPDblBuf0Addr / GetEPDblBuf1Addr.
@@ -515,34 +515,34 @@ enum EP_BUF_NUM
 * Macro Name     : SetEPDblBuffCount / SetEPDblBuf0Count / SetEPDblBuf1Count.
 * Description    : Gets buffer 0/1 address of a double buffer endpoint.
 * Input          : bEpNum: endpoint number.
-*                : bDir: endpoint dir  EP_DBUF_OUT = OUT 
-*                                      EP_DBUF_IN  = IN 
-*                : wCount: Counter value    
+*                : bDir: endpoint dir  EP_DBUF_OUT = OUT
+*                                      EP_DBUF_IN  = IN
+*                : wCount: Counter value
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
 #define _SetEPDblBuf0Count(bEpNum, bDir, wCount)  { \
-    if(bDir == EP_DBUF_OUT)\
-      /* OUT endpoint */ \
-    {_SetEPRxDblBuf0Count(bEpNum,wCount);} \
-    else if(bDir == EP_DBUF_IN)\
-      /* IN endpoint */ \
-      *_pEPTxCount(bEpNum) = (u32)wCount;  \
-  } /* SetEPDblBuf0Count*/
+        if(bDir == EP_DBUF_OUT) \
+        /* OUT endpoint */ \
+        {_SetEPRxDblBuf0Count(bEpNum,wCount); } \
+        else if(bDir == EP_DBUF_IN) \
+            /* IN endpoint */ \
+            *_pEPTxCount(bEpNum) = (u32)wCount;  \
+}   /* SetEPDblBuf0Count*/
 
 #define _SetEPDblBuf1Count(bEpNum, bDir, wCount)  { \
-    if(bDir == EP_DBUF_OUT)\
-      /* OUT endpoint */ \
-    {_SetEPRxCount(bEpNum,wCount);}\
-    else if(bDir == EP_DBUF_IN)\
-      /* IN endpoint */\
-      *_pEPRxCount(bEpNum) = (u32)wCount; \
-  } /* SetEPDblBuf1Count */
+        if(bDir == EP_DBUF_OUT) \
+        /* OUT endpoint */ \
+        {_SetEPRxCount(bEpNum,wCount); } \
+        else if(bDir == EP_DBUF_IN) \
+            /* IN endpoint */ \
+            *_pEPRxCount(bEpNum) = (u32)wCount; \
+}   /* SetEPDblBuf1Count */
 
-#define _SetEPDblBuffCount(bEpNum, bDir, wCount) {\
-    _SetEPDblBuf0Count(bEpNum, bDir, wCount); \
-    _SetEPDblBuf1Count(bEpNum, bDir, wCount); \
-  } /* _SetEPDblBuffCount  */
+#define _SetEPDblBuffCount(bEpNum, bDir, wCount) { \
+        _SetEPDblBuf0Count(bEpNum, bDir, wCount); \
+        _SetEPDblBuf1Count(bEpNum, bDir, wCount); \
+}   /* _SetEPDblBuffCount  */
 
 /*******************************************************************************
 * Macro Name     : GetEPDblBuf0Count / GetEPDblBuf1Count.
@@ -556,75 +556,75 @@ enum EP_BUF_NUM
 
 
 /* External variables --------------------------------------------------------*/
-extern volatile u16 wIstr;  /* ISTR register last read value */
+extern volatile u16        wIstr; /* ISTR register last read value */
 
 /* Exported functions ------------------------------------------------------- */
-void SetCNTR(u16 /*wRegValue*/);
-void SetISTR(u16 /*wRegValue*/);
-void SetDADDR(u16 /*wRegValue*/);
-void SetBTABLE(u16 /*wRegValue*/);
-void SetBTABLE(u16 /*wRegValue*/);
-u16 GetCNTR(void);
-u16 GetISTR(void);
-u16 GetFNR(void);
-u16 GetDADDR(void);
-u16 GetBTABLE(void);
-void SetENDPOINT(u8 /*bEpNum*/, u16 /*wRegValue*/);
-u16 GetENDPOINT(u8 /*bEpNum*/);
-void SetEPType(u8 /*bEpNum*/, u16 /*wType*/);
-u16 GetEPType(u8 /*bEpNum*/);
-void SetEPTxStatus(u8 /*bEpNum*/, u16 /*wState*/);
-void SetEPRxStatus(u8 /*bEpNum*/, u16 /*wState*/);
-void SetDouBleBuffEPStall(u8 /*bEpNum*/, u8 bDir);
-u16 GetEPTxStatus(u8 /*bEpNum*/);
-u16 GetEPRxStatus(u8 /*bEpNum*/);
-void SetEPTxValid(u8 /*bEpNum*/);
-void SetEPRxValid(u8 /*bEpNum*/);
-u16 GetTxStallStatus(u8 /*bEpNum*/);
-u16 GetRxStallStatus(u8 /*bEpNum*/);
-void SetEP_KIND(u8 /*bEpNum*/);
-void ClearEP_KIND(u8 /*bEpNum*/);
-void Set_Status_Out(u8 /*bEpNum*/);
-void Clear_Status_Out(u8 /*bEpNum*/);
-void SetEPDoubleBuff(u8 /*bEpNum*/);
-void ClearEPDoubleBuff(u8 /*bEpNum*/);
-void ClearEP_CTR_RX(u8 /*bEpNum*/);
-void ClearEP_CTR_TX(u8 /*bEpNum*/);
-void ToggleDTOG_RX(u8 /*bEpNum*/);
-void ToggleDTOG_TX(u8 /*bEpNum*/);
-void ClearDTOG_RX(u8 /*bEpNum*/);
-void ClearDTOG_TX(u8 /*bEpNum*/);
-void SetEPAddress(u8 /*bEpNum*/, u8 /*bAddr*/);
-u8 GetEPAddress(u8 /*bEpNum*/);
-void SetEPTxAddr(u8 /*bEpNum*/, u16 /*wAddr*/);
-void SetEPRxAddr(u8 /*bEpNum*/, u16 /*wAddr*/);
-u16 GetEPTxAddr(u8 /*bEpNum*/);
-u16 GetEPRxAddr(u8 /*bEpNum*/);
-void SetEPCountRxReg(u32 * /*pdwReg*/, u16 /*wCount*/);
-void SetEPTxCount(u8 /*bEpNum*/, u16 /*wCount*/);
-void SetEPRxCount(u8 /*bEpNum*/, u16 /*wCount*/);
-u16 GetEPTxCount(u8 /*bEpNum*/);
-u16 GetEPRxCount(u8 /*bEpNum*/);
-void SetEPDblBuf0Addr(u8 /*bEpNum*/, u16 /*wBuf0Addr*/);
-void SetEPDblBuf1Addr(u8 /*bEpNum*/, u16 /*wBuf1Addr*/);
-void SetEPDblBuffAddr(u8 /*bEpNum*/, u16 /*wBuf0Addr*/, u16 /*wBuf1Addr*/);
-u16 GetEPDblBuf0Addr(u8 /*bEpNum*/);
-u16 GetEPDblBuf1Addr(u8 /*bEpNum*/);
-void SetEPDblBuffCount(u8 /*bEpNum*/, u8 /*bDir*/, u16 /*wCount*/);
-void SetEPDblBuf0Count(u8 /*bEpNum*/, u8 /*bDir*/, u16 /*wCount*/);
-void SetEPDblBuf1Count(u8 /*bEpNum*/, u8 /*bDir*/, u16 /*wCount*/);
-u16 GetEPDblBuf0Count(u8 /*bEpNum*/);
-u16 GetEPDblBuf1Count(u8 /*bEpNum*/);
-EP_DBUF_DIR GetEPDblBufDir(u8 /*bEpNum*/);
-void FreeUserBuffer(u8 bEpNum/*bEpNum*/, u8 bDir);
-u16 ToWord(u8, u8);
-u16 ByteSwap(u16);
+void                SetCNTR(u16 /*wRegValue*/);
+void                SetISTR(u16 /*wRegValue*/);
+void                SetDADDR(u16 /*wRegValue*/);
+void                SetBTABLE(u16 /*wRegValue*/);
+void                SetBTABLE(u16 /*wRegValue*/);
+u16                 GetCNTR(void);
+u16                 GetISTR(void);
+u16                 GetFNR(void);
+u16                 GetDADDR(void);
+u16                 GetBTABLE(void);
+void                SetENDPOINT(u8 /*bEpNum*/, u16 /*wRegValue*/);
+u16                 GetENDPOINT(u8 /*bEpNum*/);
+void                SetEPType(u8 /*bEpNum*/, u16 /*wType*/);
+u16                 GetEPType(u8 /*bEpNum*/);
+void                SetEPTxStatus(u8 /*bEpNum*/, u16 /*wState*/);
+void                SetEPRxStatus(u8 /*bEpNum*/, u16 /*wState*/);
+void                SetDouBleBuffEPStall(u8 /*bEpNum*/, u8 bDir);
+u16                 GetEPTxStatus(u8 /*bEpNum*/);
+u16                 GetEPRxStatus(u8 /*bEpNum*/);
+void                SetEPTxValid(u8 /*bEpNum*/);
+void                SetEPRxValid(u8 /*bEpNum*/);
+u16                 GetTxStallStatus(u8 /*bEpNum*/);
+u16                 GetRxStallStatus(u8 /*bEpNum*/);
+void                SetEP_KIND(u8 /*bEpNum*/);
+void                ClearEP_KIND(u8 /*bEpNum*/);
+void                Set_Status_Out(u8 /*bEpNum*/);
+void                Clear_Status_Out(u8 /*bEpNum*/);
+void                SetEPDoubleBuff(u8 /*bEpNum*/);
+void                ClearEPDoubleBuff(u8 /*bEpNum*/);
+void                ClearEP_CTR_RX(u8 /*bEpNum*/);
+void                ClearEP_CTR_TX(u8 /*bEpNum*/);
+void                ToggleDTOG_RX(u8 /*bEpNum*/);
+void                ToggleDTOG_TX(u8 /*bEpNum*/);
+void                ClearDTOG_RX(u8 /*bEpNum*/);
+void                ClearDTOG_TX(u8 /*bEpNum*/);
+void                SetEPAddress(u8 /*bEpNum*/, u8 /*bAddr*/);
+u8                  GetEPAddress(u8 /*bEpNum*/);
+void                SetEPTxAddr(u8 /*bEpNum*/, u16 /*wAddr*/);
+void                SetEPRxAddr(u8 /*bEpNum*/, u16 /*wAddr*/);
+u16                 GetEPTxAddr(u8 /*bEpNum*/);
+u16                 GetEPRxAddr(u8 /*bEpNum*/);
+void                SetEPCountRxReg(u32 * /*pdwReg*/, u16 /*wCount*/);
+void                SetEPTxCount(u8 /*bEpNum*/, u16 /*wCount*/);
+void                SetEPRxCount(u8 /*bEpNum*/, u16 /*wCount*/);
+u16                 GetEPTxCount(u8 /*bEpNum*/);
+u16                 GetEPRxCount(u8 /*bEpNum*/);
+void                SetEPDblBuf0Addr(u8 /*bEpNum*/, u16 /*wBuf0Addr*/);
+void                SetEPDblBuf1Addr(u8 /*bEpNum*/, u16 /*wBuf1Addr*/);
+void                SetEPDblBuffAddr(u8 /*bEpNum*/, u16 /*wBuf0Addr*/, u16 /*wBuf1Addr*/);
+u16                 GetEPDblBuf0Addr(u8 /*bEpNum*/);
+u16                 GetEPDblBuf1Addr(u8 /*bEpNum*/);
+void                SetEPDblBuffCount(u8 /*bEpNum*/, u8 /*bDir*/, u16 /*wCount*/);
+void                SetEPDblBuf0Count(u8 /*bEpNum*/, u8 /*bDir*/, u16 /*wCount*/);
+void                SetEPDblBuf1Count(u8 /*bEpNum*/, u8 /*bDir*/, u16 /*wCount*/);
+u16                 GetEPDblBuf0Count(u8 /*bEpNum*/);
+u16                 GetEPDblBuf1Count(u8 /*bEpNum*/);
+EP_DBUF_DIR         GetEPDblBufDir(u8 /*bEpNum*/);
+void                FreeUserBuffer(u8 bEpNum /*bEpNum*/, u8 bDir);
+u16                 ToWord(u8, u8);
+u16                 ByteSwap(u16);
 
 
 #ifdef __cplusplus
- }
+}
 #endif
- 
+
 #endif /* __USB_REGS_H */
 
 /******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

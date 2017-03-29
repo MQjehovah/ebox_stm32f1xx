@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 #include "ebox.h"
@@ -16,9 +16,9 @@ Copyright 2015 shentq. All Rights Reserved.
 WIFI_UDP udp(&wifi);
 
 
-char        remote_ip[] = "192.168.1.101";
-uint16_t    remote_port = 8080;
-uint16_t    local_port = 4321;
+char remote_ip[] = "192.168.1.101";
+uint16_t remote_port = 8080;
+uint16_t local_port = 4321;
 
 
 uint8_t recv_buf[1024] = {0};

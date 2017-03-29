@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    gp2y1051.cpp
-  * @author  starli
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   PM2.5传感器驱动
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    gp2y1051.cpp
+ * @author  starli
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief   PM2.5传感器驱动
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -51,7 +51,7 @@ void GP2Y1051::get_data(int8_t *buf)
                 *buf++ = (tmpbuf[0]);
                 *buf++ = (tmpbuf[1]);
             }
-        break;
+            break;
         }
 
         uart1.printf("\r\voutH = %d", tmpbuf[0]);

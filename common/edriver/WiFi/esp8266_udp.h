@@ -27,21 +27,21 @@ class WIFI_UDP
 {
 public:
     WIFI_UDP(ESP8266 *wifi);
-    bool        begin();
+    bool            begin();
 
-    bool        connect(char *remote_ip, uint32_t remote_port, uint32_t local_port);
-    uint16_t    send(uint8_t *buf, uint16_t len);
-    uint16_t    available();
-    uint16_t    read(uint8_t *buf);
+    bool            connect(char *remote_ip, uint32_t remote_port, uint32_t local_port);
+    uint16_t        send(uint8_t *buf, uint16_t len);
+    uint16_t        available();
+    uint16_t        read(uint8_t *buf);
 
-    bool        connect(uint8_t mux_id, char *remote_ip, uint32_t remote_port, uint32_t local_port);
-    uint16_t    send(uint8_t mux_id, uint8_t *buf, uint16_t len);
-    uint16_t    read(uint8_t *mux_id, uint8_t *buf);
+    bool            connect(uint8_t mux_id, char *remote_ip, uint32_t remote_port, uint32_t local_port);
+    uint16_t        send(uint8_t mux_id, uint8_t *buf, uint16_t len);
+    uint16_t        read(uint8_t *mux_id, uint8_t *buf);
 
-    uint8_t     read_onebyte(void);
+    uint8_t         read_onebyte(void);
 
 private:
-    ESP8266 *wifi;
+    ESP8266 *      wifi;
 
 
 

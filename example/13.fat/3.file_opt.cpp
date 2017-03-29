@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 #include "ebox.h"
@@ -30,11 +30,11 @@ void fileOpt()
 {
     u8 ret;
     u8 buf[100];
-    u8 readBuf[6] ;
+    u8 readBuf[6];
     u32 bw = 0;
     u32 br = 0;
 
-   for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 100; i++)
         buf[i] = '1';
     res = f_open(&fsrc, "0:12345.txt", FA_WRITE | FA_READ | FA_CREATE_ALWAYS); //没有这个文件则创建该文件
     uart1.printf("\r\n");
@@ -66,7 +66,7 @@ void fileOpt()
         uart1.printf("file exist\r\n");
     else
         uart1.printf("creat/open failed~~~~(>_<)~~~~ %d\r\n", res);
-    f_close(&fsrc);//关闭文件
+    f_close(&fsrc); //关闭文件
 
     /////////////////////////////////////////////////////////////////////////////////////
     u32 readsize;
@@ -97,7 +97,7 @@ void fileOpt()
     }
     while(br == buflen);
     uart1.printf("\r\nread end\r\n");
-    f_close(&fsrc);//关闭文件
+    f_close(&fsrc); //关闭文件
     f_mount(&fs, "0:", 0);
 
 
@@ -114,7 +114,7 @@ void setup()
         uart1.printf("sdcard init ok!\r\n");
     else
         uart1.printf("sdcard init failed;err = %d\r\n",ret);
-        
+
     attach_sd_to_fat(&sd);
 
     res = f_mount(&fs, "0", 1);

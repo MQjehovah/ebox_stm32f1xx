@@ -1,27 +1,27 @@
 /* Copyright (c) 2010-2011 mbed.org, MIT License
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-* and associated documentation files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use, copy, modify, merge, publish,
-* distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-* BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-* DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 #include "stdint.h"
 #include "USBMIDI.h"
 
 
 USBMIDI::USBMIDI(uint16_t vendor_id, uint16_t product_id, uint16_t product_release)
- : USBDevice(vendor_id, product_id, product_release), cur_data(0), data_end(true)
+    : USBDevice(vendor_id, product_id, product_release), cur_data(0), data_end(true)
 {
     midi_evt = NULL;
     USBDevice::connect();
@@ -41,18 +41,18 @@ void USBMIDI::write(MIDIMessage m) {
                 buf[0]=0x4;
             } else {
                 switch(m.length - p) {
-                    case 1:
-                        // SysEx end with one byte
-                        buf[0]=0x5;
-                        break;
-                    case 2:
-                        // SysEx end with two bytes
-                        buf[0]=0x6;
-                        break;
-                    case 3:
-                        // SysEx end with three bytes
-                        buf[0]=0x7;
-                        break;
+                case 1:
+                    // SysEx end with one byte
+                    buf[0]=0x5;
+                    break;
+                case 2:
+                    // SysEx end with two bytes
+                    buf[0]=0x6;
+                    break;
+                case 3:
+                    // SysEx end with three bytes
+                    buf[0]=0x7;
+                    break;
                 }
             }
         }
@@ -83,7 +83,7 @@ bool USBMIDI::EPBULK_OUT_callback() {
     readEP(EPBULK_OUT, buf, &len, 64);
 
     if (midi_evt != NULL) {
-        for (uint32_t i=0; i<len; i+=4) {   
+        for (uint32_t i=0; i<len; i+=4) {
             uint8_t data_read;
             data_end=true;
             switch(buf[i]) {
@@ -97,7 +97,7 @@ bool USBMIDI::EPBULK_OUT_callback() {
                 data_read=3;
                 break;
             case 0x5:
-                 // Single-byte System Common Message or SysEx end with one byte
+                // Single-byte System Common Message or SysEx end with one byte
                 data_read=1;
                 break;
             case 0x6:
@@ -111,27 +111,27 @@ bool USBMIDI::EPBULK_OUT_callback() {
             case 0xD:
                 // Channel pressure
                 data_read=2;
-                break;      
+                break;
             case 0xF:
                 // Single byte
                 data_read=1;
-                break;    
+                break;
             default:
                 // Others three-bytes messages
                 data_read=3;
-                break;      
-            } 
-        
-            for(uint8_t j=1;j<data_read+1;j++) {
+                break;
+            }
+
+            for(uint8_t j=1; j<data_read+1; j++) {
                 data[cur_data]=buf[i+j];
                 cur_data++;
             }
-        
+
             if(data_end) {
-                 midi_evt(MIDIMessage(data,cur_data));
-                 cur_data=0;            
+                midi_evt(MIDIMessage(data,cur_data));
+                cur_data=0;
             }
-       }
+        }
     }
 
     // We reactivate the endpoint to receive next characters

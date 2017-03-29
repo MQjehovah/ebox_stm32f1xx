@@ -83,23 +83,23 @@ typedef struct {
 
 /* SFUD supported manufacturer information table */
 #define SFUD_MF_TABLE                                     \
-{                                                         \
-    {"Cypress",    SFUD_MF_ID_CYPRESS},                   \
-    {"Fujitsu",    SFUD_MF_ID_FUJITSU},                   \
-    {"EON",        SFUD_MF_ID_EON},                       \
-    {"Atmel",      SFUD_MF_ID_ATMEL},                     \
-    {"Micron",     SFUD_MF_ID_MICRON},                    \
-    {"AMIC",       SFUD_MF_ID_AMIC},                      \
-    {"Sanyo",      SFUD_MF_ID_SANYO},                     \
-    {"Intel",      SFUD_MF_ID_INTEL},                     \
-    {"ESMT",       SFUD_MF_ID_ESMT},                      \
-    {"Fudan",      SFUD_MF_ID_FUDAN},                     \
-    {"Hyundai",    SFUD_MF_ID_HYUNDAI},                   \
-    {"SST",        SFUD_MF_ID_SST},                       \
-    {"GigaDevice", SFUD_MF_ID_GIGADEVICE},                \
-    {"ISSI",       SFUD_MF_ID_ISSI},                      \
-    {"Winbond",    SFUD_MF_ID_WINBOND},                   \
-}
+    {                                                         \
+        {"Cypress",    SFUD_MF_ID_CYPRESS},                   \
+        {"Fujitsu",    SFUD_MF_ID_FUJITSU},                   \
+        {"EON",        SFUD_MF_ID_EON},                       \
+        {"Atmel",      SFUD_MF_ID_ATMEL},                     \
+        {"Micron",     SFUD_MF_ID_MICRON},                    \
+        {"AMIC",       SFUD_MF_ID_AMIC},                      \
+        {"Sanyo",      SFUD_MF_ID_SANYO},                     \
+        {"Intel",      SFUD_MF_ID_INTEL},                     \
+        {"ESMT",       SFUD_MF_ID_ESMT},                      \
+        {"Fudan",      SFUD_MF_ID_FUDAN},                     \
+        {"Hyundai",    SFUD_MF_ID_HYUNDAI},                   \
+        {"SST",        SFUD_MF_ID_SST},                       \
+        {"GigaDevice", SFUD_MF_ID_GIGADEVICE},                \
+        {"ISSI",       SFUD_MF_ID_ISSI},                      \
+        {"Winbond",    SFUD_MF_ID_WINBOND},                   \
+    }
 
 #ifdef SFUD_USING_FLASH_INFO_TABLE
 /* SFUD supported flash chip information table. If the flash not support JEDEC JESD216 standard,
@@ -107,20 +107,20 @@ typedef struct {
  * The configuration information name and index reference the sfud_flash_chip structure.
  * | name | mf_id | type_id | capacity_id | capacity | write_mode | erase_gran | erase_gran_cmd |
  */
-#define SFUD_FLASH_CHIP_TABLE                                                                                    \
-{                                                                                                                \
-    {"AT45DB161E", SFUD_MF_ID_ATMEL, 0x26, 0x00, 2*1024*1024, SFUD_WM_BYTE|SFUD_WM_DUAL_BUFFER, 512, 0x81},      \
-    {"W25Q40BV", SFUD_MF_ID_WINBOND, 0x40, 0x13, 512*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                       \
-    {"W25Q16CV", SFUD_MF_ID_WINBOND, 0x40, 0x15, 2*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                     \
-    {"SST25VF016B", SFUD_MF_ID_SST, 0x25, 0x41, 2*1024*1024, SFUD_WM_BYTE|SFUD_WM_AAI, 4096, 0x20},              \
-    {"M25P32", SFUD_MF_ID_MICRON, 0x20, 0x16, 4*1024*1024, SFUD_WM_PAGE_256B, 64*1024, 0xD8},                    \
-    {"EN25Q32B", SFUD_MF_ID_EON, 0x30, 0x16, 4*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                        \
-    {"GD25Q64B", SFUD_MF_ID_GIGADEVICE, 0x40, 0x17, 8*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                 \
-    {"S25FL216K", SFUD_MF_ID_CYPRESS, 0x40, 0x15, 2*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                   \
-    {"A25L080", SFUD_MF_ID_AMIC, 0x30, 0x14, 1*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                        \
-    {"F25L004", SFUD_MF_ID_ESMT, 0x20, 0x13, 512*1024, SFUD_WM_BYTE|SFUD_WM_AAI, 4096, 0x20},                    \
-    {"PCT25VF016B", SFUD_MF_ID_SST, 0x25, 0x41, 2*1024*1024, SFUD_WM_BYTE|SFUD_WM_AAI, 4096, 0x20},              \
-}
+ #define SFUD_FLASH_CHIP_TABLE                                                                                    \
+    {                                                                                                                \
+        {"AT45DB161E", SFUD_MF_ID_ATMEL, 0x26, 0x00, 2*1024*1024, SFUD_WM_BYTE|SFUD_WM_DUAL_BUFFER, 512, 0x81},      \
+        {"W25Q40BV", SFUD_MF_ID_WINBOND, 0x40, 0x13, 512*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                       \
+        {"W25Q16CV", SFUD_MF_ID_WINBOND, 0x40, 0x15, 2*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                     \
+        {"SST25VF016B", SFUD_MF_ID_SST, 0x25, 0x41, 2*1024*1024, SFUD_WM_BYTE|SFUD_WM_AAI, 4096, 0x20},              \
+        {"M25P32", SFUD_MF_ID_MICRON, 0x20, 0x16, 4*1024*1024, SFUD_WM_PAGE_256B, 64*1024, 0xD8},                    \
+        {"EN25Q32B", SFUD_MF_ID_EON, 0x30, 0x16, 4*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                        \
+        {"GD25Q64B", SFUD_MF_ID_GIGADEVICE, 0x40, 0x17, 8*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                 \
+        {"S25FL216K", SFUD_MF_ID_CYPRESS, 0x40, 0x15, 2*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                   \
+        {"A25L080", SFUD_MF_ID_AMIC, 0x30, 0x14, 1*1024*1024, SFUD_WM_PAGE_256B, 4096, 0x20},                        \
+        {"F25L004", SFUD_MF_ID_ESMT, 0x20, 0x13, 512*1024, SFUD_WM_BYTE|SFUD_WM_AAI, 4096, 0x20},                    \
+        {"PCT25VF016B", SFUD_MF_ID_SST, 0x25, 0x41, 2*1024*1024, SFUD_WM_BYTE|SFUD_WM_AAI, 4096, 0x20},              \
+    }
 #endif /* SFUD_USING_FLASH_INFO_TABLE */
 
 #ifdef __cplusplus

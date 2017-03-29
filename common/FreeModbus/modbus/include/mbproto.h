@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -81,11 +81,11 @@ typedef enum
 } eMBException;
 
 //函数指针 输入参数 报文指针 报文长度
-typedef eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+typedef eMBException ( *pxMBFunctionHandler )( UCHAR * pucFrame, USHORT * pusLength );
 
 typedef struct
 {
-    UCHAR           ucFunctionCode;
+    UCHAR ucFunctionCode;
     pxMBFunctionHandler pxHandler;
 } xMBFunctionHandler;
 

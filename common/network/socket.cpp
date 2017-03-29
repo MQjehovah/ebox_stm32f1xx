@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    socket.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    socket.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -32,30 +32,30 @@ void attach_eth_to_socket(void *e)
     eth = (W5500*)e;
 }
 /**
-@brief   This Socket function initialize the channel in perticular mode, and set the port and wait for W5200 done it.
-@return  1 for sucess else -1:hard error,-2:protocol error.
-*/
+ *  @brief   This Socket function initialize the channel in perticular mode, and set the port and wait for W5200 done it.
+ *  @return  1 for sucess else -1:hard error,-2:protocol error.
+ */
 int _socket(SOCKET s, int8_t protocol, uint16_t port, int8_t flag)
 {
     //   int ret = -3;
     //	 uint16_t i;
     if ( ((protocol & 0x0F) == Sn_MR_TCP) || ((protocol & 0x0F) == Sn_MR_UDP) || ((protocol & 0x0F) == Sn_MR_IPRAW) || \
-            ((protocol & 0x0F) == Sn_MR_MACRAW) || (protocol & 0x0F) == Sn_MR_PPPOE)
+         ((protocol & 0x0F) == Sn_MR_MACRAW) || (protocol & 0x0F) == Sn_MR_PPPOE)
     {
         _close(s);
-        eth->write(Sn_MR(s) , protocol | flag);
+        eth->write(Sn_MR(s), protocol | flag);
         if (port != 0)
         {
-            eth->write( Sn_PORT0(s) , (int8_t)((port & 0xff00) >> 8));
-            eth->write( Sn_PORT1(s) , (int8_t)(port & 0x00ff));
+            eth->write( Sn_PORT0(s), (int8_t)((port & 0xff00) >> 8));
+            eth->write( Sn_PORT1(s), (int8_t)(port & 0x00ff));
         }
         else
         {
             local_port++; // if don't set the source port, set local_port number.
-            eth->write(Sn_PORT0(s) , (int8_t)((local_port & 0xff00) >> 8));
-            eth->write(Sn_PORT1(s) , (int8_t)(local_port & 0x00ff));
+            eth->write(Sn_PORT0(s), (int8_t)((local_port & 0xff00) >> 8));
+            eth->write(Sn_PORT1(s), (int8_t)(local_port & 0x00ff));
         }
-        eth->write( Sn_CR(s) , Sn_CR_OPEN); // run sockinit Sn_CR
+        eth->write( Sn_CR(s), Sn_CR_OPEN);  // run sockinit Sn_CR
 
         /* wait to process the command... */
         while( eth->read(Sn_CR(s)) )
@@ -65,43 +65,43 @@ int _socket(SOCKET s, int8_t protocol, uint16_t port, int8_t flag)
             //                return -1;
             //            }
         }
-        return  1;
+        return 1;
         /* ------- */
 
     }
     else
     {
-        return  -2;
+        return -2;
     }
     //   return ret;
 }
 
 /**
-@brief   This function close the socket and parameter is "s" which represent the socket number
-*/
+ *  @brief   This function close the socket and parameter is "s" which represent the socket number
+ */
 void _close(SOCKET s)
 {
 
 
-    eth->write( Sn_CR(s) , Sn_CR_CLOSE);
+    eth->write( Sn_CR(s), Sn_CR_CLOSE);
 
     /* wait to process the command... */
     while( eth->read(Sn_CR(s) ) )
         ;
     /* ------- */
     /* all clear */
-    eth->write( Sn_IR(s) , 0xFF);
+    eth->write( Sn_IR(s), 0xFF);
 }
 /**
-@brief   This function established  the connection for the channel in passive (server) mode. This function waits for the request from the peer.
-@return  1 for success else 0.
-*/
+ *  @brief   This function established  the connection for the channel in passive (server) mode. This function waits for the request from the peer.
+ *  @return  1 for success else 0.
+ */
 bool _listen(SOCKET s)
 {
-    bool ret ;
+    bool ret;
     if (eth->read( Sn_SR(s) ) == SOCK_INIT)
     {
-        eth->write( Sn_CR(s) , Sn_CR_LISTEN);
+        eth->write( Sn_CR(s), Sn_CR_LISTEN);
         /* wait to process the command... */
         while( eth->read(Sn_CR(s) ) )
             ;
@@ -115,17 +115,17 @@ bool _listen(SOCKET s)
     return ret;
 }
 /**
-@brief   This function established  the connection for the channel in Active (client) mode.
-      This function waits for the untill the connection is established.
-
-@return  1 for success else -1:param error,-2:time out.
-*/
+ *  @brief   This function established  the connection for the channel in Active (client) mode.
+ *     This function waits for the untill the connection is established.
+ *
+ *  @return  1 for success else -1:param error,-2:time out.
+ */
 int _connect(SOCKET s, uint8_t *addr, uint16_t port)
 {
     int ret = -3;
     if(((addr[0] == 0xFF) && (addr[1] == 0xFF) && (addr[2] == 0xFF) && (addr[3] == 0xFF)) ||
-            ((addr[0] == 0x00) && (addr[1] == 0x00) && (addr[2] == 0x00) && (addr[3] == 0x00)) ||
-            (port == 0x00))
+       ((addr[0] == 0x00) && (addr[1] == 0x00) && (addr[2] == 0x00) && (addr[3] == 0x00)) ||
+       (port == 0x00))
     {
         ret = -1;
     }
@@ -138,7 +138,7 @@ int _connect(SOCKET s, uint8_t *addr, uint16_t port)
         eth->write( Sn_DIPR3(s), addr[3]);
         eth->write( Sn_DPORT0(s), (int8_t)((port & 0xff00) >> 8));
         eth->write( Sn_DPORT1(s), (int8_t)(port & 0x00ff));
-        eth->write( Sn_CR(s) , Sn_CR_CONNECT);
+        eth->write( Sn_CR(s), Sn_CR_CONNECT);
         /* wait for completion */
         while ( eth->read(Sn_CR(s) ) ) ;
         while(eth->read(Sn_SR(s)) != SOCK_ESTABLISHED)
@@ -173,12 +173,12 @@ int _connect(SOCKET s, uint8_t *addr, uint16_t port)
 
 
 /**
-@brief   This function used for disconnect the socket and parameter is "s" which represent the socket number
-@return  1 for success else 0.
-*/
+ *  @brief   This function used for disconnect the socket and parameter is "s" which represent the socket number
+ *  @return  1 for success else 0.
+ */
 bool _disconnect(SOCKET s)
 {
-    eth->write( Sn_CR(s) , Sn_CR_DISCON);
+    eth->write( Sn_CR(s), Sn_CR_DISCON);
 
     /* wait to process the command... */
     while( eth->read(Sn_CR(s)) )
@@ -187,9 +187,9 @@ bool _disconnect(SOCKET s)
     return true;
 }
 /**
-@brief   This function used to send the data in TCP mode
-@return   sended data size for success else 0.
-*/
+ *  @brief   This function used to send the data in TCP mode
+ *  @return   sended data size for success else 0.
+ */
 int _send(SOCKET s, const uint8_t *buf, uint16_t len)
 {
     int8_t status = 0;
@@ -197,7 +197,7 @@ int _send(SOCKET s, const uint8_t *buf, uint16_t len)
     uint16_t freesize = 0;
 
     if (len > eth->getTxMAX(s))
-        ret = 0; // check size not to exceed MAX size.
+        ret = 0;  // check size not to exceed MAX size.
     else
         ret = len;
 
@@ -217,10 +217,10 @@ int _send(SOCKET s, const uint8_t *buf, uint16_t len)
 
     // copy data
     eth->send_data_processing(s, (uint8_t *)buf, ret);
-    eth->write( Sn_CR(s) , Sn_CR_SEND);
+    eth->write( Sn_CR(s), Sn_CR_SEND);
 
     /* wait to process the command... */
-    while( eth->read(Sn_CR(s) ) );
+    while( eth->read(Sn_CR(s) ) ) ;
 
     while ( (eth->read(Sn_IR(s) ) & Sn_IR_SEND_OK) != Sn_IR_SEND_OK )
     {
@@ -232,52 +232,52 @@ int _send(SOCKET s, const uint8_t *buf, uint16_t len)
             return 0;
         }
     }
-    eth->write( Sn_IR(s) , Sn_IR_SEND_OK);
+    eth->write( Sn_IR(s), Sn_IR_SEND_OK);
 
     //#ifdef __DEF_IINCHIP_INT__
     //   putISR(s, getISR(s) & (~Sn_IR_SEND_OK));
     //#else
-    eth->write( Sn_IR(s) , Sn_IR_SEND_OK);
+    eth->write( Sn_IR(s), Sn_IR_SEND_OK);
     //#endif
 
     return ret;
 }
 /**
-@brief   This function is an application I/F function which is used to receive the data in TCP mode.
-      It continues to wait for data as much as the application wants to receive.
-
-@return  received data size for success else 0.
-*/
+ *  @brief   This function is an application I/F function which is used to receive the data in TCP mode.
+ *     It continues to wait for data as much as the application wants to receive.
+ *
+ *  @return  received data size for success else 0.
+ */
 int _recv(SOCKET s, uint8_t *buf, uint16_t len)
 {
     uint16_t ret = 0;
     if ( len > 0 )
     {
         eth->recv_data_processing(s, buf, len);
-        eth->write( Sn_CR(s) , Sn_CR_RECV);
+        eth->write( Sn_CR(s), Sn_CR_RECV);
         /* wait to process the command... */
-        while( eth->read(Sn_CR(s) ));
+        while( eth->read(Sn_CR(s) )) ;
         /* ------- */
         ret = len;
     }
     return ret;
 }
 /**
-@brief   This function is an application I/F function which is used to send the data for other then TCP mode.
-      Unlike TCP transmission, The peer's destination address and the port is needed.
-
-@return  This function return send data size for success else 0.
-*/
+ *  @brief   This function is an application I/F function which is used to send the data for other then TCP mode.
+ *     Unlike TCP transmission, The peer's destination address and the port is needed.
+ *
+ *  @return  This function return send data size for success else 0.
+ */
 int _sendto(SOCKET s, const uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t port)
 {
     uint16_t ret = 0;
 
     if (len > eth->getTxMAX(s))
-        ret = eth->getTxMAX(s); // check size not to exceed MAX size.
+        ret = eth->getTxMAX(s);  // check size not to exceed MAX size.
     else
         ret = len;
 
-    if( ((addr[0] == 0x00) && (addr[1] == 0x00) && (addr[2] == 0x00) && (addr[3] == 0x00)) || ((port == 0x00)) )//||(ret == 0) )
+    if( ((addr[0] == 0x00) && (addr[1] == 0x00) && (addr[2] == 0x00) && (addr[3] == 0x00)) || ((port == 0x00)) ) //||(ret == 0) )
     {
         /* added return value */
         ret = 0;
@@ -292,7 +292,7 @@ int _sendto(SOCKET s, const uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t 
         eth->write( Sn_DPORT1(s), (int8_t)(port & 0x00ff));
         // copy data
         eth->send_data_processing(s, (uint8_t *)buf, ret);
-        eth->write( Sn_CR(s) , Sn_CR_SEND);
+        eth->write( Sn_CR(s), Sn_CR_SEND);
         /* wait to process the command... */
         while( eth->read( Sn_CR(s) ) )
             ;
@@ -303,21 +303,21 @@ int _sendto(SOCKET s, const uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t 
             if (eth->read( Sn_IR(s) ) & Sn_IR_TIMEOUT)
             {
                 /* clear interrupt */
-                eth->write( Sn_IR(s) , (Sn_IR_SEND_OK | Sn_IR_TIMEOUT)); /* clear SEND_OK & TIMEOUT */
+                eth->write( Sn_IR(s), (Sn_IR_SEND_OK | Sn_IR_TIMEOUT));  /* clear SEND_OK & TIMEOUT */
                 return 0;
             }
         }
-        eth->write( Sn_IR(s) , Sn_IR_SEND_OK);
+        eth->write( Sn_IR(s), Sn_IR_SEND_OK);
     }
     return ret;
 }
 
 /**
-@brief   This function is an application I/F function which is used to receive the data in other then
-   TCP mode. This function is used to receive UDP, IP_RAW and MAC_RAW mode, and handle the header as well.
-
-@return  This function return received data size for success else -1.
-*/
+ *  @brief   This function is an application I/F function which is used to receive the data in other then
+ *  TCP mode. This function is used to receive UDP, IP_RAW and MAC_RAW mode, and handle the header as well.
+ *
+ *  @return  This function return received data size for success else -1.
+ */
 int _recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t *port)
 {
     uint8_t head[8];
@@ -332,7 +332,7 @@ int _recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t *por
 
         switch (eth->read(Sn_MR(s) ) & 0x07)
         {
-        case Sn_MR_UDP :
+        case Sn_MR_UDP:
             eth->read(addrbsb, head, 0x08);
             ptr += 8;
             // read peer's IP address, port number.
@@ -353,7 +353,7 @@ int _recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t *por
             eth->write( Sn_RX_RD1(s), (int8_t)(ptr & 0x00ff));
             break;
 
-        case Sn_MR_IPRAW :
+        case Sn_MR_IPRAW:
             eth->read(addrbsb, head, 0x06);
             ptr += 6;
             addr[0]  = head[0];
@@ -371,7 +371,7 @@ int _recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t *por
             eth->write( Sn_RX_RD1(s), (int8_t)(ptr & 0x00ff));
             break;
 
-        case Sn_MR_MACRAW :
+        case Sn_MR_MACRAW:
             eth->read(addrbsb, head, 0x02);
             ptr += 2;
             data_len = head[0];
@@ -379,7 +379,7 @@ int _recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t *por
             if(data_len > 1514)
             {
                 //           printf("data_len over 1514\r\n");
-                while(1);
+                while(1) ;
             }
 
             addrbsb  = (uint32_t)(ptr << 8) +  (s << 5) + 0x18;
@@ -390,10 +390,10 @@ int _recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t *por
             eth->write( Sn_RX_RD1(s), (int8_t)(ptr & 0x00ff));
             break;
 
-        default :
+        default:
             break;
         }
-        eth->write( Sn_CR(s) , Sn_CR_RECV);
+        eth->write( Sn_CR(s), Sn_CR_RECV);
 
         /* wait to process the command... */
         while( eth->read( Sn_CR(s)) ) ;
@@ -408,11 +408,11 @@ uint8_t socket_status(SOCKET s)
 }
 
 /**
-
-@brief   get socket RX recv buf size
-
-@return  This gives size of received data in receive buffer.
-*/
+ *
+ *  @brief   get socket RX recv buf size
+ *
+ *  @return  This gives size of received data in receive buffer.
+ */
 uint16_t recv_available(SOCKET s)
 {
     return eth->get_rx_recv_size(s);
@@ -435,7 +435,7 @@ bool client_connecte_event(SOCKET s)
 {
     if(eth->getSn_IR(s) & Sn_IR_CON)
     {
-        eth->setSn_IR(s, Sn_IR_CON);/*Sn_IR的第0位置1*/
+        eth->setSn_IR(s, Sn_IR_CON); /*Sn_IR的第0位置1*/
         return true;
     }
     return false;
@@ -452,12 +452,12 @@ bool  get_local_dns(uint8_t *dns)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
-@brief	Convert 32bit Address(Host Ordering) into Dotted Decimal Format
-@return 	a char pointer to a static buffer containing the text address in standard ".'' notation. Otherwise, it returns NULL.
-*/
+ *  @brief	Convert 32bit Address(Host Ordering) into Dotted Decimal Format
+ *  @return     a char pointer to a static buffer containing the text address in standard ".'' notation. Otherwise, it returns NULL.
+ */
 char *inet_ntoa(
-    unsigned long addr	/**< Pointer variable to store converted value(INPUT) */
-)
+    unsigned long addr  /**< Pointer variable to store converted value(INPUT) */
+    )
 {
     static char addr_str[32];
     memset(addr_str, 0, 32);
@@ -475,34 +475,34 @@ char *inet_ntoa_pad(unsigned long addr)
 
 
 /*
-void inet_addr_(unsigned char* addr,unsigned char *ip)
-{
-	int i;
-//	uint32_t inetaddr = 0;
-	char taddr[30];
-	char * nexttok;
-	char num;
-	strcpy(taddr,(char *)addr);
-
-	nexttok = taddr;
-	for(i = 0; i < 4 ; i++)
-	{
-		nexttok = strtok(nexttok,".");
-		if(nexttok[0] == '0' && nexttok[1] == 'x') num = ATOI(nexttok+2,0x10);
-		else num = ATOI(nexttok,10);
-
-		ip[i] = num;
-		nexttok = NULL;
-	}
-}
-*/
+ *  void inet_addr_(unsigned char* addr,unsigned char *ip)
+ *  {
+ *       int i;
+ *  //	uint32_t inetaddr = 0;
+ *       char taddr[30];
+ *       char * nexttok;
+ *       char num;
+ *       strcpy(taddr,(char *)addr);
+ *
+ *       nexttok = taddr;
+ *       for(i = 0; i < 4 ; i++)
+ *       {
+ *               nexttok = strtok(nexttok,".");
+ *               if(nexttok[0] == '0' && nexttok[1] == 'x') num = ATOI(nexttok+2,0x10);
+ *               else num = ATOI(nexttok,10);
+ *
+ *               ip[i] = num;
+ *               nexttok = NULL;
+ *       }
+ *  }
+ */
 /**
-@brief	Verify dotted notation IP address string
-@return 	success - 1, fail - 0
-*/
+ *  @brief	Verify dotted notation IP address string
+ *  @return     success - 1, fail - 0
+ */
 char VerifyIPAddress_orig(
-    char *src	/**< pointer to IP address string */
-)
+    char *src   /**< pointer to IP address string */
+    )
 {
     int i;
     int tnum;
@@ -555,12 +555,12 @@ char VerifyIPAddress(char *src, uint8_t *ip)
 }
 
 /**
-@brief	Output destination IP address of appropriate channel
-@return 	32bit destination address (Host Ordering)
-*/
+ *  @brief	Output destination IP address of appropriate channel
+ *  @return     32bit destination address (Host Ordering)
+ */
 unsigned long GetDestAddr(
-    SOCKET s	/**< Channel number which try to get destination IP Address */
-)
+    SOCKET s    /**< Channel number which try to get destination IP Address */
+    )
 {
     unsigned long addr = 0;
     int i = 0;
@@ -573,12 +573,12 @@ unsigned long GetDestAddr(
 }
 
 /**
-@brief	Output destination port number of appropriate channel
-@return 	16bit destination port number
-*/
+ *  @brief	Output destination port number of appropriate channel
+ *  @return     16bit destination port number
+ */
 unsigned int GetDestPort(
-    SOCKET s	/**< Channel number which try to get destination port */
-)
+    SOCKET s    /**< Channel number which try to get destination port */
+    )
 {
     uint16_t port;
     port = ((uint16_t) eth->read(Sn_DPORT0(s))) & 0x00FF;
@@ -589,12 +589,12 @@ unsigned int GetDestPort(
 
 
 /**
-@brief	htons function converts a unsigned short from host to TCP/IP network byte order (which is big-endian).
-@return 	the value in TCP/IP network byte order
-*/
+ *  @brief	htons function converts a unsigned short from host to TCP/IP network byte order (which is big-endian).
+ *  @return     the value in TCP/IP network byte order
+ */
 uint16_t htons(
-    uint16_t hostshort	/**< A 16-bit number in host byte order.  */
-)
+    uint16_t hostshort  /**< A 16-bit number in host byte order.  */
+    )
 {
 #if ( SYSTEM_ENDIAN == _ENDIAN_LITTLE_ )
     return swaps(hostshort);
@@ -605,12 +605,12 @@ uint16_t htons(
 
 
 /**
-@brief	htonl function converts a unsigned long from host to TCP/IP network byte order (which is big-endian).
-@return 	the value in TCP/IP network byte order
-*/
+ *  @brief	htonl function converts a unsigned long from host to TCP/IP network byte order (which is big-endian).
+ *  @return     the value in TCP/IP network byte order
+ */
 unsigned long htonl(
-    unsigned long hostlong		/**< hostshort  - A 32-bit number in host byte order.  */
-)
+    unsigned long hostlong              /**< hostshort  - A 32-bit number in host byte order.  */
+    )
 {
 #if ( SYSTEM_ENDIAN == _ENDIAN_LITTLE_ )
     return swapl(hostlong);
@@ -621,12 +621,12 @@ unsigned long htonl(
 
 
 /**
-@brief	ntohs function converts a unsigned short from TCP/IP network byte order to host byte order (which is little-endian on Intel processors).
-@return 	a 16-bit number in host byte order
-*/
+ *  @brief	ntohs function converts a unsigned short from TCP/IP network byte order to host byte order (which is little-endian on Intel processors).
+ *  @return     a 16-bit number in host byte order
+ */
 unsigned long ntohs(
-    unsigned short netshort	/**< netshort - network odering 16bit value */
-)
+    unsigned short netshort     /**< netshort - network odering 16bit value */
+    )
 {
 #if ( SYSTEM_ENDIAN == _ENDIAN_LITTLE_ )
     return htons(netshort);
@@ -637,9 +637,9 @@ unsigned long ntohs(
 
 
 /**
-@brief	converts a unsigned long from TCP/IP network byte order to host byte order (which is little-endian on Intel processors).
-@return 	a 16-bit number in host byte order
-*/
+ *  @brief	converts a unsigned long from TCP/IP network byte order to host byte order (which is little-endian on Intel processors).
+ *  @return     a 16-bit number in host byte order
+ */
 unsigned long ntohl(unsigned long netlong)
 {
 #if ( SYSTEM_ENDIAN == _ENDIAN_LITTLE_ )
@@ -657,37 +657,37 @@ int8_t CheckDestInLocal(uint32_t destip)
     for(i = 0; i < 4; i++)
     {
         if((pdestip[i] & eth->read(SUBR0 + i)) != (eth->read(SIPR0 + i) & eth->read(SUBR0 + i)))
-            return 1;	// Remote
+            return 1;   // Remote
     }
     return 0;
 }
 
 
 /**
-@brief	Get handle of socket which status is same to 'status'
-@return 	socket number
-*/
+ *  @brief	Get handle of socket which status is same to 'status'
+ *  @return     socket number
+ */
 SOCKET getSocket(
-    unsigned char status, 	/**< socket's status to be found */
-    SOCKET start			/**< base of socket to be found */
-)
+    unsigned char   status,     /**< socket's status to be found */
+    SOCKET          start               /**< base of socket to be found */
+    )
 {
     SOCKET i;
     if(start > 3) start = 0;
 
-    for(i = start; i < MAX_SOCK_NUM ; i++) if( eth->getSn_SR(i) == status ) return i;
+    for(i = start; i < MAX_SOCK_NUM; i++) if( eth->getSn_SR(i) == status ) return i;
     return MAX_SOCK_NUM;
 }
 
 
 /**
-@brief	Calculate checksum of a stream
-@return 	checksum
-*/
+ *  @brief	Calculate checksum of a stream
+ *  @return     checksum
+ */
 unsigned short checksum(
-    unsigned char *src, 	/**< pointer to stream  */
-    unsigned int len		/**< size of stream */
-)
+    unsigned char * src,        /**< pointer to stream  */
+    unsigned int    len         /**< size of stream */
+    )
 {
     uint16_t sum, tsum, i, j;
     uint32_t lsum;
@@ -720,9 +720,9 @@ unsigned short checksum(
 
 #ifndef NO_USE_SOCKUTIL_FUNC
 /**
-@brief	Get Source IP Address of iinChip.
-@return 	Source IP Address(32bit Address-Host Ordering)
-*/
+ *  @brief	Get Source IP Address of iinChip.
+ *  @return     Source IP Address(32bit Address-Host Ordering)
+ */
 uint32_t GetIPAddress(void)
 {
     uint32_t ip = 0;
@@ -737,9 +737,9 @@ uint32_t GetIPAddress(void)
 
 
 /**
-@brief	Get Gateway IP Address of iinChip.
-@return 	Gateway IP Address(32bit Address-Host Ordering)
-*/
+ *  @brief	Get Gateway IP Address of iinChip.
+ *  @return     Gateway IP Address(32bit Address-Host Ordering)
+ */
 uint32_t GetGWAddress(void)
 {
     uint32_t ip = 0;
@@ -754,9 +754,9 @@ uint32_t GetGWAddress(void)
 
 
 /**
-@brief	Get Subnet mask of iinChip.
-@return 	Subnet Mask(32bit Address-Host Ordering)
-*/
+ *  @brief	Get Subnet mask of iinChip.
+ *  @return     Subnet Mask(32bit Address-Host Ordering)
+ */
 uint32_t GetSubMask(void)
 {
     uint32_t ip = 0;
@@ -771,28 +771,28 @@ uint32_t GetSubMask(void)
 
 
 /**
-@brief	Get Mac Address of iinChip.
-@return 	Subnet Mask(32bit Address-Host Ordering)
-*/
+ *  @brief	Get Mac Address of iinChip.
+ *  @return     Subnet Mask(32bit Address-Host Ordering)
+ */
 void GetMacAddress(
-    char *mac	/**< Pointer to store Mac Address(48bit Address)(INPUT, OUTPUT) */
-)
+    char *mac   /**< Pointer to store Mac Address(48bit Address)(INPUT, OUTPUT) */
+    )
 {
     int i = 0;
-    for(i = 0; i < 6; i++)*mac++ = eth->read(SHAR0 + i);
+    for(i = 0; i < 6; i++) *mac++ = eth->read(SHAR0 + i);
 }
 
 void GetDestMacAddr(SOCKET s, int8_t *mac)
 {
     int i = 0;
-    for(i = 0; i < 6; i++)*mac++ = eth->read(Sn_DHAR0(s) + i);
+    for(i = 0; i < 6; i++) *mac++ = eth->read(Sn_DHAR0(s) + i);
 }
 
 
 /**
-@brief	Read established network information(G/W, IP, S/N, Mac) of iinChip and Output that through Serial.
-		Mac Address is output into format of Dotted HexaDecimal.Others are output into format of Dotted Decimal Format.
-*/
+ *  @brief	Read established network information(G/W, IP, S/N, Mac) of iinChip and Output that through Serial.
+ *               Mac Address is output into format of Dotted HexaDecimal.Others are output into format of Dotted Decimal Format.
+ */
 void GetNetConfig(void)
 {
     char addr[6];

@@ -1,21 +1,21 @@
 /**
-  ******************************************************************************
-  * @file   : *.cpp
-  * @author : shentq
-  * @version: V1.2
-  * @date   : 2016/08/14
-
-  * @brief   ebox application example .
-  *
-  * Copyright 2016 shentq. All Rights Reserved.         
-  ******************************************************************************
+ ******************************************************************************
+ * @file   : *.cpp
+ * @author : shentq
+ * @version: V1.2
+ * @date   : 2016/08/14
+ *
+ * @brief   ebox application example .
+ *
+ * Copyright 2016 shentq. All Rights Reserved.
+ ******************************************************************************
  */
 
 
 #include "bsp.h"
 #include "ebox.h"
 #include <sfud.h>
- 
+
 #define SFUD_DEMO_TEST_BUFFER_SIZE                     1024
 
 static void sfud_demo(uint32_t addr, size_t size, uint8_t *data);
@@ -30,8 +30,8 @@ void setup()
     uart1.begin(115200);
     uart1.printf("test\r\n");
     if (sfud_init() == SFUD_SUCCESS) {
-     sfud_demo(0, sizeof(sfud_demo_test_buf), sfud_demo_test_buf);
-       delay_ms(1000);
+        sfud_demo(0, sizeof(sfud_demo_test_buf), sfud_demo_test_buf);
+        delay_ms(1000);
     }
 
 }
@@ -65,7 +65,7 @@ static void sfud_demo(uint32_t addr, size_t size, uint8_t *data) {
     result = sfud_erase(flash, addr, size);
     if (result == SFUD_SUCCESS) {
         uart1.printf("Erase the %s flash data finish. Start from 0x%08X, size is %ld.\r\n", flash->name, addr,
-                size);
+                     size);
     } else {
         uart1.printf("Erase the %s flash data failed.\r\n", flash->name);
         return;
@@ -74,7 +74,7 @@ static void sfud_demo(uint32_t addr, size_t size, uint8_t *data) {
     result = sfud_write(flash, addr, size, data);
     if (result == SFUD_SUCCESS) {
         uart1.printf("Write the %s flash data finish. Start from 0x%08X, size is %ld.\r\n", flash->name, addr,
-                size);
+                     size);
     } else {
         uart1.printf("Write the %s flash data failed.\r\n", flash->name);
         return;
@@ -83,7 +83,7 @@ static void sfud_demo(uint32_t addr, size_t size, uint8_t *data) {
     result = sfud_read(flash, addr, size, data);
     if (result == SFUD_SUCCESS) {
         uart1.printf("Read the %s flash data success. Start from 0x%08X, size is %ld. The data is:\r\n", flash->name, addr,
-                size);
+                     size);
         uart1.printf("Offset (h) 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F\r\n");
         for (i = 0; i < size; i++) {
             if (i % 16 == 0) {
@@ -102,7 +102,7 @@ static void sfud_demo(uint32_t addr, size_t size, uint8_t *data) {
     for (i = 0; i < size; i++) {
         if (data[i] != i % 256) {
             uart1.printf("Read and check write data has an error. Write the %s flash data failed.\r\n", flash->name);
-			break;
+            break;
         }
     }
     if (i == size) {
