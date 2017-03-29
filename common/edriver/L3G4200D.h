@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    l3g4200d.h
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    l3g4200d.h
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __L3G4200D_H
@@ -62,26 +62,26 @@ public:
         float x, y, z;
     } vector;
 
-    vector g; // gyro angular velocity readings
+    vector        g; // gyro angular velocity readings
     L3G4200D(SoftI2c *i2c)
     {
         this->i2c = i2c;
     }
-    void begin(uint32_t speed);
-    void test();
+    void            begin(uint32_t speed);
+    void            test();
 
-    void 		write_reg(uint8_t reg, uint8_t value);
-    uint8_t read_reg(uint8_t reg);
+    void            write_reg(uint8_t reg, uint8_t value);
+    uint8_t         read_reg(uint8_t reg);
 
-    void read(void);
+    void            read(void);
 
     // vector functions
-    static void vector_cross(const vector *a, const vector *b, vector *out);
-    static float vector_dot(const vector *a, const vector *b);
-    static void vector_normalize(vector *a);
+    static void         vector_cross(const vector *a, const vector *b, vector *out);
+    static float        vector_dot(const vector *a, const vector *b);
+    static void         vector_normalize(vector *a);
 
 private:
-    SoftI2c *i2c;
-    uint32_t speed;
+    SoftI2c *       i2c;
+    uint32_t        speed;
 };
 #endif

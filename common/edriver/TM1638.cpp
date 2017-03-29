@@ -1,31 +1,31 @@
 /**
-  ******************************************************************************
-  * @file    tm1638.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    tm1638.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
- 
+
 #include "TM1638.h"
 
 Tm1638::Tm1638(Gpio *p_data_pin, Gpio *p_sck_pin, Gpio *p_rck_pin)
 {
-    data_pin 	= p_data_pin;
-    sck_pin 	= p_sck_pin;
-    rck_pin 	= p_rck_pin;
+    data_pin    = p_data_pin;
+    sck_pin     = p_sck_pin;
+    rck_pin     = p_rck_pin;
 
 }
 void Tm1638::begin()
@@ -43,7 +43,7 @@ void Tm1638::begin()
 void Tm1638::delay(uint16_t delayvalue)
 {
     uint16_t i = 0;
-    for(i = 0; i < delayvalue; i++);
+    for(i = 0; i < delayvalue; i++) ;
 }
 
 void Tm1638::write(uint8_t DATA)
@@ -68,7 +68,7 @@ void Tm1638::writeCmd(uint8_t Cmd)
 {
     rck_pin->write(LOW);
     delay(10);
-    write(Cmd);//shift_out(data_pin,sck_pin,bit_oder,Cmd);
+    write(Cmd); //shift_out(data_pin,sck_pin,bit_oder,Cmd);
     rck_pin->write(HIGH);
 }
 
@@ -103,14 +103,14 @@ uint16_t Tm1638::readkey()
     delay(10);
     data_pin->mode(OUTPUT_PP);
     delay(10);
-    rck_pin->write(HIGH);					//4个字节数据合成一个字节
+    rck_pin->write(HIGH);                                       //4个字节数据合成一个字节
     key_value = c[1];
     key_value = ((key_value) << 8) | c[0];
     return key_value;
 }
 
 void Tm1638::LedDisplay(uint8_t ddata0, uint8_t ddata1, uint8_t ddata2, uint8_t ddata3,
-                         uint8_t ddata4, uint8_t ddata5, uint8_t ddata6, uint8_t ddata7, uint8_t ddata8, uint8_t ddata9)
+                        uint8_t ddata4, uint8_t ddata5, uint8_t ddata6, uint8_t ddata7, uint8_t ddata8, uint8_t ddata9)
 
 {
     uint8_t writedata0, writedata1, writedata2, writedata3, writedata4, writedata5, writedata6, writedata7;
@@ -146,12 +146,12 @@ void Tm1638::LedDisplay(uint8_t ddata0, uint8_t ddata1, uint8_t ddata2, uint8_t 
                  + ((tab[data5] & 0x40) >> 1) + ((tab[data6] & 0x40)) + ((tab[data7] & 0x40) << 1);
 
     writedata7 = ddata8;
-    writeCmd(0x8a);//亮度   Write_COM(0x8a);//亮度
+    writeCmd(0x8a); //亮度   Write_COM(0x8a);//亮度
     writeCmd(0x40); //写 数据命令
     delay(1);
     rck_pin->write(LOW);
     delay(1);
-    write(0xc0);		//写地址命令
+    write(0xc0);                //写地址命令
     write(writedata0);
     if((ddata9 & 0x01) > 0)
         write(0x01);

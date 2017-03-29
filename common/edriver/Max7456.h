@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    max7456.h
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    max7456.h
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 
@@ -25,8 +25,8 @@
 
 /******* FROM DATASHEET *******/
 
-#define MAX7456_SELECT 6//SS
-#define MAX7456_VSYNC 2//INT0
+#define MAX7456_SELECT 6 //SS
+#define MAX7456_VSYNC 2 //INT0
 
 #define NTSC 0
 #define PAL 1
@@ -86,11 +86,11 @@
 
 //If PAL
 #ifdef isPAL
-#define MAX7456_screen_size 480 //16x30
-#define MAX7456_screen_rows 15
+ #define MAX7456_screen_size 480 //16x30
+ #define MAX7456_screen_rows 15
 #else
-#define MAX7456_screen_size 390 //13x30
-#define MAX7456_screen_rows 12
+ #define MAX7456_screen_size 390 //13x30
+ #define MAX7456_screen_rows 12
 #endif
 
 //------------------ the OSD class -----------------------------------------------
@@ -103,28 +103,28 @@ public:
         this->cs  = cs;
         this->spi = spi;
     }
-    void begin(uint8_t dev_num);
-    void init(void);
-    void clear(void);
-    void plug(void);
-    void set_panel(uint8_t start_col, uint8_t start_row);
-    void open_panel(void);
-    void close_panel(void);
-    void control(uint8_t ctrl);
-    void detect_mode(void);
-    void set_mode(int mode);
-    void open_single(uint8_t x, uint8_t y);
-    int get_mode(void);
-    int get_center(void);
-    uint8_t write(uint8_t c);
-    void printf(const char *fmt, ...);
-    void write_NVM(int font_count, uint8_t *character_bitmap);
+    void            begin(uint8_t dev_num);
+    void            init(void);
+    void            clear(void);
+    void            plug(void);
+    void            set_panel(uint8_t start_col, uint8_t start_row);
+    void            open_panel(void);
+    void            close_panel(void);
+    void            control(uint8_t ctrl);
+    void            detect_mode(void);
+    void            set_mode(int mode);
+    void            open_single(uint8_t x, uint8_t y);
+    int             get_mode(void);
+    int             get_center(void);
+    uint8_t         write(uint8_t c);
+    void            printf(const char *fmt, ...);
+    void            write_NVM(int font_count, uint8_t *character_bitmap);
 
 private:
-    uint8_t start_col, start_row, col, row, video_mode, video_center;
-    SPI_CONFIG_TYPE spi_dev_max7456;
-    Gpio *cs;
-    Spi *spi;
+    uint8_t                 start_col, start_row, col, row, video_mode, video_center;
+    SPI_CONFIG_TYPE         spi_dev_max7456;
+    Gpio *                  cs;
+    Spi *                   spi;
 };
 
 #endif

@@ -7,7 +7,7 @@
 /* storage control modules to the FatFs module with a defined API.       */
 /*-----------------------------------------------------------------------*/
 
-#include "diskio.h"		/* FatFs lower layer API */
+#include "diskio.h"             /* FatFs lower layer API */
 #include "stm32f10x.h"
 #include "wrapperdiskio.h"
 
@@ -17,7 +17,7 @@
 //#define MMC		1	/* Example: Map MMC/SD card to physical drive 1 */
 //#define USB		2	/* Example: Map USB MSD to physical drive 2 */
 
-#define MMC		0	/* Example: Map MMC/SD card to physical drive 1 */
+#define MMC             0       /* Example: Map MMC/SD card to physical drive 1 */
 //#define ATA		1	/* Example: Map ATA harddisk to physical drive 0 */
 //#define USB		2	/* Example: Map USB MSD to physical drive 2 */
 
@@ -27,12 +27,12 @@
 /*-----------------------------------------------------------------------*/
 
 DSTATUS disk_status (
-	BYTE pdrv		/* Physical drive nmuber to identify the drive */
-)
+    BYTE pdrv                   /* Physical drive nmuber to identify the drive */
+    )
 {
-	DSTATUS stat;
+    DSTATUS stat;
 
-	switch (pdrv) {
+    switch (pdrv) {
 //	case ATA :
 ////		result = ATA_disk_status();
 
@@ -40,12 +40,12 @@ DSTATUS disk_status (
 
 //		return stat;
 
-	case MMC :
-		stat = MMC_disk_status();
+    case MMC:
+        stat = MMC_disk_status();
 
-		// translate the reslut code here
+        // translate the reslut code here
 
-		return stat;
+        return stat;
 
 //	case USB :
 ////		result = USB_disk_status();
@@ -53,8 +53,8 @@ DSTATUS disk_status (
 //		// translate the reslut code here
 
 //		return stat;
-	}
-	return STA_NOINIT;
+    }
+    return STA_NOINIT;
 }
 
 
@@ -64,12 +64,12 @@ DSTATUS disk_status (
 /*-----------------------------------------------------------------------*/
 
 DSTATUS disk_initialize (
-	BYTE pdrv				/* Physical drive nmuber to identify the drive */
-)
+    BYTE pdrv                                   /* Physical drive nmuber to identify the drive */
+    )
 {
-	DSTATUS stat;
+    DSTATUS stat;
 
-	switch (pdrv) {
+    switch (pdrv) {
 //	case ATA :
 ////		result = ATA_disk_initialize();
 
@@ -77,12 +77,12 @@ DSTATUS disk_initialize (
 
 //		return stat;
 
-	case MMC :
-		stat = MMC_disk_initialize();
+    case MMC:
+        stat = MMC_disk_initialize();
 
-		// translate the reslut code here
+        // translate the reslut code here
 //		stat = result;
-		return stat;
+        return stat;
 
 //	case USB :
 ////		result = USB_disk_initialize();
@@ -90,8 +90,8 @@ DSTATUS disk_initialize (
 //		// translate the reslut code here
 
 //		return stat;
-	}
-	return STA_NOINIT;
+    }
+    return STA_NOINIT;
 }
 
 
@@ -101,15 +101,15 @@ DSTATUS disk_initialize (
 /*-----------------------------------------------------------------------*/
 
 DRESULT disk_read (
-	BYTE pdrv,		/* Physical drive nmuber to identify the drive */
-	BYTE *buff,		/* Data buffer to store read data */
-	DWORD sector,	/* Sector address in LBA */
-	UINT count		/* Number of sectors to read */
-)
+    BYTE    pdrv,               /* Physical drive nmuber to identify the drive */
+    BYTE *  buff,               /* Data buffer to store read data */
+    DWORD   sector,     /* Sector address in LBA */
+    UINT    count               /* Number of sectors to read */
+    )
 {
-	DRESULT res;
+    DRESULT res;
 
-	switch (pdrv) {
+    switch (pdrv) {
 //	case ATA :
 //		// translate the arguments here
 
@@ -119,14 +119,14 @@ DRESULT disk_read (
 
 //		return res;
 
-	case MMC :
-		// translate the arguments here
+    case MMC:
+        // translate the arguments here
 
-		res = (DRESULT)MMC_disk_read(buff, sector, count);
+        res = (DRESULT)MMC_disk_read(buff, sector, count);
 
-		// translate the reslut code here
+        // translate the reslut code here
 
-		return res;
+        return res;
 
 //	case USB :
 //		// translate the arguments here
@@ -136,9 +136,9 @@ DRESULT disk_read (
 //		// translate the reslut code here
 
 //		return res;
-	}
+    }
 
-	return RES_PARERR;
+    return RES_PARERR;
 }
 
 
@@ -149,15 +149,15 @@ DRESULT disk_read (
 
 #if _USE_WRITE
 DRESULT disk_write (
-	BYTE pdrv,			/* Physical drive nmuber to identify the drive */
-	const BYTE *buff,	/* Data to be written */
-	DWORD sector,		/* Sector address in LBA */
-	UINT count			/* Number of sectors to write */
-)
+    BYTE        pdrv,                   /* Physical drive nmuber to identify the drive */
+    const BYTE *buff,           /* Data to be written */
+    DWORD       sector,         /* Sector address in LBA */
+    UINT        count                   /* Number of sectors to write */
+    )
 {
-	DRESULT res;
+    DRESULT res;
 
-	switch (pdrv) {
+    switch (pdrv) {
 //	case ATA :
 //		// translate the arguments here
 
@@ -167,14 +167,14 @@ DRESULT disk_write (
 
 //		return res;
 
-	case MMC :
-		// translate the arguments here
+    case MMC:
+        // translate the arguments here
 
-		res = (DRESULT)MMC_disk_write(buff, sector, count);
+        res = (DRESULT)MMC_disk_write(buff, sector, count);
 
-		// translate the reslut code here
+        // translate the reslut code here
 
-		return res;
+        return res;
 
 //	case USB :
 //		// translate the arguments here
@@ -184,9 +184,9 @@ DRESULT disk_write (
 //		// translate the reslut code here
 
 //		return res;
-	}
+    }
 
-	return RES_PARERR;
+    return RES_PARERR;
 }
 #endif
 
@@ -197,42 +197,42 @@ DRESULT disk_write (
 
 #if _USE_IOCTL
 DRESULT disk_ioctl (
-	BYTE pdrv,		/* Physical drive nmuber (0..) */
-	BYTE cmd,		/* Control code */
-	void *buff		/* Buffer to send/receive control data */
-)
+    BYTE    pdrv,               /* Physical drive nmuber (0..) */
+    BYTE    cmd,                /* Control code */
+    void *  buff                /* Buffer to send/receive control data */
+    )
 {
-	DRESULT res;
+    DRESULT res;
 
-	switch (pdrv) {
+    switch (pdrv) {
 //	case ATA :
 
 //		// Process of the command for the ATA drive
 
 //		return res;
 
-	case MMC :
+    case MMC:
 
-		// Process of the command for the MMC/SD card
+        // Process of the command for the MMC/SD card
 
-		return res;
+        return res;
 
 //	case USB :
 
 //		// Process of the command the USB drive
 
 //		return res;
-	}
+    }
 
-	return RES_PARERR;
+    return RES_PARERR;
 }
 #endif
 /*--------------------------------------------------------------------------
-
-   Private Functions
-
----------------------------------------------------------------------------*/
+ *
+ *  Private Functions
+ *
+ *  ---------------------------------------------------------------------------*/
 DWORD get_fattime (void)
 {
-  return 0;
+    return 0;
 }

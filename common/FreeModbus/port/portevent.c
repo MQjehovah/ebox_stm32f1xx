@@ -24,15 +24,15 @@
 #include "mbport.h"
 
 /* ----------------------- Variables ----------------------------------------*/
-static eMBEventType   eQueuedEvent;
-static BOOL           xEventInQueue;
+static eMBEventType eQueuedEvent;
+static BOOL xEventInQueue;
 
 /* ----------------------- Start implementation -----------------------------*/
 /**
-  * @brief  事件初始化
-  * @param  None
-  * @retval None
-  */
+ * @brief  事件初始化
+ * @param  None
+ * @retval None
+ */
 BOOL
 xMBPortEventInit( void )
 {
@@ -41,39 +41,39 @@ xMBPortEventInit( void )
 }
 
 /**
-  * @brief  事件发送
-  * @param  None
-  * @retval None
-  */
+ * @brief  事件发送
+ * @param  None
+ * @retval None
+ */
 BOOL
 xMBPortEventPost( eMBEventType eEvent )
 {
-  //有事件标志更新 
-  xEventInQueue = TRUE;
-  //设定事件标志
-  eQueuedEvent = eEvent;
-  return TRUE;
+    //有事件标志更新
+    xEventInQueue = TRUE;
+    //设定事件标志
+    eQueuedEvent = eEvent;
+    return TRUE;
 }
 
 /**
-  * @brief  事件接收
-  * @param  None
-  * @retval None
-  */
+ * @brief  事件接收
+ * @param  None
+ * @retval None
+ */
 BOOL
 xMBPortEventGet( eMBEventType * eEvent )
 {
-    
-  BOOL xEventHappened = FALSE;
-  
-  //若有事件更新
-  if( xEventInQueue )
-  {
-    //获得事件
-    *eEvent = eQueuedEvent;
-    xEventInQueue = FALSE;
-    xEventHappened = TRUE;
-  }
-  
-  return xEventHappened;
+
+    BOOL xEventHappened = FALSE;
+
+    //若有事件更新
+    if( xEventInQueue )
+    {
+        //获得事件
+        *eEvent = eQueuedEvent;
+        xEventInQueue = FALSE;
+        xEventHappened = TRUE;
+    }
+
+    return xEventHappened;
 }

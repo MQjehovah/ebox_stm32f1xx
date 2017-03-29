@@ -319,41 +319,41 @@ public:
         cs = p_cs_pin;
         spi = p_spi;
     }
-    u8 begin(uint8_t dev_num);
-    void host_mem_read_start(uint32_t addr, uint8_t *pnt, uint8_t len);
-    void host_mem_write_start(uint32_t addr, uint8_t *pnt, uint8_t len);
-    void host_cmd_write(uint8_t CMD);
-    void host_cmd_active(void);
-    void HOST_MEM_WR8(uint32_t addr, uint8_t data);
-    void HOST_MEM_WR16(uint32_t addr, uint32_t data);
-    void HOST_MEM_WR32(uint32_t addr, uint32_t data);
-    uint8_t HOST_MEM_RD8(uint32_t addr);
-    uint32_t HOST_MEM_RD16(uint32_t addr);
-    uint32_t HOST_MEM_RD32(uint32_t addr);
+    u8              begin(uint8_t dev_num);
+    void            host_mem_read_start(uint32_t addr, uint8_t *pnt, uint8_t len);
+    void            host_mem_write_start(uint32_t addr, uint8_t *pnt, uint8_t len);
+    void            host_cmd_write(uint8_t CMD);
+    void            host_cmd_active(void);
+    void            HOST_MEM_WR8(uint32_t addr, uint8_t data);
+    void            HOST_MEM_WR16(uint32_t addr, uint32_t data);
+    void            HOST_MEM_WR32(uint32_t addr, uint32_t data);
+    uint8_t         HOST_MEM_RD8(uint32_t addr);
+    uint32_t        HOST_MEM_RD16(uint32_t addr);
+    uint32_t        HOST_MEM_RD32(uint32_t addr);
     /*** CMD Functions *****************************************************************/
-    uint8_t cmd_execute(uint32_t data);
-    uint8_t cmd(uint32_t data);
-    uint8_t cmd_ready(void);
+    uint8_t         cmd_execute(uint32_t data);
+    uint8_t         cmd(uint32_t data);
+    uint8_t         cmd_ready(void);
 
 
-    void cmd_text(int16_t x, int16_t y, int16_t font, uint16_t options, const char *str);
-    void cmd_button(int16_t x, int16_t y, int16_t w, int16_t h, int16_t font, uint16_t options, const char *str);
+    void        cmd_text(int16_t x, int16_t y, int16_t font, uint16_t options, const char *str);
+    void        cmd_button(int16_t x, int16_t y, int16_t w, int16_t h, int16_t font, uint16_t options, const char *str);
     /*** Set FG color ******************************************************************/
-    void cmd_fgcolor(uint32_t c);
+    void        cmd_fgcolor(uint32_t c);
 
     /*** Set BG color ******************************************************************/
-    void cmd_bgcolor(uint32_t c);
+    void        cmd_bgcolor(uint32_t c);
     /*** Set Gradient color ************************************************************/
-    void cmd_gradcolor(uint32_t c);
+    void        cmd_gradcolor(uint32_t c);
     /*** Draw Gradient *****************************************************************/
-    void cmd_gradient(int16_t x0, int16_t y0, uint32_t rgb0, int16_t x1, int16_t y1, uint32_t rgb1);
+    void        cmd_gradient(int16_t x0, int16_t y0, uint32_t rgb0, int16_t x1, int16_t y1, uint32_t rgb1);
 private:
-    void _stop();
-    void _start(u32 addr);
+    void        _stop();
+    void        _start(u32 addr);
 
 private:
-    Gpio *int_pin;
-    Gpio *cs;
-    SoftSpi *spi;
+    Gpio *          int_pin;
+    Gpio *          cs;
+    SoftSpi *       spi;
 };
 #endif

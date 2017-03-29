@@ -1,16 +1,16 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 #include "ebox.h"
 #include "ucos_ii.h"
-static OS_STK startup_task_stk[STARTUP_TASK_STK_SIZE];		  //定义栈
+static OS_STK startup_task_stk[STARTUP_TASK_STK_SIZE];            //定义栈
 
 void xx()
 {
@@ -28,7 +28,7 @@ void setup()
 }
 void Task_LED(void *p_arg)
 {
-    (void)p_arg;                		// 'p_arg' 并没有用到，防止编译器提示警告
+    (void)p_arg;                                // 'p_arg' 并没有用到，防止编译器提示警告
     while (1)
     {
         PB8.toggle();

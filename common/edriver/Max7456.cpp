@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    max7456.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    max7456.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -49,7 +49,7 @@ void OSD::init()
     cs->reset(); //select chip
     //read black level register
 
-    spi->write(MAX7456_OSDBL_reg_read);//black level read register
+    spi->write(MAX7456_OSDBL_reg_read); //black level read register
     uint8_t osdbl_r = spi->read();
 
     spi->write(MAX7456_VM0_reg);
@@ -94,7 +94,7 @@ void OSD::detect_mode()
     //        setMode(1);
     //    }
     //#endif
-#if 0 //to do 
+#if 0 //to do
     if (EEPROM.read(PAL_NTSC_ADDR) == 1)
     {
         setMode(1);
@@ -361,7 +361,7 @@ OSD::write_NVM(int font_count, uint8_t *character_bitmap)
     spi->write(WRITE_nvr);
 
     // wait until bit 5 in the status register returns to 0 (12ms)
-    while (( spi->write(MAX7456_STAT_reg_read) & STATUS_reg_nvr_busy) != 0x00);
+    while (( spi->write(MAX7456_STAT_reg_read) & STATUS_reg_nvr_busy) != 0x00) ;
 
     spi->write(MAX7456_VM0_reg); // turn on screen next vertical
     spi->write(MAX7456_ENABLE_display_vert);

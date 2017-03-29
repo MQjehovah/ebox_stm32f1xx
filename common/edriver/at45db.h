@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    at45db.h
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    at45db.h
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 
@@ -106,37 +106,37 @@
 
 class At45db
 {
-	public:
-		At45db(Gpio *cs,Spi *spi)
-		{
-			this->cs  = cs;
-			this->spi = spi;
-		}
-		void begin(uint8_t dev_num); 
-		void read_id(uint16_t *id); 
-		void read(uint8_t *buf,uint16_t page_addr,uint16_t byte_addr,unsigned long num_to_read);
-        void DataToPage_ViaBuffer_WithErase_SecWay(unsigned char BufferNumber,
-                                                   unsigned int PageAddr,
-                                                   unsigned int ByteAddr,
-                                                   unsigned char *Data,
-                                                   unsigned int ByteNum);
-        void DataToPage_ViaBuffer_WithErase_OneWay(unsigned char BufferNumber,
-                                                   unsigned int PageAddr,
-                                                   unsigned int ByteAddr,
-                                                   unsigned char *Data,
-                                                   unsigned int ByteNum);
-        
-	private:
-		uint8_t                  spi_flash_buf[1024];
-		SPI_CONFIG_TYPE     spi_dev_AT45DB;
-		Gpio                *cs;
-		Spi                 *spi;
+public:
+    At45db(Gpio *cs,Spi *spi)
+    {
+        this->cs  = cs;
+        this->spi = spi;
+    }
+    void        begin(uint8_t dev_num);
+    void        read_id(uint16_t *id);
+    void        read(uint8_t *buf,uint16_t page_addr,uint16_t byte_addr,unsigned long num_to_read);
+    void        DataToPage_ViaBuffer_WithErase_SecWay(unsigned char     BufferNumber,
+                                                      unsigned int      PageAddr,
+                                                      unsigned int      ByteAddr,
+                                                      unsigned char *   Data,
+                                                      unsigned int      ByteNum);
+    void        DataToPage_ViaBuffer_WithErase_OneWay(unsigned char     BufferNumber,
+                                                      unsigned int      PageAddr,
+                                                      unsigned int      ByteAddr,
+                                                      unsigned char *   Data,
+                                                      unsigned int      ByteNum);
 
-		uint8_t   readSR(void);  
-		void _waitBusy(void);
-        void Buffer_Write(unsigned char BufferNumber,unsigned int ByteAddr,
-                          unsigned char *Data,unsigned int ByteNum);
-        void buffer_MMPage_WithErase(unsigned char BufferNumber,unsigned int PageAddr);
+private:
+    uint8_t                 spi_flash_buf[1024];
+    SPI_CONFIG_TYPE         spi_dev_AT45DB;
+    Gpio *                  cs;
+    Spi *                   spi;
+
+    uint8_t                 readSR(void);
+    void                    _waitBusy(void);
+    void                    Buffer_Write(unsigned char BufferNumber,unsigned int ByteAddr,
+                                         unsigned char *Data,unsigned int ByteNum);
+    void                    buffer_MMPage_WithErase(unsigned char BufferNumber,unsigned int PageAddr);
 
 };
 

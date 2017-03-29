@@ -1,18 +1,18 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 
 
 /*
-一个独立看门狗的示例程序
-*/
+ *  一个独立看门狗的示例程序
+ */
 #include "ebox.h"
 
 Iwdg dog;
@@ -33,7 +33,7 @@ int main(void)
 
     while(1)
     {
-        dog.feed();//在常见的应用中喂狗应该在定时器中断中定时喂狗
+        dog.feed(); //在常见的应用中喂狗应该在定时器中断中定时喂狗
         uart1.printf("running!\r\n");
         delay_ms(1000);
         //        delay_ms(1900);

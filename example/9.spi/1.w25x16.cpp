@@ -1,14 +1,14 @@
 /**
-  ******************************************************************************
-  * @file   : *.cpp
-  * @author : shentq
-  * @version: V1.2
-  * @date   : 2016/08/14
-
-  * @brief   ebox application example .
-  *
-  * Copyright 2016 shentq. All Rights Reserved.         
-  ******************************************************************************
+ ******************************************************************************
+ * @file   : *.cpp
+ * @author : shentq
+ * @version: V1.2
+ * @date   : 2016/08/14
+ *
+ * @brief   ebox application example .
+ *
+ * Copyright 2016 shentq. All Rights Reserved.
+ ******************************************************************************
  */
 
 
@@ -39,7 +39,7 @@ int main(void)
     {
         for(int i = 0; i < 100; i++)
             wbuf[i] = random()%256;
-        
+
         flash.read_id(&id);
         uart1.printf("\r\n==readid=======\r\n");
         uart1.printf("id = %x", id);

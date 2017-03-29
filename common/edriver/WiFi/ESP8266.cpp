@@ -29,9 +29,9 @@ char password[] = "dvmaster456";
 
 
 #if 1
-#define ESP_DEBUG(...) uart1.printf("[ESP]"),uart1.printf(__VA_ARGS__)
+ #define ESP_DEBUG(...) uart1.printf("[ESP]"),uart1.printf(__VA_ARGS__)
 #else
-#define  ESP_DEBUG(...)
+ #define  ESP_DEBUG(...)
 #endif
 
 ESP8266 wifi;
@@ -82,7 +82,7 @@ void net_data_state_process(char c)
         {
             net_temp_data_rx_buf[wifi.net_data_rx_cnt++] = c;
         }
-        else if(c == ':')/*<len>:<data>*/
+        else if(c == ':') /*<len>:<data>*/
         {
             net_temp_data_rx_buf[wifi.net_data_rx_cnt++] = '\0';
             wifi.net_data_len = atoi((const char *)net_temp_data_rx_buf);
@@ -186,7 +186,7 @@ bool ESP8266::begin(Gpio *rst, Uart *uart, uint32_t baud)
 
     this->uart->begin(baud);
 //    this->uart->attach_rx_interrupt(uart_interrupt_event);
-	  this->uart->attach(uart_interrupt_event,RxIrq);
+    this->uart->attach(uart_interrupt_event,RxIrq);
     this->rst->mode(OUTPUT_PP);
 
     wifi_mode = NET_MODE;
@@ -198,7 +198,7 @@ bool ESP8266::begin(Gpio *rst, Uart *uart, uint32_t baud)
     net_data_len = 0;
     net_data_id = 0;
 
-    clear_rx_cdm_buffer();//清空AT命令接收缓冲区
+    clear_rx_cdm_buffer(); //清空AT命令接收缓冲区
     ret = restart();
     ret = kick();
     delay_ms(1000);
@@ -510,16 +510,16 @@ WIFI_STATUS_T ESP8266::get_IP_status()
 {
     char buf[100];
     char status;
-    if( exc_AT_CIPSTATUS(buf)){
-        if(search_str(buf, "STATUS:") != -1){
+    if( exc_AT_CIPSTATUS(buf)) {
+        if(search_str(buf, "STATUS:") != -1) {
             get_str(buf, "STATUS:", 1, "\r\n", 1, &status);
-            status -= 0x30; 
+            status -= 0x30;
         }
         else
             status = 0;
 
-    }      
-    return (WIFI_STATUS_T)status;    
+    }
+    return (WIFI_STATUS_T)status;
 }
 
 /**
@@ -581,13 +581,13 @@ bool ESP8266::release_TCP(void)
 }
 
 /**
-* Register UDP port number in single mode.
-*
-* @param addr - the IP or domain name of the target host.
-* @param port - the port number of the target host.
-* @retval true - success.
-* @retval false - failure.
-*/
+ * Register UDP port number in single mode.
+ *
+ * @param addr - the IP or domain name of the target host.
+ * @param port - the port number of the target host.
+ * @retval true - success.
+ * @retval false - failure.
+ */
 bool ESP8266::register_UDP(char *addr, uint32_t port, uint32_t loca_port)
 {
     return set_AT_CIPSTART_single("UDP", addr, port, loca_port);
@@ -643,12 +643,12 @@ bool ESP8266::register_UDP(uint8_t mux_id, char *addr, uint32_t port, uint32_t l
     return set_AT_CIPSTART_multiple(mux_id, "UDP", addr, port, loca_port);
 }
 /**
-* Unregister UDP port number in multiple mode.
-*
-* @param mux_id - the identifier of this TCP(available value: 0 - 4).
-* @retval true - success.
-* @retval false - failure.
-*/
+ * Unregister UDP port number in multiple mode.
+ *
+ * @param mux_id - the identifier of this TCP(available value: 0 - 4).
+ * @retval true - success.
+ * @retval false - failure.
+ */
 bool ESP8266::unregister_UDP(uint8_t mux_id)
 {
     return set_AT_CIPCLOSE_mulitple(mux_id);
@@ -690,11 +690,11 @@ bool ESP8266::start_TCPServer(uint32_t port)
 }
 
 /**
-* Stop TCP Server(Only in multiple mode).
-*
-* @retval true - success.
-* @retval false - failure.
-*/
+ * Stop TCP Server(Only in multiple mode).
+ *
+ * @retval true - success.
+ * @retval false - failure.
+ */
 bool ESP8266::stop_TCPServer(void)
 {
     set_AT_CIPSERVER(0);
@@ -756,12 +756,12 @@ bool ESP8266::send(uint8_t mux_id, const uint8_t *buffer, uint32_t len)
 }
 
 /**
- *bool ESP8266::exc_AT(void)
-
- *@breif    AT测试命令
- *@param    NONE
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT(void)
+ *
+ * *@breif    AT测试命令
+ * *@param    NONE
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT(void)
 {
     bool ret = false;
@@ -780,12 +780,12 @@ bool ESP8266::exc_AT(void)
 }
 
 /**
- *bool ESP8266::exc_AT_RST(void)
-
- *@breif    发送复位命令
- *@param    NONE
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_RST(void)
+ *
+ * *@breif    发送复位命令
+ * *@param    NONE
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_RST(void)
 {
     bool ret = false;
@@ -802,12 +802,12 @@ bool ESP8266::exc_AT_RST(void)
     return ret;
 }
 /**
- *bool ESP8266::exc_AT_GMR(char *version)
-
- *@breif    查询esp8266版本号
- *@param    buf:接收数据缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_GMR(char *version)
+ *
+ * *@breif    查询esp8266版本号
+ * *@param    buf:接收数据缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_GMR(char *msg)
 {
     bool ret = false;
@@ -893,12 +893,12 @@ bool ESP8266::exc_AT_UART(uint32_t baud_rate, uint8_t data_bits, uint8_t stop_bi
 }
 
 /**
- *bool ESP8266::query_AT_CWMODE(uint8_t *mode)
-
- *@breif    查询WiFi应用模式
- *@param    mode:WiFi模式的返回值。用户应填入某个变量的指针
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::query_AT_CWMODE(uint8_t *mode)
+ *
+ * *@breif    查询WiFi应用模式
+ * *@param    mode:WiFi模式的返回值。用户应填入某个变量的指针
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::query_AT_CWMODE(uint8_t *mode)
 {
     bool ret = false;
@@ -926,15 +926,15 @@ bool ESP8266::query_AT_CWMODE(uint8_t *mode)
 }
 
 /**
- *bool ESP8266::set_AT_CWMODE(uint8_t mode)
-
- *@breif    设置WiFi应用模式
- *@param    mode:WiFi模式的值
-                1：station模式
-                2：AP模式
-                3：AP兼station模式
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CWMODE(uint8_t mode)
+ *
+ * *@breif    设置WiFi应用模式
+ * *@param    mode:WiFi模式的值
+ *               1：station模式
+ *               2：AP模式
+ *               3：AP兼station模式
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CWMODE(uint8_t mode)
 {
     bool ret = false;
@@ -955,12 +955,12 @@ bool ESP8266::set_AT_CWMODE(uint8_t mode)
 
 
 /**
- *bool ESP8266::exc_AT_CWLAP(char *list)
-
- *@breif    列出当前可用AP
- *@param    list:AP列表缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_CWLAP(char *list)
+ *
+ * *@breif    列出当前可用AP
+ * *@param    list:AP列表缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_CWLAP(char *list)
 {
     bool ret = false;
@@ -982,13 +982,13 @@ bool ESP8266::exc_AT_CWLAP(char *list)
 }
 
 /**
- *bool ESP8266::set_AT_CWJAP(char *ssid, char *pwd)
-
- *@breif    链接(AP)路由
- *@param    ssid:路由的ssid字符串
- *@param    pwd:路由的密码
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CWJAP(char *ssid, char *pwd)
+ *
+ * *@breif    链接(AP)路由
+ * *@param    ssid:路由的ssid字符串
+ * *@param    pwd:路由的密码
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CWJAP(char *ssid, char *pwd)
 {
     bool ret = false;
@@ -1010,12 +1010,12 @@ bool ESP8266::set_AT_CWJAP(char *ssid, char *pwd)
 }
 
 /**
- *bool ESP8266::exc_AT_CWQAP(void)
-
- *@breif    退出AP链接
- *@param    NONE
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_CWQAP(void)
+ *
+ * *@breif    退出AP链接
+ * *@param    NONE
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_CWQAP(void)
 {
     bool ret = false;
@@ -1034,15 +1034,15 @@ bool ESP8266::exc_AT_CWQAP(void)
 }
 
 /**
- *bool ESP8266::set_AT_CWSAP(char *ssid, char *pwd, uint8_t chl, uint8_t ecn)
-
- *@breif    设置AP模式下的参数
- *@param    ssid：AP接入点名称字符串
- *@param    pwd:密码字符串，最长64字节
- *@param    chl:通道号
- *@param    ecn：加密方式
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CWSAP(char *ssid, char *pwd, uint8_t chl, uint8_t ecn)
+ *
+ * *@breif    设置AP模式下的参数
+ * *@param    ssid：AP接入点名称字符串
+ * *@param    pwd:密码字符串，最长64字节
+ * *@param    chl:通道号
+ * *@param    ecn：加密方式
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CWSAP(char *ssid, char *pwd, uint8_t chl, uint8_t ecn)
 {
     bool ret = false;
@@ -1061,12 +1061,12 @@ bool ESP8266::set_AT_CWSAP(char *ssid, char *pwd, uint8_t chl, uint8_t ecn)
 }
 
 /**
- *bool ESP8266::exc_AT_CWLIF(char *list)
-
- *@breif    查看已接入的设备IP，MAC列表
- *@param    list:链接列表缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_CWLIF(char *list)
+ *
+ * *@breif    查看已接入的设备IP，MAC列表
+ * *@param    list:链接列表缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_CWLIF(char *list)
 {
     bool ret = false;
@@ -1089,18 +1089,18 @@ bool ESP8266::exc_AT_CWLIF(char *list)
 }
 
 /**
- *bool ESP8266::set_AT_CWDHCP(uint8_t mode,uint8_t enable)
-
- *@breif    DHCP配置，本设置会保存在用户flash参数区域，掉电重启会保留
- *@param    mode:模式
-                0：设置AP
-                1：设置STA
-                2：设置AP和STA
- *@param    enable:使能控制
-                0：关闭
-                1：开启
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CWDHCP(uint8_t mode,uint8_t enable)
+ *
+ * *@breif    DHCP配置，本设置会保存在用户flash参数区域，掉电重启会保留
+ * *@param    mode:模式
+ *               0：设置AP
+ *               1：设置STA
+ *               2：设置AP和STA
+ * *@param    enable:使能控制
+ *               0：关闭
+ *               1：开启
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CWDHCP(uint8_t mode, uint8_t enable) //DHCP配置
 {
     bool ret = false;
@@ -1119,14 +1119,14 @@ bool ESP8266::set_AT_CWDHCP(uint8_t mode, uint8_t enable) //DHCP配置
 }
 
 /**
- *bool ESP8266::set_AT_CWAUTOCONN(uint8_t enable)
-
- *@breif    设置STA开机自动链接
- *@param    enable:使能控制
-                0：禁止
-                1：开启
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CWAUTOCONN(uint8_t enable)
+ *
+ * *@breif    设置STA开机自动链接
+ * *@param    enable:使能控制
+ *               0：禁止
+ *               1：开启
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CWAUTOCONN(uint8_t enable)     //自动连接设置
 {
     bool ret = false;
@@ -1146,12 +1146,12 @@ bool ESP8266::set_AT_CWAUTOCONN(uint8_t enable)     //自动连接设置
 }
 
 /**
- *bool ESP8266::set_AT_CIPSTAMAC(char *mac)
-
- *@breif    设置STA的mac地址
- *@param    mac:字符串参数，例如"18:fe:12:34:56:78"
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPSTAMAC(char *mac)
+ *
+ * *@breif    设置STA的mac地址
+ * *@param    mac:字符串参数，例如"18:fe:12:34:56:78"
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPSTAMAC(char *mac)           //设置STAmac
 {
     bool ret = false;
@@ -1170,12 +1170,12 @@ bool ESP8266::set_AT_CIPSTAMAC(char *mac)           //设置STAmac
 }
 
 /**
- *bool ESP8266::set_AT_CIPAPMAC(char *mac)
-
- *@breif    设置AP的mac地址
- *@param    mac:字符串参数，例如"18:fe:12:34:56:78"
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPAPMAC(char *mac)
+ *
+ * *@breif    设置AP的mac地址
+ * *@param    mac:字符串参数，例如"18:fe:12:34:56:78"
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPAPMAC(char *mac)
 {
     bool ret = false;
@@ -1194,12 +1194,12 @@ bool ESP8266::set_AT_CIPAPMAC(char *mac)
 }
 
 /**
- *bool ESP8266::set_AT_CIPSTA(char *ip)
-
- *@breif    设置STA的ip
- *@param    ip: IP字符串"192.168.1.99"
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPSTA(char *ip)
+ *
+ * *@breif    设置STA的ip
+ * *@param    ip: IP字符串"192.168.1.99"
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPSTA(char *ip)
 {
     bool ret = false;
@@ -1218,12 +1218,12 @@ bool ESP8266::set_AT_CIPSTA(char *ip)
 }
 
 /**
- *bool ESP8266::set_AT_CIPAP(char *ip)
-
- *@breif    设置AP的ip
- *@param    ip: IP字符串"192.168.1.99"
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPAP(char *ip)
+ *
+ * *@breif    设置AP的ip
+ * *@param    ip: IP字符串"192.168.1.99"
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPAP(char *ip)
 {
     bool ret = false;
@@ -1242,15 +1242,15 @@ bool ESP8266::set_AT_CIPAP(char *ip)
 }
 
 /**
- *bool ESP8266::set_AT_CWSMARTSTART(uint8_t method)
-
- *@breif    设置智能连接的方法
- *@param    method:方法
-                0：使用安可信AI_LINK技术
-                1：使用ESP-TOUCH技术
-                2：使用AIR-KISS技术
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CWSMARTSTART(uint8_t method)
+ *
+ * *@breif    设置智能连接的方法
+ * *@param    method:方法
+ *               0：使用安可信AI_LINK技术
+ *               1：使用ESP-TOUCH技术
+ *               2：使用AIR-KISS技术
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CWSMARTSTART(uint8_t method)   //
 {
     bool ret = false;
@@ -1269,12 +1269,12 @@ bool ESP8266::set_AT_CWSMARTSTART(uint8_t method)   //
 }
 
 /**
- *bool ESP8266::set_AT_CWSMARTSTOP(void)
-
- *@breif    关闭智能连接
- *@param    NONE
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CWSMARTSTOP(void)
+ *
+ * *@breif    关闭智能连接
+ * *@param    NONE
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CWSMARTSTOP(void)
 {
     bool ret = false;
@@ -1293,12 +1293,12 @@ bool ESP8266::set_AT_CWSMARTSTOP(void)
 }
 
 /**
- *bool ESP8266::query_AT_CIPSTAMAC(char *msg)
-
- *@breif    查询STAmac
- *@param    msg: 接收数据缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::query_AT_CIPSTAMAC(char *msg)
+ *
+ * *@breif    查询STAmac
+ * *@param    msg: 接收数据缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::query_AT_CIPSTAMAC(char *msg)         //
 {
     bool ret = false;
@@ -1320,12 +1320,12 @@ bool ESP8266::query_AT_CIPSTAMAC(char *msg)         //
 }
 
 /**
- *bool ESP8266::query_AT_CIPAPMAC(char *msg)
-
- *@breif    查询AP的mac
- *@param    msg: 接收数据缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::query_AT_CIPAPMAC(char *msg)
+ *
+ * *@breif    查询AP的mac
+ * *@param    msg: 接收数据缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::query_AT_CIPAPMAC(char *msg)          //
 {
     bool ret = false;
@@ -1347,12 +1347,12 @@ bool ESP8266::query_AT_CIPAPMAC(char *msg)          //
 }
 
 /**
- *bool ESP8266::query_AT_CIPSTA(char *msg)
-
- *@breif    查询STA的ip
- *@param    msg: 接收数据缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::query_AT_CIPSTA(char *msg)
+ *
+ * *@breif    查询STA的ip
+ * *@param    msg: 接收数据缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::query_AT_CIPSTA(char *msg)            //
 {
     bool ret = false;
@@ -1374,12 +1374,12 @@ bool ESP8266::query_AT_CIPSTA(char *msg)            //
 }
 
 /**
- *bool ESP8266::query_AT_CIPAP(char *msg)
-
- *@breif    查询AP的ip
- *@param    msg: 接收数据缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::query_AT_CIPAP(char *msg)
+ *
+ * *@breif    查询AP的ip
+ * *@param    msg: 接收数据缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::query_AT_CIPAP(char *msg)             //
 {
     bool ret = false;
@@ -1402,12 +1402,12 @@ bool ESP8266::query_AT_CIPAP(char *msg)             //
 
 
 /**
- *bool ESP8266::exc_AT_CIPSTATUS(char *list)
-
- *@breif    查看已接入的设备IP，MAC列表
- *@param    list:链接列表缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_CIPSTATUS(char *list)
+ *
+ * *@breif    查看已接入的设备IP，MAC列表
+ * *@param    list:链接列表缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_CIPSTATUS(char *list)
 {
     bool ret = false;
@@ -1430,12 +1430,12 @@ bool ESP8266::exc_AT_CIPSTATUS(char *list)
 
 
 /**
- *bool ESP8266::exc_AT_CIFSR(char *list)
-
- *@breif    获取本机IP地址
- *@param    list:链接列表缓冲区
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_CIFSR(char *list)
+ *
+ * *@breif    获取本机IP地址
+ * *@param    list:链接列表缓冲区
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_CIFSR(char *list)
 {
     bool ret = false;
@@ -1458,12 +1458,12 @@ bool ESP8266::exc_AT_CIFSR(char *list)
 }
 
 /**
- *bool ESP8266::set_AT_CIPMUX(uint8_t mode)
-
- *@breif    启动多链接功能
- *@param    mode:多连接模式；0：单路链接；1：多路链接
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPMUX(uint8_t mode)
+ *
+ * *@breif    启动多链接功能
+ * *@param    mode:多连接模式；0：单路链接；1：多路链接
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPMUX(uint8_t mode)
 {
     bool ret = false;
@@ -1490,17 +1490,17 @@ bool ESP8266::set_AT_CIPMUX(uint8_t mode)
 
 
 /**
- *bool ESP8266::set_AT_CIPSTART_single(char *type, char *addr, uint32_t port)
-
- *@breif    建立TCP链接或者注册UDP端口号
- *@param    type:字符串参数，表明连接类型
-                "TCP":建立TCP链接
-                "UDP":建立UDP链接
- *@param    addr:       字符串参数，远程服务器IP地址
- *@param    port:       远程服务器端口号
- *@param    local_port: 本地端口号
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPSTART_single(char *type, char *addr, uint32_t port)
+ *
+ * *@breif    建立TCP链接或者注册UDP端口号
+ * *@param    type:字符串参数，表明连接类型
+ *               "TCP":建立TCP链接
+ *               "UDP":建立UDP链接
+ * *@param    addr:       字符串参数，远程服务器IP地址
+ * *@param    port:       远程服务器端口号
+ * *@param    local_port: 本地端口号
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPSTART_single(char *type, char *addr, uint32_t port, uint32_t loca_port)
 {
     bool ret = false;
@@ -1527,15 +1527,15 @@ bool ESP8266::set_AT_CIPSTART_single(char *type, char *addr, uint32_t port, uint
 
 
 /**
- *bool ESP8266::set_AT_CIPSTART_multiple(uint8_t mux_id, char *type, char *addr, uint32_t port)
-
- *@breif    建立TCP链接或者注册UDP端口号
- *@param    mux_id:链接的ID号
- *@param    type:字符串参数，表明连接类型
-                "TCP":建立TCP链接
-                "UDP":建立UDP链接
- *@param    addr:字符串参数，远程服务器IP地址
- *@param    port:远程服务器端口号
+ * *bool ESP8266::set_AT_CIPSTART_multiple(uint8_t mux_id, char *type, char *addr, uint32_t port)
+ *
+ * *@breif    建立TCP链接或者注册UDP端口号
+ * *@param    mux_id:链接的ID号
+ * *@param    type:字符串参数，表明连接类型
+ *               "TCP":建立TCP链接
+ *               "UDP":建立UDP链接
+ * *@param    addr:字符串参数，远程服务器IP地址
+ * *@param    port:远程服务器端口号
  *@retval   成功返回true，失败false*/
 bool ESP8266::set_AT_CIPSTART_multiple(uint8_t mux_id, char *type, char *addr, uint32_t port, uint32_t loca_port)
 {
@@ -1562,12 +1562,12 @@ bool ESP8266::set_AT_CIPSTART_multiple(uint8_t mux_id, char *type, char *addr, u
 
 
 /**
- *bool ESP8266::exc_AT_CIPCLOSE_single(void)
-
- *@breif    关闭TCP或者UDP链接
- *@param    NONE
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_CIPCLOSE_single(void)
+ *
+ * *@breif    关闭TCP或者UDP链接
+ * *@param    NONE
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_CIPCLOSE_single(void)
 {
     bool ret = false;
@@ -1588,12 +1588,12 @@ bool ESP8266::exc_AT_CIPCLOSE_single(void)
 
 
 /**
- *bool ESP8266::set_AT_CIPCLOSE_mulitple(uint8_t mux_id)
-
- *@breif    关闭TCP或者UDP链接
- *@param    mux_id:关闭链接的ID
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPCLOSE_mulitple(uint8_t mux_id)
+ *
+ * *@breif    关闭TCP或者UDP链接
+ * *@param    mux_id:关闭链接的ID
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPCLOSE_mulitple(uint8_t mux_id)
 {
     bool ret = false;
@@ -1614,12 +1614,12 @@ bool ESP8266::set_AT_CIPCLOSE_mulitple(uint8_t mux_id)
 
 
 /**
- *bool ESP8266::set_AT_CIPSTO(uint32_t timeout)
-
- *@breif    设置TCP服务器超时时间
- *@param    timeout:超时时间0~7200
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPSTO(uint32_t timeout)
+ *
+ * *@breif    设置TCP服务器超时时间
+ * *@param    timeout:超时时间0~7200
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPSTO(uint32_t timeout)
 {
     bool ret = false;
@@ -1640,15 +1640,15 @@ bool ESP8266::set_AT_CIPSTO(uint32_t timeout)
 
 
 /**
- *bool ESP8266::set_AT_CIPSERVER(uint8_t mode, uint32_t port)
-
- *@breif    配置为TCP服务器
- *@param    mode:服务器模式
-                0：关闭
-                1：开启
- *@param    port:服务器端口（缺省值为333）
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPSERVER(uint8_t mode, uint32_t port)
+ *
+ * *@breif    配置为TCP服务器
+ * *@param    mode:服务器模式
+ *               0：关闭
+ *               1：开启
+ * *@param    port:服务器端口（缺省值为333）
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPSERVER(uint8_t mode, uint32_t port)
 {
     bool ret = false;
@@ -1678,13 +1678,13 @@ bool ESP8266::set_AT_CIPSERVER(uint8_t mode, uint32_t port)
 
 
 /**
- *bool ESP8266::set_AT_CIPSEND_single(const uint8_t *buffer, uint32_t len)
-
- *@breif    发送数据
- *@param    buffer: 发送数据缓冲区
- *@param    len:    数据长度,最大长度为2048
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPSEND_single(const uint8_t *buffer, uint32_t len)
+ *
+ * *@breif    发送数据
+ * *@param    buffer: 发送数据缓冲区
+ * *@param    len:    数据长度,最大长度为2048
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPSEND_single(const uint8_t *buffer, uint32_t len)
 {
     bool ret = false;
@@ -1730,14 +1730,14 @@ bool ESP8266::set_AT_CIPSEND_single(const uint8_t *buffer, uint32_t len)
 
 
 /**
- *bool ESP8266::set_AT_CIPSEND_multiple(uint8_t mux_id, const uint8_t *buffer, uint32_t len)
-
- *@breif    发送数据
- *@param    mux_id: 链接ID号
- *@param    buffer: 发送数据缓冲区
- *@param    len:    数据长度最大长度为2048
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::set_AT_CIPSEND_multiple(uint8_t mux_id, const uint8_t *buffer, uint32_t len)
+ *
+ * *@breif    发送数据
+ * *@param    mux_id: 链接ID号
+ * *@param    buffer: 发送数据缓冲区
+ * *@param    len:    数据长度最大长度为2048
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::set_AT_CIPSEND_multiple(uint8_t mux_id, const uint8_t *buffer, uint32_t len)
 {
     bool ret = false;
@@ -1776,20 +1776,20 @@ bool ESP8266::set_AT_CIPSEND_multiple(uint8_t mux_id, const uint8_t *buffer, uin
     return ret;
 }
 /**
- *bool ESP8266::set_AT_CIPMODE(uint8_t mode)
-
- *@breif    设置透传模式
-            进入偷穿模式会将建立的TCP链接保存在flash user parameter区域
-            下次上电仍会自动建立链接并进入透传
-
- *@param    mode: 透传模式
-                0：非透传
-                1：透传模式只有关闭server模式，并且为单路
- *@param    buffer: 发送数据缓冲区
- *@param    len:    数据长度
- *@retval   成功返回true，失败false
-*/
-bool ESP8266::set_AT_CIPMODE(uint8_t mode)//
+ * *bool ESP8266::set_AT_CIPMODE(uint8_t mode)
+ *
+ * *@breif    设置透传模式
+ *           进入偷穿模式会将建立的TCP链接保存在flash user parameter区域
+ *           下次上电仍会自动建立链接并进入透传
+ *
+ * *@param    mode: 透传模式
+ *               0：非透传
+ *               1：透传模式只有关闭server模式，并且为单路
+ * *@param    buffer: 发送数据缓冲区
+ * *@param    len:    数据长度
+ * *@retval   成功返回true，失败false
+ */
+bool ESP8266::set_AT_CIPMODE(uint8_t mode) //
 {
     bool ret = false;
     wait_wifi_mode(CMD_MODE);
@@ -1818,13 +1818,13 @@ bool ESP8266::set_AT_CIPMODE(uint8_t mode)//
 }
 
 /**
- *bool ESP8266::set_AT_exit_trans()//推出透传
-
- *@breif    退出透传模式
- *@param    NONE
- *@retval   成功返回true，失败false
-*/
-bool ESP8266::set_AT_exit_trans()//推出透传
+ * *bool ESP8266::set_AT_exit_trans()//推出透传
+ *
+ * *@breif    退出透传模式
+ * *@param    NONE
+ * *@retval   成功返回true，失败false
+ */
+bool ESP8266::set_AT_exit_trans() //推出透传
 {
     bool ret = true;
     uart->printf("+++");
@@ -1834,13 +1834,13 @@ bool ESP8266::set_AT_exit_trans()//推出透传
 }
 
 /**
- *bool ESP8266::exc_AT_CIUPDATE(void)
-
- *@breif    网络升级固件
- *@param    NONE
- *@retval   成功返回true，失败false
-*/
-bool ESP8266::exc_AT_CIUPDATE(void)//网络升级固件
+ * *bool ESP8266::exc_AT_CIUPDATE(void)
+ *
+ * *@breif    网络升级固件
+ * *@param    NONE
+ * *@retval   成功返回true，失败false
+ */
+bool ESP8266::exc_AT_CIUPDATE(void) //网络升级固件
 {
     bool ret = false;
     wait_wifi_mode(CMD_MODE);
@@ -1858,13 +1858,13 @@ bool ESP8266::exc_AT_CIUPDATE(void)//网络升级固件
 
 }
 /**
- *bool ESP8266::exc_AT_PING(const char *host,char *msg)
-
- *@breif    PING主机命令
- *@param    host:   主机IP或者域名
- *@param    msg:    ping的结果
- *@retval   成功返回true，失败false
-*/
+ * *bool ESP8266::exc_AT_PING(const char *host,char *msg)
+ *
+ * *@breif    PING主机命令
+ * *@param    host:   主机IP或者域名
+ * *@param    msg:    ping的结果
+ * *@retval   成功返回true，失败false
+ */
 bool ESP8266::exc_AT_PING(const char *host, char *msg)
 {
     bool ret;
@@ -1932,7 +1932,7 @@ uint16_t ESP8266::get_str(char *source, const char *begin, uint16_t count, uint1
 uint16_t ESP8266::get_str(char *source, char *out, uint16_t length)
 {
     uint16_t i = 0;
-    for (i = 0 ; i < length ; i++)
+    for (i = 0; i < length; i++)
     {
         out[i] = source[i];
     }
@@ -1949,7 +1949,7 @@ uint16_t ESP8266::find_str(uint8_t *s_str, uint8_t *p_str, uint16_t count, uint1
     uint8_t *temp_char = NULL;
     if(0 == s_str || 0 == p_str)
         return 0;
-    for(temp_str = s_str; *temp_str != '\0'; temp_str++)	 //依次查找字符串
+    for(temp_str = s_str; *temp_str != '\0'; temp_str++)         //依次查找字符串
     {
         temp_char = temp_str; //指向当前字符串
         //比较
@@ -2006,9 +2006,9 @@ CMD_STATE_T ESP8266::wait_cmd(uint32_t wait_time)
             search_str(rx_cmd_buf, "OK"   ) != -1  || \
             search_str(rx_cmd_buf, "FAIL" ) != -1  || \
             search_str(rx_cmd_buf, "EEROR") != -1
-        )
+            )
         {
-            while(millis() - last_time < 2);//等待所有字节接收完成
+            while(millis() - last_time < 2) ;  //等待所有字节接收完成
             cmd_state = RECEIVED;
             break;
         }
@@ -2037,9 +2037,9 @@ CMD_STATE_T ESP8266::wait_cmd(const char *spacial_target, uint32_t wait_time)
             search_str(rx_cmd_buf, "OK"   ) != -1          || \
             search_str(rx_cmd_buf, "FAIL" ) != -1          || \
             search_str(rx_cmd_buf, "EEROR") != -1
-        )
+            )
         {
-            while(millis() - last_time < 2);//等待所有字节接收完成
+            while(millis() - last_time < 2) ;  //等待所有字节接收完成
             cmd_state = RECEIVED;
             break;
         }
@@ -2055,7 +2055,7 @@ bool ESP8266::wait_wifi_mode(WIFI_MODE_T mode)
         wifi_mode = mode;
     else
     {
-        while(millis() - last_time < 2);
+        while(millis() - last_time < 2) ;
         wifi_mode = mode;
     }
     return true;
@@ -2090,7 +2090,7 @@ void ESP8266::print_rx_buf()
  * @retval >0 rx ring ringbuffer length.
  * @retval <=0 failure.
  */
-int  ESP8266::available()
+int ESP8266::available()
 {
     return net_buf.available();
 }
@@ -2103,7 +2103,7 @@ int  ESP8266::available()
  */
 char ESP8266::read_one()
 {
-   return net_buf.read();
+    return net_buf.read();
 }
 /**
  * Send data based on TCP or UDP builded already in single mode.
@@ -2157,7 +2157,7 @@ uint16_t ESP8266::read(unsigned char *buf)
  * @param buf - the buffer of data to read.
  * @retval len - the length of data readed.
  *
-     */
+ */
 uint16_t ESP8266::read(uint8_t *mux_id, unsigned char *buf)
 {
     uint16_t len = available();

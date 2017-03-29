@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    ltc1446.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    ltc1446.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -33,15 +33,15 @@ void LTCX::begin(uint8_t dev_num)
     cs->set();
 }
 /**
-  ******************************************************************************
-  * @brief  DAC写数据
-  * @param  unsigned int
-	*			_DAC_A	通道A的值，低12位有效
-	*			_DAC_B	通道B的值，低12位有效
-  * @note   特别说明,  可略, 仅加在必要的地方.
-  * @retval None, 返回值描述
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @brief  DAC写数据
+ * @param  unsigned int
+ *			_DAC_A	通道A的值，低12位有效
+ *			_DAC_B	通道B的值，低12位有效
+ * @note   特别说明,  可略, 仅加在必要的地方.
+ * @retval None, 返回值描述
+ ******************************************************************************
+ */
 void LTCX::write(uint16_t _DACA, uint16_t _DACB)
 {
     uint32_t _DAC_volue = _DACA << 12 | (_DACB & 0x0fff);

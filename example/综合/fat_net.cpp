@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 #include "ebox.h"
@@ -22,7 +22,7 @@ static FATFS fs;            // Work area (file system object) for logical drive
 FATFS *fss;
 FRESULT res;
 DIR DirObject;       //目录结构
-DWORD free_clust;//空簇，空扇区大小
+DWORD free_clust; //空簇，空扇区大小
 
 
 LCD lcd(&PB5, &PB6, &PB4, &PB3, &spi1);
@@ -71,13 +71,13 @@ void setup()
     if(!ret)
         uart1.printf("\r\nsdcard init ok!");
     ee.begin(100000);
-    
+
     lcd.clear(BLACK);
 
     attach_sd_to_fat(&sd);
     res = f_mount(&fs, "0:", 1);
     uart1.printf("\r\nres = %d", res);
-    
+
 
 }
 u32 count;

@@ -33,11 +33,11 @@
 #define DUMMY_DATA                               0xFF
 
 #ifndef SFUD_FLASH_DEVICE_TABLE
-#error "Please configure the flash device information table in (in sfud_cfg.h)."
+ #error "Please configure the flash device information table in (in sfud_cfg.h)."
 #endif
 
 #if !defined(SFUD_USING_SFDP) && !defined(SFUD_USING_FLASH_INFO_TABLE)
-#error "Please configure SFUD_USING_SFDP or SFUD_USING_FLASH_INFO_TABLE at least one kind of mode (in sfud_cfg.h)."
+ #error "Please configure SFUD_USING_SFDP or SFUD_USING_FLASH_INFO_TABLE at least one kind of mode (in sfud_cfg.h)."
 #endif
 
 /* user configured flash device information table */
@@ -53,7 +53,7 @@ static const sfud_flash_chip flash_chip_table[] = SFUD_FLASH_CHIP_TABLE;
 static sfud_err software_init(const sfud_flash *flash);
 static sfud_err hardware_init(sfud_flash *flash);
 static sfud_err page256_or_1_byte_write(const sfud_flash *flash, uint32_t addr, size_t size, uint16_t write_gran,
-        const uint8_t *data);
+                                        const uint8_t *data);
 static sfud_err aai_write(const sfud_flash *flash, uint32_t addr, size_t size, const uint8_t *data);
 static sfud_err wait_busy(const sfud_flash *flash);
 static sfud_err reset(const sfud_flash *flash);
@@ -170,7 +170,7 @@ static sfud_err hardware_init(sfud_flash *flash) {
     SFUD_ASSERT(flash->spi.wr);
     /* if the user don't configure flash chip information then using SFDP parameter or static flash parameter table */
     if (flash->chip.capacity == 0 || flash->chip.write_mode == 0 || flash->chip.erase_gran == 0
-            || flash->chip.erase_gran_cmd == 0) {
+        || flash->chip.erase_gran_cmd == 0) {
         /* read JEDEC ID include manufacturer ID, memory type ID and flash capacity ID */
         result = read_jedec_id(flash);
         if (result != SFUD_SUCCESS) {
@@ -202,29 +202,29 @@ static sfud_err hardware_init(sfud_flash *flash) {
 #endif
 
 #ifdef SFUD_USING_FLASH_INFO_TABLE
-            /* read SFDP parameters failed then using SFUD library provided static parameter */
-            for (i = 0; i < sizeof(flash_chip_table) / sizeof(sfud_flash_chip); i++) {
-                if ((flash_chip_table[i].mf_id == flash->chip.mf_id)
-                        && (flash_chip_table[i].type_id == flash->chip.type_id)
-                        && (flash_chip_table[i].capacity_id == flash->chip.capacity_id)) {
-                    flash->chip.name = flash_chip_table[i].name;
-                    flash->chip.capacity = flash_chip_table[i].capacity;
-                    flash->chip.write_mode = flash_chip_table[i].write_mode;
-                    flash->chip.erase_gran = flash_chip_table[i].erase_gran;
-                    flash->chip.erase_gran_cmd = flash_chip_table[i].erase_gran_cmd;
-                    break;
-                }
+        /* read SFDP parameters failed then using SFUD library provided static parameter */
+        for (i = 0; i < sizeof(flash_chip_table) / sizeof(sfud_flash_chip); i++) {
+            if ((flash_chip_table[i].mf_id == flash->chip.mf_id)
+                && (flash_chip_table[i].type_id == flash->chip.type_id)
+                && (flash_chip_table[i].capacity_id == flash->chip.capacity_id)) {
+                flash->chip.name = flash_chip_table[i].name;
+                flash->chip.capacity = flash_chip_table[i].capacity;
+                flash->chip.write_mode = flash_chip_table[i].write_mode;
+                flash->chip.erase_gran = flash_chip_table[i].erase_gran;
+                flash->chip.erase_gran_cmd = flash_chip_table[i].erase_gran_cmd;
+                break;
             }
+        }
 #endif
 
 #ifdef SFUD_USING_SFDP
-        }
+    }
 #endif
 
     }
 
     if (flash->chip.capacity == 0 || flash->chip.write_mode == 0 || flash->chip.erase_gran == 0
-            || flash->chip.erase_gran_cmd == 0) {
+        || flash->chip.erase_gran_cmd == 0) {
         SFUD_INFO("Warning: This flash device is not found or not support.");
         return SFUD_ERR_NOT_FOUND;
     } else {
@@ -239,7 +239,7 @@ static sfud_err hardware_init(sfud_flash *flash) {
         /* print manufacturer and flash chip name */
         if (flash_mf_name && flash->chip.name) {
             SFUD_INFO("Find a %s %s flash chip. Size is %ld bytes.", flash_mf_name, flash->chip.name,
-                    flash->chip.capacity);
+                      flash->chip.capacity);
         } else if (flash_mf_name) {
             SFUD_INFO("Find a %s flash chip. Size is %ld bytes.", flash_mf_name, flash->chip.capacity);
         }
@@ -496,7 +496,7 @@ __exit:
  * @return result
  */
 static sfud_err page256_or_1_byte_write(const sfud_flash *flash, uint32_t addr, size_t size, uint16_t write_gran,
-        const uint8_t *data) {
+                                        const uint8_t *data) {
     sfud_err result = SFUD_SUCCESS;
     const sfud_spi *spi = &flash->spi;
     uint8_t cmd_data[5 + SFUD_WRITE_MAX_PAGE_SIZE], cmd_size;
@@ -746,7 +746,7 @@ static sfud_err read_jedec_id(sfud_flash *flash) {
         flash->chip.type_id = recv_data[1];
         flash->chip.capacity_id = recv_data[2];
         SFUD_DEBUG("The flash device manufacturer ID is 0x%02X, memory type ID is 0x%02X, capacity ID is 0x%02X.",
-                flash->chip.mf_id, flash->chip.type_id, flash->chip.capacity_id);
+                   flash->chip.mf_id, flash->chip.type_id, flash->chip.capacity_id);
     } else {
         SFUD_INFO("Error: Read flash device JEDEC ID error.");
     }

@@ -41,8 +41,8 @@ u8 FT800::begin(uint8_t dev_num)
     {
         return 1;
     }
-    HOST_MEM_WR8(REG_GPIO, 0x00);			// Set REG_GPIO to 0 to turn off the LCD DISP signal
-    HOST_MEM_WR8(REG_PCLK, 0x00);      		// Pixel Clock Output disable
+    HOST_MEM_WR8(REG_GPIO, 0x00);                       // Set REG_GPIO to 0 to turn off the LCD DISP signal
+    HOST_MEM_WR8(REG_PCLK, 0x00);               // Pixel Clock Output disable
 
     HOST_MEM_WR16(REG_HCYCLE, 548);         // Set H_Cycle to 548
     HOST_MEM_WR16(REG_HOFFSET, 43);         // Set H_Offset to 43
@@ -78,11 +78,11 @@ u8 FT800::begin(uint8_t dev_num)
     uart1.printf("\r\nret = %d", ret);
 
     /* configure touch & audio */
-    //	HOST_MEM_WR8(REG_TOUCH_MODE, 0x03);     	//set touch on: continous
-    //	HOST_MEM_WR8(REG_TOUCH_ADC_MODE, 0x01); 	//set touch mode: differential
-    //	HOST_MEM_WR8(REG_TOUCH_OVERSAMPLE, 0x0F); 	//set touch oversampling to max
+    //	HOST_MEM_WR8(REG_TOUCH_MODE, 0x03);         //set touch on: continous
+    //	HOST_MEM_WR8(REG_TOUCH_ADC_MODE, 0x01);     //set touch mode: differential
+    //	HOST_MEM_WR8(REG_TOUCH_OVERSAMPLE, 0x0F);   //set touch oversampling to max
     //	HOST_MEM_WR16(REG_TOUCH_RZTHRESH, 5000);	//set touch resistance threshold
-    //	HOST_MEM_WR8(REG_VOL_SOUND, 0xFF);      	//set the volume to maximum
+    //	HOST_MEM_WR8(REG_VOL_SOUND, 0xFF);          //set the volume to maximum
 
     /* write first display list */
     //	HOST_MEM_WR32(RAM_DL+0, CLEAR_COLOR_RGB(0,0,0));  // Set Initial Color to BLACK
@@ -100,36 +100,36 @@ u8 FT800::begin(uint8_t dev_num)
     return 0;
 }
 /*
-    Function: host_mem_read
-    ARGS:     addr: 24 Bit Command Address
-              pnt:  output buffer for read data
-              len:  length of bytes to be read
-
-    Description: Reads len(n) bytes of data, starting at addr into pnt(buffer)
-*/
+ *   Function: host_mem_read
+ *   ARGS:     addr: 24 Bit Command Address
+ *             pnt:  output buffer for read data
+ *             len:  length of bytes to be read
+ *
+ *   Description: Reads len(n) bytes of data, starting at addr into pnt(buffer)
+ */
 void FT800::host_mem_read_start(uint32_t addr, uint8_t *pnt, uint8_t len)
 {
     cs->reset();
-    spi->write(((addr >> 16) & 0x3F) );			// Send out bits 23:16 of addr, bits 7:6 of this byte must be 00
-    spi->write(((addr >> 8) & 0xFF));       	// Send out bits 15:8 of addr
-    spi->write((addr & 0xFF));            	// Send out bits 7:0 of addr
+    spi->write(((addr >> 16) & 0x3F) );                 // Send out bits 23:16 of addr, bits 7:6 of this byte must be 00
+    spi->write(((addr >> 8) & 0xFF));           // Send out bits 15:8 of addr
+    spi->write((addr & 0xFF));                  // Send out bits 7:0 of addr
 
-    spi->write(0);                      	// Send out DUMMY (0) byte
+    spi->write(0);                              // Send out DUMMY (0) byte
 
-    while(len--)                      	// While Len > 0 Read out n bytes
+    while(len--)                        // While Len > 0 Read out n bytes
         *pnt++ = spi->read();
 
     cs->set();
 }
 
 /*
-    Function: HOST_MEM_WR_STR
-    ARGS:     addr: 24 Bit Command Address
-              pnt:  input buffer of data to send
-              len:  length of bytes to be send
-
-    Description: Writes len(n) bytes of data from pnt (buffer) to addr
-*/
+ *   Function: HOST_MEM_WR_STR
+ *   ARGS:     addr: 24 Bit Command Address
+ *             pnt:  input buffer of data to send
+ *             len:  length of bytes to be send
+ *
+ *   Description: Writes len(n) bytes of data from pnt (buffer) to addr
+ */
 void FT800::host_mem_write_start(uint32_t addr, uint8_t *pnt, uint8_t len)
 {
     cs->reset();
@@ -144,11 +144,11 @@ void FT800::host_mem_write_start(uint32_t addr, uint8_t *pnt, uint8_t len)
 }
 
 /*
-    Function: HOST_CMD_WRITE
-    ARGS:     CMD:  5 bit Command
-
-    Description: Writes Command to FT800
-*/
+ *   Function: HOST_CMD_WRITE
+ *   ARGS:     CMD:  5 bit Command
+ *
+ *   Description: Writes Command to FT800
+ */
 void FT800::host_cmd_write(uint8_t CMD)
 {
     cs->reset();
@@ -169,12 +169,12 @@ void FT800::host_cmd_active(void)
 
 
 /*
-    Function: HOST_MEM_WR8
-    ARGS:     addr: 24 Bit Command Address
-              data: 8bit Data Byte
-
-    Description: Writes 1 byte of data to addr
-*/
+ *   Function: HOST_MEM_WR8
+ *   ARGS:     addr: 24 Bit Command Address
+ *             data: 8bit Data Byte
+ *
+ *   Description: Writes 1 byte of data to addr
+ */
 void FT800::HOST_MEM_WR8(uint32_t addr, uint8_t data)
 {
     cs->reset();
@@ -188,12 +188,12 @@ void FT800::HOST_MEM_WR8(uint32_t addr, uint8_t data)
 }
 
 /*
-    Function: HOST_MEM_WR16
-    ARGS:     addr: 24 Bit Command Address
-              data: 16bit (2 bytes)
-
-    Description: Writes 2 bytes of data to addr
-*/
+ *   Function: HOST_MEM_WR16
+ *   ARGS:     addr: 24 Bit Command Address
+ *             data: 16bit (2 bytes)
+ *
+ *   Description: Writes 2 bytes of data to addr
+ */
 void FT800::HOST_MEM_WR16(uint32_t addr, uint32_t data)
 {
     cs->reset();
@@ -209,12 +209,12 @@ void FT800::HOST_MEM_WR16(uint32_t addr, uint32_t data)
 }
 
 /*
-    Function: HOST_MEM_WR32
-    ARGS:     addr: 24 Bit Command Address
-              data: 32bit (4 bytes)
-
-    Description: Writes 4 bytes of data to addr
-*/
+ *   Function: HOST_MEM_WR32
+ *   ARGS:     addr: 24 Bit Command Address
+ *             data: 32bit (4 bytes)
+ *
+ *   Description: Writes 4 bytes of data to addr
+ */
 void FT800::HOST_MEM_WR32(uint32_t addr, uint32_t data)
 {
     cs->reset();
@@ -231,11 +231,11 @@ void FT800::HOST_MEM_WR32(uint32_t addr, uint32_t data)
 }
 
 /*
-    Function: HOST_MEM_RD8
-    ARGS:     addr: 24 Bit Command Address
-
-    Description: Returns 1 byte of data from addr
-*/
+ *   Function: HOST_MEM_RD8
+ *   ARGS:     addr: 24 Bit Command Address
+ *
+ *   Description: Returns 1 byte of data from addr
+ */
 uint8_t FT800::HOST_MEM_RD8(uint32_t addr)
 {
     uint8_t data_in;
@@ -253,11 +253,11 @@ uint8_t FT800::HOST_MEM_RD8(uint32_t addr)
 }
 
 /*
-    Function: HOST_MEM_RD16
-    ARGS:     addr: 24 Bit Command Address
-
-    Description: Returns 2 byte of data from addr in a 32bit variable
-*/
+ *   Function: HOST_MEM_RD16
+ *   ARGS:     addr: 24 Bit Command Address
+ *
+ *   Description: Returns 2 byte of data from addr in a 32bit variable
+ */
 uint32_t FT800::HOST_MEM_RD16(uint32_t addr)
 {
     uint8_t data_in = 0;
@@ -281,11 +281,11 @@ uint32_t FT800::HOST_MEM_RD16(uint32_t addr)
 }
 
 /*
-    Function: HOST_MEM_RD32
-    ARGS:     addr: 24 Bit Command Address
-
-    Description: Returns 4 byte of data from addr in a 32bit variable
-*/
+ *   Function: HOST_MEM_RD32
+ *   ARGS:     addr: 24 Bit Command Address
+ *
+ *   Description: Returns 4 byte of data from addr in a 32bit variable
+ */
 uint32_t FT800::HOST_MEM_RD32(uint32_t addr)
 {
     uint8_t data_in = 0;
@@ -348,22 +348,22 @@ uint8_t FT800::cmd_ready(void)
     return (cmdBufferRd == cmdBufferWr) ? 1 : 0;
 }
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /*** Draw Text *********************************************************************/
 void FT800::cmd_text(int16_t x, int16_t y, int16_t font, uint16_t options, const char *str)
 {
     /*
-    	i: data pointer
-    	q: str  pointer
-    	j: loop counter
-    */
+     *   i: data pointer
+     *   q: str  pointer
+     *   j: loop counter
+     */
 
     uint16_t i, j, q;
     const uint16_t length = strlen(str);
-    if(!length) return ;
+    if(!length) return;
 
     uint32_t *data = (uint32_t *) calloc((length / 4) + 1, sizeof(uint32_t));
 
@@ -389,14 +389,14 @@ void FT800::cmd_text(int16_t x, int16_t y, int16_t font, uint16_t options, const
 void FT800::cmd_button(int16_t x, int16_t y, int16_t w, int16_t h, int16_t font, uint16_t options, const char *str)
 {
     /*
-    	i: data pointer
-    	q: str  pointer
-    	j: loop counter
-    */
+     *   i: data pointer
+     *   q: str  pointer
+     *   j: loop counter
+     */
 
     uint16_t i, j, q;
     const uint16_t length = strlen(str);
-    if(!length) return ;
+    if(!length) return;
 
     uint32_t *data = (uint32_t *) calloc((length / 4) + 1, sizeof(uint32_t));
 

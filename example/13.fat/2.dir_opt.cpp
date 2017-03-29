@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 #include "ebox.h"
@@ -55,7 +55,7 @@ void setup()
         uart1.printf("sdcard init ok!\r\n");
     else
         uart1.printf("sdcard init failed;err = %d\r\n",ret);
-        
+
     attach_sd_to_fat(&sd);
 
     res = f_mount(&fs, "0", 1);

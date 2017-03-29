@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 
@@ -72,7 +72,7 @@ int main(void)
     setup();
     while(1)
     {
-        while(ft.begin(1));
+        while(ft.begin(1)) ;
         clrscr();
         lcd_start_screen(0);
         delay_ms(300);

@@ -1,17 +1,17 @@
 /*
-file   : cpu.c
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-
-Copyright Notice
-No part of this software may be used for any commercial activities by any form or means, without the prior written consent of shentq.
-
-Disclaimer
-This specification is preliminary and is subject to change at any time without notice. shentq assumes no responsibility for any errors contained herein.
-*/
+ *  file   : cpu.c
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ *
+ *  Copyright Notice
+ *  No part of this software may be used for any commercial activities by any form or means, without the prior written consent of shentq.
+ *
+ *  Disclaimer
+ *  This specification is preliminary and is subject to change at any time without notice. shentq assumes no responsibility for any errors contained herein.
+ */
 
 #include "cpu.h"
 OS_TCBP OS_Tcb_CurP;
@@ -19,14 +19,14 @@ OS_TCBP OS_Tcb_HighRdyP;
 
 /******************全局变量定义***************/
 INT32U OSTick;
-INT32U cpu_sr;//保存 PRIMASK;
+INT32U cpu_sr; //保存 PRIMASK;
 INT8U TIME_SW = 1;
 
 
-INT32U   		OSRdyTbl;     							// 就绪任务列表
-PRIO_TypeDef	OSPrioCur;		            	// 当前任务的优先级
-PRIO_TypeDef  OSPrioHighRdy	;           	// 即将要运行任务的优先级
-OS_TCB        TCB[OS_TASKS + 1];			// 定义任务控制块TCB数组
+INT32U OSRdyTbl;                                                                        // 就绪任务列表
+PRIO_TypeDef OSPrioCur;                                 // 当前任务的优先级
+PRIO_TypeDef OSPrioHighRdy;                     // 即将要运行任务的优先级
+OS_TCB TCB[OS_TASKS + 1];                               // 定义任务控制块TCB数组
 
 void CPU_task_create(TASK_TypeDef task, STACK_TypeDef *stk, PRIO_TypeDef t_Prio)
 {

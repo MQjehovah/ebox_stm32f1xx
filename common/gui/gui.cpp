@@ -6,11 +6,11 @@
 //返回值：RGB格式的颜色值
 //u16 LCD_BGR2RGB(u16 c)
 //{
-//  u16  r,g,b,rgb;   
+//  u16  r,g,b,rgb;
 //  b=(c>>0)&0x1f;
 //  g=(c>>5)&0x3f;
-//  r=(c>>11)&0x1f;	 
-//  rgb=(b<<11)+(g<<5)+(r<<0);		 
+//  r=(c>>11)&0x1f;
+//  rgb=(b<<11)+(g<<5)+(r<<0);
 //  return(rgb);
 
 //}
@@ -22,19 +22,19 @@
 //#endif
 
 #ifndef min
-#define min(a,b) (((a) < (b)) ? (a) : (b))
+ #define min(a,b) (((a) < (b)) ? (a) : (b))
 #endif
 
 #ifndef _swap_int16_t
-#define _swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
+ #define _swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
 #endif
 
 /*********************************************************************
-*
-*       GUI graphic
-*
-**********************************************************************
-*/
+ *
+ *       GUI graphic
+ *
+ **********************************************************************
+ */
 
 void GUI::draw_pixel(int16_t x, int16_t y)
 {
@@ -55,12 +55,12 @@ void GUI::draw_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1)
 void GUI::draw_rect(int16_t x0, int16_t y0, int16_t x1, int16_t y1)
 {
     dev_draw_rect(x0,y0,x1,y1,this->color);
-}    
+}
 void GUI::fill_rect(int16_t x0, int16_t y0, int16_t x1, int16_t y1)
 {
     dev_fill_fect(x0,y0,x1,y1,this->color);
 }
-void GUI::fill_screen(uint16_t color) 
+void GUI::fill_screen(uint16_t color)
 {
     dev_fill_screen(color);
 }
@@ -74,14 +74,14 @@ void GUI::draw_circle(int16_t x0, int16_t y0, int16_t r)
     int16_t x = 0;
     int16_t y = r;
 
-    draw_pixel(x0  , y0+r);
-    draw_pixel(x0  , y0-r);
+    draw_pixel(x0, y0+r);
+    draw_pixel(x0, y0-r);
     draw_pixel(x0+r, y0  );
     draw_pixel(x0-r, y0  );
 
-    while (x<y) 
+    while (x<y)
     {
-        if (f >= 0) 
+        if (f >= 0)
         {
             y--;
             ddF_y += 2;
@@ -102,39 +102,39 @@ void GUI::draw_circle(int16_t x0, int16_t y0, int16_t r)
     }
 }
 void GUI::draw_circle_helper( int16_t x0, int16_t y0,
- int16_t r, uint8_t cornername) {
-  int16_t f     = 1 - r;
-  int16_t ddF_x = 1;
-  int16_t ddF_y = -2 * r;
-  int16_t x     = 0;
-  int16_t y     = r;
+                              int16_t r, uint8_t cornername) {
+    int16_t f     = 1 - r;
+    int16_t ddF_x = 1;
+    int16_t ddF_y = -2 * r;
+    int16_t x     = 0;
+    int16_t y     = r;
 
-  while (x<y) {
-    if (f >= 0) {
-      y--;
-      ddF_y += 2;
-      f     += ddF_y;
+    while (x<y) {
+        if (f >= 0) {
+            y--;
+            ddF_y += 2;
+            f     += ddF_y;
+        }
+        x++;
+        ddF_x += 2;
+        f     += ddF_x;
+        if (cornername & 0x4) {
+            draw_pixel(x0 + x, y0 + y);
+            draw_pixel(x0 + y, y0 + x);
+        }
+        if (cornername & 0x2) {
+            draw_pixel(x0 + x, y0 - y);
+            draw_pixel(x0 + y, y0 - x);
+        }
+        if (cornername & 0x8) {
+            draw_pixel(x0 - y, y0 + x);
+            draw_pixel(x0 - x, y0 + y);
+        }
+        if (cornername & 0x1) {
+            draw_pixel(x0 - y, y0 - x);
+            draw_pixel(x0 - x, y0 - y);
+        }
     }
-    x++;
-    ddF_x += 2;
-    f     += ddF_x;
-    if (cornername & 0x4) {
-      draw_pixel(x0 + x, y0 + y);
-      draw_pixel(x0 + y, y0 + x);
-    }
-    if (cornername & 0x2) {
-      draw_pixel(x0 + x, y0 - y);
-      draw_pixel(x0 + y, y0 - x);
-    }
-    if (cornername & 0x8) {
-      draw_pixel(x0 - y, y0 + x);
-      draw_pixel(x0 - x, y0 + y);
-    }
-    if (cornername & 0x1) {
-      draw_pixel(x0 - y, y0 - x);
-      draw_pixel(x0 - x, y0 - y);
-    }
-  }
 }
 void GUI::fill_circle(int16_t x0, int16_t y0, int16_t r)
 {
@@ -143,33 +143,33 @@ void GUI::fill_circle(int16_t x0, int16_t y0, int16_t r)
 }
 // Used to do circles and roundrects
 void GUI::fill_circle_helper(int16_t x0, int16_t y0, int16_t r,
- uint8_t cornername, int16_t delta) {
+                             uint8_t cornername, int16_t delta) {
 
-  int16_t f     = 1 - r;
-  int16_t ddF_x = 1;
-  int16_t ddF_y = -2 * r;
-  int16_t x     = 0;
-  int16_t y     = r;
+    int16_t f     = 1 - r;
+    int16_t ddF_x = 1;
+    int16_t ddF_y = -2 * r;
+    int16_t x     = 0;
+    int16_t y     = r;
 
-  while (x<y) {
-    if (f >= 0) {
-      y--;
-      ddF_y += 2;
-      f     += ddF_y;
-    }
-    x++;
-    ddF_x += 2;
-    f     += ddF_x;
+    while (x<y) {
+        if (f >= 0) {
+            y--;
+            ddF_y += 2;
+            f     += ddF_y;
+        }
+        x++;
+        ddF_x += 2;
+        f     += ddF_x;
 
-    if (cornername & 0x1) {
-      draw_v_line(x0+x, y0-y, y0 + y+1+delta);
-      draw_v_line(x0+y, y0-x, y0 + x+1+delta);
+        if (cornername & 0x1) {
+            draw_v_line(x0+x, y0-y, y0 + y+1+delta);
+            draw_v_line(x0+y, y0-x, y0 + x+1+delta);
+        }
+        if (cornername & 0x2) {
+            draw_v_line(x0-x, y0-y, y0 + y+1+delta);
+            draw_v_line(x0-y, y0-x, y0 + x+1+delta);
+        }
     }
-    if (cornername & 0x2) {
-      draw_v_line(x0-x, y0-y, y0 + y+1+delta);
-      draw_v_line(x0-y, y0-x, y0 + x+1+delta);
-    }
-  }
 }
 
 
@@ -178,114 +178,114 @@ void GUI::fill_circle_helper(int16_t x0, int16_t y0, int16_t r,
 
 // Draw a rounded rectangle
 void GUI::draw_round_rect(int16_t x, int16_t y, int16_t w,
- int16_t h, int16_t r) {
-  // smarter version
-  draw_h_line(x+r  , y    , x + w-r + 1); // Top
-  draw_h_line(x+r  , y+h-1, x + w-r + 1); // Bottom
-  draw_v_line(x    , y+r  , y + h-r + 1); // Left
-  draw_v_line(x+w-1, y+r  , y + h-r + 1); // Right
-  // draw four corners
-  draw_circle_helper(x+r    , y+r    , r, 1);
-  draw_circle_helper(x+w-r-1, y+r    , r, 2);
-  draw_circle_helper(x+w-r-1, y+h-r-1, r, 4);
-  draw_circle_helper(x+r    , y+h-r-1, r, 8);
+                          int16_t h, int16_t r) {
+    // smarter version
+    draw_h_line(x+r, y, x + w-r + 1);     // Top
+    draw_h_line(x+r, y+h-1, x + w-r + 1); // Bottom
+    draw_v_line(x, y+r, y + h-r + 1);     // Left
+    draw_v_line(x+w-1, y+r, y + h-r + 1); // Right
+    // draw four corners
+    draw_circle_helper(x+r, y+r, r, 1);
+    draw_circle_helper(x+w-r-1, y+r, r, 2);
+    draw_circle_helper(x+w-r-1, y+h-r-1, r, 4);
+    draw_circle_helper(x+r, y+h-r-1, r, 8);
 }
 
 // Fill a rounded rectangle
 void GUI::fill_round_rect(int16_t x, int16_t y, int16_t w,
- int16_t h, int16_t r) {
-  // smarter version
-  fill_rect(x+r, y, x + w-r + 1, y + h);
+                          int16_t h, int16_t r) {
+    // smarter version
+    fill_rect(x+r, y, x + w-r + 1, y + h);
 
-  // draw four corners
-  fill_circle_helper(x+w-r-1, y+r, r, 1, h-2*r-1);
-  fill_circle_helper(x+r    , y+r, r, 2, h-2*r-1);
+    // draw four corners
+    fill_circle_helper(x+w-r-1, y+r, r, 1, h-2*r-1);
+    fill_circle_helper(x+r, y+r, r, 2, h-2*r-1);
 }
 
 // Draw a triangle
 void GUI::draw_triangle(int16_t x0, int16_t y0,
- int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
-  draw_line(x0, y0, x1, y1);
-  draw_line(x1, y1, x2, y2);
-  draw_line(x2, y2, x0, y0);
+                        int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
+    draw_line(x0, y0, x1, y1);
+    draw_line(x1, y1, x2, y2);
+    draw_line(x2, y2, x0, y0);
 }
 
 //// Fill a triangle
 void GUI::fill_triangle(int16_t x0, int16_t y0,
- int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
+                        int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
 
-  int16_t a, b, y, last;
+    int16_t a, b, y, last;
 
-  // Sort coordinates by Y order (y2 >= y1 >= y0)
-  if (y0 > y1) {
-    _swap_int16_t(y0, y1); _swap_int16_t(x0, x1);
-  }
-  if (y1 > y2) {
-    _swap_int16_t(y2, y1); _swap_int16_t(x2, x1);
-  }
-  if (y0 > y1) {
-    _swap_int16_t(y0, y1); _swap_int16_t(x0, x1);
-  }
+    // Sort coordinates by Y order (y2 >= y1 >= y0)
+    if (y0 > y1) {
+        _swap_int16_t(y0, y1); _swap_int16_t(x0, x1);
+    }
+    if (y1 > y2) {
+        _swap_int16_t(y2, y1); _swap_int16_t(x2, x1);
+    }
+    if (y0 > y1) {
+        _swap_int16_t(y0, y1); _swap_int16_t(x0, x1);
+    }
 
-  if(y0 == y2) { // Handle awkward all-on-same-line case as its own thing
-    a = b = x0;
-    if(x1 < a)      a = x1;
-    else if(x1 > b) b = x1;
-    if(x2 < a)      a = x2;
-    else if(x2 > b) b = x2;
-    draw_h_line(a, y0, b+1);
-    return;
-  }
+    if(y0 == y2) { // Handle awkward all-on-same-line case as its own thing
+        a = b = x0;
+        if(x1 < a) a = x1;
+        else if(x1 > b) b = x1;
+        if(x2 < a) a = x2;
+        else if(x2 > b) b = x2;
+        draw_h_line(a, y0, b+1);
+        return;
+    }
 
-  int16_t
-    dx01 = x1 - x0,
-    dy01 = y1 - y0,
-    dx02 = x2 - x0,
-    dy02 = y2 - y0,
-    dx12 = x2 - x1,
-    dy12 = y2 - y1;
-  int32_t
-    sa   = 0,
-    sb   = 0;
+    int16_t
+        dx01 = x1 - x0,
+        dy01 = y1 - y0,
+        dx02 = x2 - x0,
+        dy02 = y2 - y0,
+        dx12 = x2 - x1,
+        dy12 = y2 - y1;
+    int32_t
+        sa   = 0,
+        sb   = 0;
 
-  // For upper part of triangle, find scanline crossings for segments
-  // 0-1 and 0-2.  If y1=y2 (flat-bottomed triangle), the scanline y1
-  // is included here (and second loop will be skipped, avoiding a /0
-  // error there), otherwise scanline y1 is skipped here and handled
-  // in the second loop...which also avoids a /0 error here if y0=y1
-  // (flat-topped triangle).
-  if(y1 == y2) last = y1;   // Include y1 scanline
-  else         last = y1-1; // Skip it
+    // For upper part of triangle, find scanline crossings for segments
+    // 0-1 and 0-2.  If y1=y2 (flat-bottomed triangle), the scanline y1
+    // is included here (and second loop will be skipped, avoiding a /0
+    // error there), otherwise scanline y1 is skipped here and handled
+    // in the second loop...which also avoids a /0 error here if y0=y1
+    // (flat-topped triangle).
+    if(y1 == y2) last = y1;  // Include y1 scanline
+    else last = y1-1;       // Skip it
 
-  for(y=y0; y<=last; y++) {
-    a   = x0 + sa / dy01;
-    b   = x0 + sb / dy02;
-    sa += dx01;
-    sb += dx02;
-    /* longhand:
-    a = x0 + (x1 - x0) * (y - y0) / (y1 - y0);
-    b = x0 + (x2 - x0) * (y - y0) / (y2 - y0);
-    */
-    if(a > b) _swap_int16_t(a,b);
-    draw_h_line(a, y, b+1);
-  }
+    for(y=y0; y<=last; y++) {
+        a   = x0 + sa / dy01;
+        b   = x0 + sb / dy02;
+        sa += dx01;
+        sb += dx02;
+        /* longhand:
+         *  a = x0 + (x1 - x0) * (y - y0) / (y1 - y0);
+         *  b = x0 + (x2 - x0) * (y - y0) / (y2 - y0);
+         */
+        if(a > b) _swap_int16_t(a,b);
+        draw_h_line(a, y, b+1);
+    }
 
-  // For lower part of triangle, find scanline crossings for segments
-  // 0-2 and 1-2.  This loop is skipped if y1=y2.
-  sa = dx12 * (y - y1);
-  sb = dx02 * (y - y0);
-  for(; y<=y2; y++) {
-    a   = x1 + sa / dy12;
-    b   = x0 + sb / dy02;
-    sa += dx12;
-    sb += dx02;
-    /* longhand:
-    a = x1 + (x2 - x1) * (y - y1) / (y2 - y1);
-    b = x0 + (x2 - x0) * (y - y0) / (y2 - y0);
-    */
-    if(a > b) _swap_int16_t(a,b);
-    draw_h_line(a, y, b+1);
-  }
+    // For lower part of triangle, find scanline crossings for segments
+    // 0-2 and 1-2.  This loop is skipped if y1=y2.
+    sa = dx12 * (y - y1);
+    sb = dx02 * (y - y0);
+    for(; y<=y2; y++) {
+        a   = x1 + sa / dy12;
+        b   = x0 + sb / dy02;
+        sa += dx12;
+        sb += dx02;
+        /* longhand:
+         *  a = x1 + (x2 - x1) * (y - y1) / (y2 - y1);
+         *  b = x0 + (x2 - x0) * (y - y0) / (y2 - y0);
+         */
+        if(a > b) _swap_int16_t(a,b);
+        draw_h_line(a, y, b+1);
+    }
 }
 
 //// Draw a 1-bit image (bitmap) at the specified (x,y) position from the
@@ -432,18 +432,18 @@ void GUI::fill_triangle(int16_t x0, int16_t y0,
 ////{
 ////	Gui_DrawLine(x1,  y1,  x2,y1, WHITE); //H
 ////	Gui_DrawLine(x1,  y1,  x1,y2, WHITE); //V
-////	
+////
 ////	Gui_DrawLine(x1+1,y2-1,x2,y2-1, GRAY1);  //H
 ////	Gui_DrawLine(x1,  y2,  x2,y2, GRAY2);  //H
 ////	Gui_DrawLine(x2-1,y1+1,x2-1,y2, GRAY1);  //V
 ////    Gui_DrawLine(x2  ,y1  ,x2,y2, GRAY2); //V
 ////}
 /*********************************************************************
-*
-*       GUI text
-*
-**********************************************************************
-*/
+ *
+ *       GUI text
+ *
+ **********************************************************************
+ */
 void GUI::set_font(const GUI_FONT *font)
 {
     this->current_font = (GUI_FONT *)font;
@@ -454,7 +454,7 @@ void GUI::set_text_style(uint8_t style)
     this->text_style = style;
 }
 void GUI::set_text_mode(uint8_t mode)
-{   
+{
     draw_mode = mode;
 }
 ////解码//////////////////////////////
@@ -464,7 +464,7 @@ void GUI::char_index_of_font(uint16_t code,const GUI_FONT_PROP **font_list,uint1
     uint16_t count;
     const GUI_FONT_PROP *pList;
     pList = current_font->list;
-    
+
     while(pList != NULL)
     {
         if(code >= pList->First && code <= pList->Last)
@@ -476,7 +476,7 @@ void GUI::char_index_of_font(uint16_t code,const GUI_FONT_PROP **font_list,uint1
         else
         {
             *font_list = current_font->list;
-            *index = 0; 
+            *index = 0;
             pList=pList->pNext;
         }
     }
@@ -486,47 +486,47 @@ void GUI::char_index_of_font(uint16_t code,const GUI_FONT_PROP **font_list,uint1
 
 void GUI::disp_index(const GUI_FONT_PROP *font_list,uint16_t index)
 {
-	uint32_t count, row ,col, mask;
-	uint8_t tmp;
+    uint32_t count, row,col, mask;
+    uint8_t tmp;
     const GUI_CHARINFO *pCharInfo;
     uint8_t byte_per_line;
-    if((font_list == NULL) || (index > (font_list->Last - font_list->First + 1)))return;
+    if((font_list == NULL) || (index > (font_list->Last - font_list->First + 1))) return;
     pCharInfo = &font_list->paCharInfo[index];
     byte_per_line = pCharInfo->BytesPerLine;
-    
-	for(row = 0; row < current_font->YSize; row++){   
-        for( count = 0; count < byte_per_line; count++){
+
+    for(row = 0; row < current_font->YSize; row++) {
+        for( count = 0; count < byte_per_line; count++) {
             tmp = pCharInfo->pData[byte_per_line * row + count];
-            for(mask = 0x80, col = 0; col < 8 ; mask >>= 1, col++){	
+            for(mask = 0x80, col = 0; col < 8; mask >>= 1, col++) {
                 switch(draw_mode)
                 {
-                    case LCD_DRAWMODE_NORMAL:
-                        if(mask & tmp)
-                            draw_pixel(cursor_x,cursor_y);
-                        else
-                            dev_draw_pixel(cursor_x,cursor_y,back_color);
-                        break;
-                    case LCD_DRAWMODE_XOR:
-                        if(mask & tmp)
-                            draw_pixel(cursor_x,cursor_y);
-                        break;
-                    case LCD_DRAWMODE_TRANS:
-                        if(mask & tmp)
-                            draw_pixel(cursor_x,cursor_y);
-                        break;
-                    case LCD_DRAWMODE_REV:
-                        if(mask & tmp)
-                            dev_draw_pixel(cursor_x,cursor_y,back_color);
-                        else
-                            draw_pixel(cursor_x,cursor_y);
-                        break;
+                case LCD_DRAWMODE_NORMAL:
+                    if(mask & tmp)
+                        draw_pixel(cursor_x,cursor_y);
+                    else
+                        dev_draw_pixel(cursor_x,cursor_y,back_color);
+                    break;
+                case LCD_DRAWMODE_XOR:
+                    if(mask & tmp)
+                        draw_pixel(cursor_x,cursor_y);
+                    break;
+                case LCD_DRAWMODE_TRANS:
+                    if(mask & tmp)
+                        draw_pixel(cursor_x,cursor_y);
+                    break;
+                case LCD_DRAWMODE_REV:
+                    if(mask & tmp)
+                        dev_draw_pixel(cursor_x,cursor_y,back_color);
+                    else
+                        draw_pixel(cursor_x,cursor_y);
+                    break;
 
                 }
                 cursor_x++;
             }
         }
-            cursor_x-=byte_per_line * 8;
-            cursor_y++;
+        cursor_x-=byte_per_line * 8;
+        cursor_y++;
     }
     cursor_y-=current_font->YDist;
     cursor_x+=pCharInfo->XSize;
@@ -554,13 +554,13 @@ void GUI::disp_string(const char *str)
     uint16_t ch = 0;
     while(*str)
     {
-        if(*str < 0x7e)//是字母
+        if(*str < 0x7e) //是字母
             disp_char(*str++);
-        else//汉字
-        {            
+        else //汉字
+        {
             ch = (*str++)<<8;
             ch += *str++;
-            disp_char(ch);        
+            disp_char(ch);
         }
     }
 }
@@ -572,11 +572,11 @@ void GUI::disp_string_at(const char *str,uint16_t x,uint16_t y)
 
 
 /*********************************************************************
-*
-*       GUI settings
-*
-**********************************************************************
-*/
+ *
+ *       GUI settings
+ *
+ **********************************************************************
+ */
 
 
 
@@ -595,7 +595,7 @@ void GUI::set_cursor(uint16_t x,uint16_t y)
     this->cursor_y = y;
 }
 void GUI::set_draw_mode(uint8_t mode)
-{   
+{
     draw_mode = mode;
 }
 

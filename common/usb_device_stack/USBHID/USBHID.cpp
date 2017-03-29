@@ -1,27 +1,27 @@
 /* Copyright (c) 2010-2011 mbed.org, MIT License
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-* and associated documentation files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use, copy, modify, merge, publish,
-* distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-* BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-* DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 #include "stdint.h"
 #include "USBHAL.h"
 #include "USBHID.h"
 
 
-USBHID::USBHID(uint8_t output_report_length, uint8_t input_report_length, uint16_t vendor_id, uint16_t product_id, uint16_t product_release, bool connect): USBDevice(vendor_id, product_id, product_release)
+USBHID::USBHID(uint8_t output_report_length, uint8_t input_report_length, uint16_t vendor_id, uint16_t product_id, uint16_t product_release, bool connect) : USBDevice(vendor_id, product_id, product_release)
 {
     output_length = output_report_length;
     input_length = input_report_length;
@@ -97,37 +97,37 @@ bool USBHID::USBCallback_request() {
     {
         switch (transfer->setup.bRequest)
         {
-            case GET_DESCRIPTOR:
-                switch (DESCRIPTOR_TYPE(transfer->setup.wValue))
+        case GET_DESCRIPTOR:
+            switch (DESCRIPTOR_TYPE(transfer->setup.wValue))
+            {
+            case REPORT_DESCRIPTOR:
+                if ((reportDesc() != NULL) \
+                    && (reportDescLength() != 0))
                 {
-                    case REPORT_DESCRIPTOR:
-                        if ((reportDesc() != NULL) \
-                            && (reportDescLength() != 0))
-                        {
-                            transfer->remaining = reportDescLength();
-                            transfer->ptr = reportDesc();
-                            transfer->direction = DEVICE_TO_HOST;
-                            success = true;
-                        }
-                        break;
-                    case HID_DESCRIPTOR:
-                            // Find the HID descriptor, after the configuration descriptor
-                            hidDescriptor = findDescriptor(HID_DESCRIPTOR);
-                            if (hidDescriptor != NULL)
-                            {
-                                transfer->remaining = HID_DESCRIPTOR_LENGTH;
-                                transfer->ptr = hidDescriptor;
-                                transfer->direction = DEVICE_TO_HOST;
-                                success = true;
-                            }
-                            break;
-
-                    default:
-                        break;
+                    transfer->remaining = reportDescLength();
+                    transfer->ptr = reportDesc();
+                    transfer->direction = DEVICE_TO_HOST;
+                    success = true;
                 }
                 break;
+            case HID_DESCRIPTOR:
+                // Find the HID descriptor, after the configuration descriptor
+                hidDescriptor = findDescriptor(HID_DESCRIPTOR);
+                if (hidDescriptor != NULL)
+                {
+                    transfer->remaining = HID_DESCRIPTOR_LENGTH;
+                    transfer->ptr = hidDescriptor;
+                    transfer->direction = DEVICE_TO_HOST;
+                    success = true;
+                }
+                break;
+
             default:
                 break;
+            }
+            break;
+        default:
+            break;
         }
     }
 
@@ -137,18 +137,18 @@ bool USBHID::USBCallback_request() {
     {
         switch (transfer->setup.bRequest)
         {
-             case SET_REPORT:
-                // First byte will be used for report ID
-                outputReport.data[0] = transfer->setup.wValue & 0xff;
-                outputReport.length = transfer->setup.wLength + 1;
+        case SET_REPORT:
+            // First byte will be used for report ID
+            outputReport.data[0] = transfer->setup.wValue & 0xff;
+            outputReport.length = transfer->setup.wLength + 1;
 
-                transfer->remaining = sizeof(outputReport.data) - 1;
-                transfer->ptr = &outputReport.data[1];
-                transfer->direction = HOST_TO_DEVICE;
-                transfer->notify = true;
-                success = true;
-            default:
-                break;
+            transfer->remaining = sizeof(outputReport.data) - 1;
+            transfer->ptr = &outputReport.data[1];
+            transfer->direction = HOST_TO_DEVICE;
+            transfer->notify = true;
+            success = true;
+        default:
+            break;
         }
     }
 
@@ -208,7 +208,7 @@ uint8_t * USBHID::reportDesc() {
         0x95, input_length, // report count
         0x09, 0x01,         // usage
         0x81, 0x02,         // Input (array)
-        0x95, output_length,// report count
+        0x95, output_length, // report count
         0x09, 0x02,         // usage
         0x91, 0x02,         // Output (array)
         0xC0                // end collection
@@ -220,13 +220,13 @@ uint8_t * USBHID::reportDesc() {
 
 #define DEFAULT_CONFIGURATION (1)
 #define TOTAL_DESCRIPTOR_LENGTH ((1 * CONFIGURATION_DESCRIPTOR_LENGTH) \
-                               + (1 * INTERFACE_DESCRIPTOR_LENGTH) \
-                               + (1 * HID_DESCRIPTOR_LENGTH) \
-                               + (2 * ENDPOINT_DESCRIPTOR_LENGTH))
+                                 + (1 * INTERFACE_DESCRIPTOR_LENGTH) \
+                                 + (1 * HID_DESCRIPTOR_LENGTH) \
+                                 + (2 * ENDPOINT_DESCRIPTOR_LENGTH))
 
 uint8_t * USBHID::configurationDesc() {
     static uint8_t configurationDescriptor[] = {
-        CONFIGURATION_DESCRIPTOR_LENGTH,// bLength
+        CONFIGURATION_DESCRIPTOR_LENGTH, // bLength
         CONFIGURATION_DESCRIPTOR,       // bDescriptorType
         LSB(TOTAL_DESCRIPTOR_LENGTH),   // wTotalLength (LSB)
         MSB(TOTAL_DESCRIPTOR_LENGTH),   // wTotalLength (MSB)

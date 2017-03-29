@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    oled_ssd1306.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    oled_ssd1306.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -23,17 +23,17 @@
 
 
 /**********************************************************
- *                    函 数 声 明 区                      *
- **********************************************************/
+*                    函 数 声 明 区                      *
+**********************************************************/
 OLED_SSD1306::OLED_SSD1306(Gpio *cs_pin, Gpio *res_pin, Gpio *dc_pin, Gpio *scl_pin, Gpio *sda_pin)
 {
-    this->cs_pin	= cs_pin;
-    this->res_pin	= res_pin;
-    this->dc_pin	= dc_pin;
-    this->scl_pin	= scl_pin;
-    this->sda_pin	= sda_pin;
+    this->cs_pin        = cs_pin;
+    this->res_pin       = res_pin;
+    this->dc_pin        = dc_pin;
+    this->scl_pin       = scl_pin;
+    this->sda_pin       = sda_pin;
 }
-void OLED_SSD1306::begin(void)	//初始化SSD1306
+void OLED_SSD1306::begin(void)  //初始化SSD1306
 {
     res_pin->mode(OUTPUT_PP);
     dc_pin->mode(OUTPUT_PP);
@@ -125,7 +125,7 @@ void OLED_SSD1306::clear(void)
         write_cmd(0xb0 + i);  //设置也地址(0~7)
         write_cmd (0x00);      //设置显示位置—列低地址
         write_cmd (0x10);      //设置显示位置—列高地址
-        for(n = 0; n < 128; n++)write_data(0);
+        for(n = 0; n < 128; n++) write_data(0);
     } //更新显示
 }
 
@@ -138,7 +138,7 @@ void OLED_SSD1306::clear(void)
 ***********************************************************/
 void OLED_SSD1306::display_on(void)
 {
-    write_cmd(0x8d);	//SET DCDC命令
+    write_cmd(0x8d);    //SET DCDC命令
     write_cmd(0X14);  //DCDC ON
     write_cmd(0XAF);  //DISPLAY ON
 }
@@ -152,7 +152,7 @@ void OLED_SSD1306::display_on(void)
 ***********************************************************/
 void OLED_SSD1306::display_off(void)
 {
-    write_cmd(0x8d);	//SET DCDC命令
+    write_cmd(0x8d);    //SET DCDC命令
     write_cmd(0X10);  //DCDC ON
     write_cmd(0XAE);  //DISPLAY ON
 }
@@ -295,7 +295,7 @@ void OLED_SSD1306::draw_bmp(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, 
 uint32_t OLED_SSD1306::oled_pow(uint8_t m, uint8_t n)
 {
     uint32_t result = 1;
-    while(n--)result *= m;
+    while(n--) result *= m;
     return result;
 }
 
@@ -314,36 +314,36 @@ void OLED_SSD1306::init(void)
     delay_ms(100);
     res_pin->set();
 
-    write_cmd(0xae);//--turn off oled panel
-    write_cmd(0x00);//---set low column address
-    write_cmd(0x10);//---set high column address
-    write_cmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
-    write_cmd(0x81);//--set contrast control register
+    write_cmd(0xae); //--turn off oled panel
+    write_cmd(0x00); //---set low column address
+    write_cmd(0x10); //---set high column address
+    write_cmd(0x40); //--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
+    write_cmd(0x81); //--set contrast control register
     write_cmd(0xcf); // Set SEG Output Current Brightness
-    write_cmd(0xa1);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
-    write_cmd(0xc8);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
-    write_cmd(0xa6);//--set normal display
-    write_cmd(0xa8);//--set multiplex ratio(1 to 64)
-    write_cmd(0x3f);//--1/64 duty
-    write_cmd(0xd3);//-set display offset	Shift Mapping RAM Counter (0x00~0x3F)
-    write_cmd(0x00);//-not offset
-    write_cmd(0xd5);//--set display clock divide ratio/oscillator frequency
-    write_cmd(0x80);//--set divide ratio, Set Clock as 100 Frames/Sec
-    write_cmd(0xd9);//--set pre-charge period
-    write_cmd(0xf1);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
-    write_cmd(0xda);//--set com pins hardware configuration
+    write_cmd(0xa1); //--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
+    write_cmd(0xc8); //Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
+    write_cmd(0xa6); //--set normal display
+    write_cmd(0xa8); //--set multiplex ratio(1 to 64)
+    write_cmd(0x3f); //--1/64 duty
+    write_cmd(0xd3); //-set display offset	Shift Mapping RAM Counter (0x00~0x3F)
+    write_cmd(0x00); //-not offset
+    write_cmd(0xd5); //--set display clock divide ratio/oscillator frequency
+    write_cmd(0x80); //--set divide ratio, Set Clock as 100 Frames/Sec
+    write_cmd(0xd9); //--set pre-charge period
+    write_cmd(0xf1); //Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
+    write_cmd(0xda); //--set com pins hardware configuration
     write_cmd(0x12);
-    write_cmd(0xdb);//--set vcomh
-    write_cmd(0x40);//Set VCOM Deselect Level
-    write_cmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
-    write_cmd(0x02);//
-    write_cmd(0x8d);//--set Charge Pump enable/disable
-    write_cmd(0x14);//--set(0x10) disable
-    write_cmd(0xa4);// Disable Entire Display On (0xa4/0xa5)
-    write_cmd(0xa6);// Disable Inverse Display On (0xa6/a7)
-    write_cmd(0xaf);//--turn on oled panel
+    write_cmd(0xdb); //--set vcomh
+    write_cmd(0x40); //Set VCOM Deselect Level
+    write_cmd(0x20); //-Set Page Addressing Mode (0x00/0x01/0x02)
+    write_cmd(0x02); //
+    write_cmd(0x8d); //--set Charge Pump enable/disable
+    write_cmd(0x14); //--set(0x10) disable
+    write_cmd(0xa4); // Disable Entire Display On (0xa4/0xa5)
+    write_cmd(0xa6); // Disable Inverse Display On (0xa6/a7)
+    write_cmd(0xaf); //--turn on oled panel
 
-    write_cmd(0xaf);	/*display ON*/
+    write_cmd(0xaf);    /*display ON*/
     clear();
     set_xy(0, 0);
 }

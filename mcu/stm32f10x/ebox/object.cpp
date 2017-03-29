@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    object.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    object.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -150,14 +150,14 @@ Uart uart4(UART4, &PC10, &PC11);
 Uart uart5(UART5, &PC12, &PD2);
 
 //spi
-Spi     spi1(SPI1, &PA5, &PA6, &PA7);
-Spi     spi2(SPI2, &PB13, &PB14, &PB15);
-Spi     spi3(SPI3, &PB3, &PB4, &PB5);
-SoftSpi	sspi1(&PA5, &PA6, &PA7);
+Spi spi1(SPI1, &PA5, &PA6, &PA7);
+Spi spi2(SPI2, &PB13, &PB14, &PB15);
+Spi spi3(SPI3, &PB3, &PB4, &PB5);
+SoftSpi sspi1(&PA5, &PA6, &PA7);
 
 //i2c
-I2c     i2c1(I2C1, &PB6, &PB7);
-I2c     i2c2(I2C2, &PB10, &PB11);
+I2c i2c1(I2C1, &PB6, &PB7);
+I2c i2c2(I2C2, &PB10, &PB11);
 SoftI2c si2c(&PA4, &PA5);
 SoftI2c si2c1(&PB6, &PB7);
 SoftI2c si2c2(&PB10, &PB11);

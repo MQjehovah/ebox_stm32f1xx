@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -69,7 +69,7 @@ typedef enum
 static volatile eMBSndState eSndState;
 static volatile eMBRcvState eRcvState;
 
-volatile UCHAR  ucRTUBuf[MB_SER_PDU_SIZE_MAX];
+volatile UCHAR ucRTUBuf[MB_SER_PDU_SIZE_MAX];
 
 //发送缓冲队列
 static volatile UCHAR *pucSndBufferCur;
@@ -82,8 +82,8 @@ static volatile USHORT usRcvBufferPos;
 eMBErrorCode
 eMBRTUInit( UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity )
 {
-    eMBErrorCode    eStatus = MB_ENOERR;
-    ULONG           usTimerT35_50us;
+    eMBErrorCode eStatus = MB_ENOERR;
+    ULONG usTimerT35_50us;
 
     ( void )ucSlaveAddress;
     ENTER_CRITICAL_SECTION();
@@ -116,7 +116,7 @@ eMBRTUInit( UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity ePar
              */
             usTimerT35_50us = ( 7UL * 220000UL ) / ( 2UL * ulBaudRate );
         }
-        
+
         //初始化定时器
         if( xMBPortTimersInit( ( USHORT ) usTimerT35_50us ) != TRUE )
         {
@@ -160,8 +160,8 @@ eMBRTUStop( void )
 eMBErrorCode
 eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
 {
-    BOOL            xFrameReceived = FALSE;
-    eMBErrorCode    eStatus = MB_ENOERR;
+    BOOL xFrameReceived = FALSE;
+    eMBErrorCode eStatus = MB_ENOERR;
 
     ENTER_CRITICAL_SECTION();
     assert( usRcvBufferPos < MB_SER_PDU_SIZE_MAX );
@@ -181,7 +181,7 @@ eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
         *pusLength = ( USHORT )( usRcvBufferPos - MB_SER_PDU_PDU_OFF - MB_SER_PDU_SIZE_CRC );
 
         /* Return the start of the Modbus PDU to the caller. */
-        *pucFrame = ( UCHAR * ) & ucRTUBuf[MB_SER_PDU_PDU_OFF];
+        *pucFrame = ( UCHAR * ) &ucRTUBuf[MB_SER_PDU_PDU_OFF];
         xFrameReceived = TRUE;
     }
     else
@@ -196,8 +196,8 @@ eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
 eMBErrorCode
 eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
 {
-    eMBErrorCode    eStatus = MB_ENOERR;
-    USHORT          usCRC16;
+    eMBErrorCode eStatus = MB_ENOERR;
+    USHORT usCRC16;
 
     ENTER_CRITICAL_SECTION(  );
 
@@ -223,12 +223,12 @@ eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
         /* Activate the transmitter. */
         //发送状态转换，在中断中不断发送
         eSndState = STATE_TX_XMIT;
-        
+
         //启动第一次发送，这样才可以进入发送完成中断
         xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur );
         pucSndBufferCur++;  /* next byte in sendbuffer. */
         usSndBufferCount--;
-        
+
         //使能发送状态，禁止接收状态
         vMBPortSerialEnable( FALSE, TRUE );
     }
@@ -243,35 +243,35 @@ eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
 BOOL
 xMBRTUReceiveFSM( void )
 {
-    BOOL            xTaskNeedSwitch = FALSE;
-    UCHAR           ucByte;
+    BOOL xTaskNeedSwitch = FALSE;
+    UCHAR ucByte;
 
     assert( eSndState == STATE_TX_IDLE );
 
     //读串口接收数据，实际上该函数在串口接收中断中被执行
-    ( void )xMBPortSerialGetByte( ( CHAR * ) & ucByte );
-    
+    ( void )xMBPortSerialGetByte( ( CHAR * ) &ucByte );
+
     //根据不同的状态转移
     switch ( eRcvState )
     {
-        /* If we have received a character in the init state we have to
-         * wait until the frame is finished.
-         */
+    /* If we have received a character in the init state we have to
+     * wait until the frame is finished.
+     */
     case STATE_RX_INIT:
         vMBPortTimersEnable();
         break;
 
-        /* In the error state we wait until all characters in the
-         * damaged frame are transmitted.
-         */
+    /* In the error state we wait until all characters in the
+     * damaged frame are transmitted.
+     */
     case STATE_RX_ERROR:
         vMBPortTimersEnable();
         break;
 
-        /* In the idle state we wait for a new character. If a character
-         * is received the t1.5 and t3.5 timers are started and the
-         * receiver is in the state STATE_RX_RECEIVCE.
-         */
+    /* In the idle state we wait for a new character. If a character
+     * is received the t1.5 and t3.5 timers are started and the
+     * receiver is in the state STATE_RX_RECEIVCE.
+     */
     case STATE_RX_IDLE:
         //接收到一个数据，保存串口数据，重启定时器
         usRcvBufferPos = 0;
@@ -284,11 +284,11 @@ xMBRTUReceiveFSM( void )
         vMBPortTimersEnable();
         break;
 
-        /* We are currently receiving a frame. Reset the timer after
-         * every character received. If more than the maximum possible
-         * number of bytes in a modbus frame is received the frame is
-         * ignored.
-         */
+    /* We are currently receiving a frame. Reset the timer after
+     * every character received. If more than the maximum possible
+     * number of bytes in a modbus frame is received the frame is
+     * ignored.
+     */
     case STATE_RX_RCV:
         if( usRcvBufferPos < MB_SER_PDU_SIZE_MAX )
         {
@@ -308,14 +308,14 @@ xMBRTUReceiveFSM( void )
 BOOL
 xMBRTUTransmitFSM( void )
 {
-    BOOL            xNeedPoll = FALSE;
+    BOOL xNeedPoll = FALSE;
 
     assert( eRcvState == STATE_RX_IDLE );
 
     switch ( eSndState )
     {
-        /* We should not get a transmitter event if the transmitter is in
-         * idle state.  */
+    /* We should not get a transmitter event if the transmitter is in
+     * idle state.  */
     case STATE_TX_IDLE:
         /* enable receiver/disable transmitter. */
         //发送处于空闲状态，使能接收，禁止发送
@@ -352,34 +352,34 @@ xMBRTUTransmitFSM( void )
 BOOL
 xMBRTUTimerT35Expired( void )
 {
-    BOOL            xNeedPoll = FALSE;
+    BOOL xNeedPoll = FALSE;
 
     switch ( eRcvState )
     {
-        /* Timer t35 expired. Startup phase is finished. */
-        //这是一个启动状态，运行到这里说明启动状态完成。
+    /* Timer t35 expired. Startup phase is finished. */
+    //这是一个启动状态，运行到这里说明启动状态完成。
     case STATE_RX_INIT:
         xNeedPoll = xMBPortEventPost( EV_READY );
         break;
 
-        /* A frame was received and t35 expired. Notify the listener that
-         * a new frame was received. */
-        //当串口处于数据接收状态，此时若进入定时器超时中断，说明接收到完整的modbus数据
+    /* A frame was received and t35 expired. Notify the listener that
+     * a new frame was received. */
+    //当串口处于数据接收状态，此时若进入定时器超时中断，说明接收到完整的modbus数据
     case STATE_RX_RCV:
         //发送事件，接收到完整的modbus数据
         xNeedPoll = xMBPortEventPost( EV_FRAME_RECEIVED );
         break;
 
-        /* An error occured while receiving the frame. */
+    /* An error occured while receiving the frame. */
     case STATE_RX_ERROR:
         break;
 
-        /* Function called in an illegal state. */
+    /* Function called in an illegal state. */
     default:
         assert( ( eRcvState == STATE_RX_INIT ) ||
                 ( eRcvState == STATE_RX_RCV ) || ( eRcvState == STATE_RX_ERROR ) );
     }
-    
+
     //禁止定时器
     vMBPortTimersDisable(  );
     //串口接收状态 变为空闲状态。

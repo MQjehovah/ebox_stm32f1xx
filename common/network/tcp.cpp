@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    tcp.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    tcp.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -23,9 +23,9 @@
 
 #define TCP_DEBUG 1
 #if TCP_DEBUG
-#define TCP_DBG(...) DBG(__VA_ARGS__)
+ #define TCP_DBG(...) DBG(__VA_ARGS__)
 #else
-#define  TCP_DBG(...)
+ #define  TCP_DBG(...)
 #endif
 
 int TCPCLIENT::begin(SOCKET ps, uint16_t port)
@@ -50,11 +50,11 @@ bool TCPCLIENT::connect(uint8_t *IP, uint16_t Port)
     while(--i)
     {
         state = status();
-        switch(state)/*获取socket0的状态*/
+        switch(state) /*获取socket0的状态*/
         {
         case SOCK_INIT:
             TCP_DBG("sending connect cmd...\r\n", localPort, s);
-            ret = _connect(s, remoteIP , remotePort); /*在TCP模式下向服务器发送连接请求*/
+            ret = _connect(s, remoteIP, remotePort);  /*在TCP模式下向服务器发送连接请求*/
             if(ret == 1)
             {
                 TCP_DBG("send connect cmd ok !\r\n");
@@ -115,7 +115,7 @@ void TCPCLIENT::stop()
     uint32_t start = millis();
     _disconnect(s);
     // wait a second for the connection to close
-    while (status() != SOCK_CLOSED && millis() - start < 2000);
+    while (status() != SOCK_CLOSED && millis() - start < 2000) ;
     if(status() == SOCK_CLOSED)
         _close(s);
 }
@@ -128,7 +128,7 @@ uint16_t TCPCLIENT::recv(uint8_t *buf)
     uint16_t len = 0;
     if(connected())
     {
-        len = available();/*len为已接收数据的大小*/
+        len = available(); /*len为已接收数据的大小*/
         if(len > 0)
         {
             _recv(s, buf, len); /*W5500接收来自Sever的数据*/
@@ -145,7 +145,7 @@ uint16_t TCPCLIENT::recv(uint8_t *buf, uint16_t len)
     uint16_t llen;
     if(connected())
     {
-        llen = available();/*llen为已接收数据的大小*/
+        llen = available(); /*llen为已接收数据的大小*/
         if(llen > 0)
         {
             if(len >= llen)
@@ -186,11 +186,11 @@ int TCPSERVER::begin(SOCKET ps, uint16_t port)
 
     while(--i)
     {
-        tmp = socket_status(s);/*获取socket的状态*/
+        tmp = socket_status(s); /*获取socket的状态*/
         switch(tmp)
         {
-        case SOCK_INIT:/*socket初始化完成*/
-            ret = _listen(s);/*在TCP模式下向服务器发送连接请求*/
+        case SOCK_INIT: /*socket初始化完成*/
+            ret = _listen(s); /*在TCP模式下向服务器发送连接请求*/
             if(ret == 1)
             {
                 TCP_DBG("\r\nlisten on port:%d,socket:%d", localPort, s);
@@ -200,12 +200,12 @@ int TCPSERVER::begin(SOCKET ps, uint16_t port)
             else
                 DBG("\r\nerr code:%d", ret);
             break;
-        case SOCK_CLOSED:/*socket关闭*/
+        case SOCK_CLOSED: /*socket关闭*/
             ret = _socket(s, Sn_MR_TCP, localPort, Sn_MR_ND); /*打开socket的一个端口*/
             if(ret == 0)
                 TCP_DBG("\r\nopen port:%d success !", localPort);
             break;
-        default :
+        default:
             TCP_DBG("\r\nerr code:%d", tmp);
             break;
         }
@@ -218,7 +218,7 @@ uint16_t TCPSERVER::recv(uint8_t *buf)
 
     switch(socket_status(s)) /*获取socket0的状态*/
     {
-    case SOCK_ESTABLISHED:/*socket连接建立*/
+    case SOCK_ESTABLISHED: /*socket连接建立*/
         if(client_connecte_event(s))
         {
             get_remote_ip(s, remoteIP);
@@ -226,7 +226,7 @@ uint16_t TCPSERVER::recv(uint8_t *buf)
             TCP_DBG("\r\none tcp client connected !");
             TCP_DBG("\r\nclient info:%d.%d.%d.%d:%d !", remoteIP[0], remoteIP[1], remoteIP[2], remoteIP[3], remotePort);
         }
-        len = recv_available(s);/*len为已接收数据的大小*/
+        len = recv_available(s); /*len为已接收数据的大小*/
         if(len > 0)
         {
             len = _recv(s, buf, len); /*W5200接收来自Sever的数据*/

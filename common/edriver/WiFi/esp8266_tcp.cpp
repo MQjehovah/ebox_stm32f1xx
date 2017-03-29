@@ -20,39 +20,39 @@
 
 
 #if 1
-#define TCP_DEBUG(...) uart1.printf(__VA_ARGS__)
+ #define TCP_DEBUG(...) uart1.printf(__VA_ARGS__)
 #else
-#define  TCP_DEBUG(...)
+ #define  TCP_DEBUG(...)
 #endif
 
 
 WIFI_TCP::WIFI_TCP(ESP8266 *wifi)
 {
     this->wifi = wifi;
-    
+
 }
 
 /**
-	* begin connect to AP .
-	*
-	* @param SSID - the SSID of AP.
-	* @param PASSWORD - the PASSWORD of AP.
-	* @retval true - success.
-	* @retval false - failure.
-*/
+ * begin connect to AP .
+ *
+ * @param SSID - the SSID of AP.
+ * @param PASSWORD - the PASSWORD of AP.
+ * @retval true - success.
+ * @retval false - failure.
+ */
 bool WIFI_TCP::begin()
 {
     return true;
 }
 /**
-	* connect to remote server or client .
-	*
-	* @param remote_ip - the ip of remote server or client .
-	* @param remote_port - the port of remote server or client .
-	* @param local_port - the port of local server or client .
-	* @retval true - success.
-	* @retval false - failure.
-*/
+ * connect to remote server or client .
+ *
+ * @param remote_ip - the ip of remote server or client .
+ * @param remote_port - the port of remote server or client .
+ * @param local_port - the port of local server or client .
+ * @retval true - success.
+ * @retval false - failure.
+ */
 bool WIFI_TCP::connect(char *remote_ip, uint32_t remote_port, uint32_t local_port)
 {
     if(local_port >= 7200) local_port = 7200;
@@ -73,23 +73,23 @@ bool WIFI_TCP::disconnect()
 }
 
 /**
-	* tcp send data.
-	*
-	* @param buf - buffer to send .
-	* @param len - length to send .
-	* @retval >0 - send length.
-	* @retval 0 - failure.
-*/
+ * tcp send data.
+ *
+ * @param buf - buffer to send .
+ * @param len - length to send .
+ * @retval >0 - send length.
+ * @retval 0 - failure.
+ */
 
 uint16_t WIFI_TCP::send(uint8_t *buf, uint16_t len)
 {
     bool ret;
     ret = wifi->send(buf, len);
     if(ret)
-        ;//uart1.printf("send ok!\r\n");
+        ;  //uart1.printf("send ok!\r\n");
     else
     {
-        ;//uart1.printf("send fail!\r\n");
+        ; //uart1.printf("send fail!\r\n");
         len = 0;
     }
     return len;
@@ -99,12 +99,12 @@ int WIFI_TCP::available()
     return wifi->available();
 }
 /**
-	* tcp read data.
-	*
-	* @param buf - buffer to read .
-	* @retval >0 - read length.
-	* @retval 0 - failure.
-*/
+ * tcp read data.
+ *
+ * @param buf - buffer to read .
+ * @retval >0 - read length.
+ * @retval 0 - failure.
+ */
 
 uint16_t WIFI_TCP::read(uint8_t *buf)
 {
@@ -114,20 +114,20 @@ uint16_t WIFI_TCP::read(uint8_t *buf)
     return len;
 }
 /**
-	* read buffer until match ch
-    * @note must Coordinate available() use;!!!!!!!!!!!!
-	* @param buf - buffer to read .
-	* @retval >0 - read length.
-	* @retval 0 - failure.
-*/
+ * read buffer until match ch
+ * @note must Coordinate available() use;!!!!!!!!!!!!
+ * @param buf - buffer to read .
+ * @retval >0 - read length.
+ * @retval 0 - failure.
+ */
 uint16_t WIFI_TCP::read_until(uint8_t *buf,char ch)
 {
     int len = 0;
     char c;
-    while(1){
-        if(available()){
+    while(1) {
+        if(available()) {
             buf[len] = wifi->read_one();
-            if(buf[len] == ch){
+            if(buf[len] == ch) {
                 len++;
                 break;
             }
@@ -138,15 +138,15 @@ uint16_t WIFI_TCP::read_until(uint8_t *buf,char ch)
 }
 
 /**
-	* connect to remote server or client .
-	*
-	* @param mux_id - the identifier of this TCP(available value: 0 - 4).
-	* @param remote_ip - the ip of remote server or client .
-	* @param remote_port - the port of remote server or client .
-	* @param local_port - the port of local server or client .
-	* @retval true - success.
-	* @retval false - failure.
-*/
+ * connect to remote server or client .
+ *
+ * @param mux_id - the identifier of this TCP(available value: 0 - 4).
+ * @param remote_ip - the ip of remote server or client .
+ * @param remote_port - the port of remote server or client .
+ * @param local_port - the port of local server or client .
+ * @retval true - success.
+ * @retval false - failure.
+ */
 
 bool WIFI_TCP::connect(uint8_t mux_id, char *remote_ip, uint32_t remote_port, uint32_t local_port)
 {
@@ -154,23 +154,23 @@ bool WIFI_TCP::connect(uint8_t mux_id, char *remote_ip, uint32_t remote_port, ui
 }
 
 /**
-	* tcp send data.
-	*
-	* @param mux_id - the identifier of this TCP(available value: 0 - 4).
-	* @param buf - buffer to send .
-	* @param len - length to send .
-	* @retval >0 - send length.
-	* @retval 0 - failure.
-*/
+ * tcp send data.
+ *
+ * @param mux_id - the identifier of this TCP(available value: 0 - 4).
+ * @param buf - buffer to send .
+ * @param len - length to send .
+ * @retval >0 - send length.
+ * @retval 0 - failure.
+ */
 uint16_t WIFI_TCP::send(uint8_t mux_id, uint8_t *buf, uint16_t len)
 {
     bool ret;
     ret = wifi->send(mux_id, buf, len);
     if(ret)
-        ;// uart1.printf("send ok!\r\n");
+        ;  // uart1.printf("send ok!\r\n");
     else
     {
-        ;//uart1.printf("send fail!\r\n");
+        ; //uart1.printf("send fail!\r\n");
         len = 0;
     }
     return len;
@@ -178,13 +178,13 @@ uint16_t WIFI_TCP::send(uint8_t mux_id, uint8_t *buf, uint16_t len)
 
 
 /**
-	* tcp read data.
-	*
-	* @param mux_id - the identifier of this TCP(available value: 0 - 4).
-	* @param buf - buffer to read .
-	* @retval >0 - read length.
-	* @retval 0 - failure.
-*/
+ * tcp read data.
+ *
+ * @param mux_id - the identifier of this TCP(available value: 0 - 4).
+ * @param buf - buffer to read .
+ * @retval >0 - read length.
+ * @retval 0 - failure.
+ */
 uint16_t WIFI_TCP::read(uint8_t *mux_id, uint8_t *buf)
 {
     uint16_t len = 0;
@@ -194,10 +194,10 @@ uint16_t WIFI_TCP::read(uint8_t *mux_id, uint8_t *buf)
 
 
 /**
-	* tcp read one byte from ringbuffer.
-	* @retval data
-	* @note before read  call wifi.available() to check first.
-*/
+ * tcp read one byte from ringbuffer.
+ * @retval data
+ * @note before read  call wifi.available() to check first.
+ */
 uint8_t WIFI_TCP::read_onebyte(void)
 {
     return 0;

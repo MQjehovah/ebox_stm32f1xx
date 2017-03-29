@@ -2,12 +2,12 @@
 #include "heap.h"
 void *ebox_malloc(size_t sz)
 {
-   return memMalloc(sz,SRAM_IN - 1);       
+    return memMalloc(sz,SRAM_IN - 1);
 }
 void ebox_free(void *ptr)
 {
-   memFree(ptr,SRAM_IN - 1);
-   ptr = NULL;
+    memFree(ptr,SRAM_IN - 1);
+    ptr = NULL;
 }
 size_t ebox_get_free()
 {

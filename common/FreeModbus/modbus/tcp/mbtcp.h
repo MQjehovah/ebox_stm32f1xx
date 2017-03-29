@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -39,13 +39,13 @@ PR_BEGIN_EXTERN_C
 #define MB_TCP_PSEUDO_ADDRESS   255
 
 /* ----------------------- Function prototypes ------------------------------*/
-    eMBErrorCode eMBTCPDoInit( USHORT ucTCPPort );
-void            eMBTCPStart( void );
-void            eMBTCPStop( void );
-eMBErrorCode    eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame,
-                               USHORT * pusLength );
-eMBErrorCode    eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame,
-                            USHORT usLength );
+eMBErrorCode        eMBTCPDoInit( USHORT ucTCPPort );
+void                eMBTCPStart( void );
+void                eMBTCPStop( void );
+eMBErrorCode        eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame,
+                                   USHORT * pusLength );
+eMBErrorCode        eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame,
+                                USHORT usLength );
 
 #ifdef __cplusplus
 PR_END_EXTERN_C

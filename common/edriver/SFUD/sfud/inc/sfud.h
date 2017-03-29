@@ -41,7 +41,7 @@ extern "C" {
  *
  * @return result
  */
-sfud_err sfud_init(void);
+sfud_err        sfud_init(void);
 
 /**
  * get flash device by its index which in the flash information table
@@ -50,21 +50,21 @@ sfud_err sfud_init(void);
  *
  * @return flash device
  */
-sfud_flash *sfud_get_device(size_t index);
+sfud_flash *      sfud_get_device(size_t index);
 
 /**
  * get flash device total number on flash device information table  @see flash_table
  *
  * @return flash device total number
  */
-size_t sfud_get_device_num(void);
+size_t        sfud_get_device_num(void);
 
 /**
  * get flash device information table  @see flash_table
  *
  * @return flash device table pointer
  */
-const sfud_flash *sfud_get_device_table(void);
+const sfud_flash *      sfud_get_device_table(void);
 
 /**
  * read flash data
@@ -76,7 +76,7 @@ const sfud_flash *sfud_get_device_table(void);
  *
  * @return result
  */
-sfud_err sfud_read(const sfud_flash *flash, uint32_t addr, size_t size, uint8_t *data);
+sfud_err        sfud_read(const sfud_flash *flash, uint32_t addr, size_t size, uint8_t *data);
 
 /**
  * erase flash data
@@ -89,7 +89,7 @@ sfud_err sfud_read(const sfud_flash *flash, uint32_t addr, size_t size, uint8_t 
  *
  * @return result
  */
-sfud_err sfud_erase(const sfud_flash *flash, uint32_t addr, size_t size);
+sfud_err        sfud_erase(const sfud_flash *flash, uint32_t addr, size_t size);
 
 /**
  * write flash data (no erase operate)
@@ -101,7 +101,7 @@ sfud_err sfud_erase(const sfud_flash *flash, uint32_t addr, size_t size);
  *
  * @return result
  */
-sfud_err sfud_write(const sfud_flash *flash, uint32_t addr, size_t size, const uint8_t *data);
+sfud_err        sfud_write(const sfud_flash *flash, uint32_t addr, size_t size, const uint8_t *data);
 
 /**
  * erase and write flash data
@@ -113,7 +113,7 @@ sfud_err sfud_write(const sfud_flash *flash, uint32_t addr, size_t size, const u
  *
  * @return result
  */
-sfud_err sfud_erase_write(const sfud_flash *flash, uint32_t addr, size_t size, const uint8_t *data);
+sfud_err        sfud_erase_write(const sfud_flash *flash, uint32_t addr, size_t size, const uint8_t *data);
 
 /**
  * erase all flash data
@@ -122,7 +122,7 @@ sfud_err sfud_erase_write(const sfud_flash *flash, uint32_t addr, size_t size, c
  *
  * @return result
  */
-sfud_err sfud_chip_erase(const sfud_flash *flash);
+sfud_err        sfud_chip_erase(const sfud_flash *flash);
 
 /**
  * read flash register status
@@ -132,7 +132,7 @@ sfud_err sfud_chip_erase(const sfud_flash *flash);
  *
  * @return result
  */
-sfud_err sfud_read_status(const sfud_flash *flash, uint8_t *status);
+sfud_err        sfud_read_status(const sfud_flash *flash, uint8_t *status);
 
 /**
  * write status register
@@ -143,7 +143,7 @@ sfud_err sfud_read_status(const sfud_flash *flash, uint8_t *status);
  *
  * @return result
  */
-sfud_err sfud_write_status(const sfud_flash *flash, bool is_volatile, uint8_t status);
+sfud_err        sfud_write_status(const sfud_flash *flash, bool is_volatile, uint8_t status);
 
 #ifdef __cplusplus
 }

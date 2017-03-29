@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -44,23 +44,23 @@
 
 #include "mbport.h"
 #if MB_RTU_ENABLED == 1
-#include "mbrtu.h"
+ #include "mbrtu.h"
 #endif
 #if MB_ASCII_ENABLED == 1
-#include "mbascii.h"
+ #include "mbascii.h"
 #endif
 #if MB_TCP_ENABLED == 1
-#include "mbtcp.h"
+ #include "mbtcp.h"
 #endif
 
 #ifndef MB_PORT_HAS_CLOSE
-#define MB_PORT_HAS_CLOSE 0
+ #define MB_PORT_HAS_CLOSE 0
 #endif
 
 /* ----------------------- Static variables ---------------------------------*/
 //从机地址
-static UCHAR    ucMBAddress;
-static eMBMode  eMBCurrentMode;
+static UCHAR ucMBAddress;
+static eMBMode eMBCurrentMode;
 
 static enum
 {
@@ -72,22 +72,22 @@ static enum
 /* Functions pointer which are initialized in eMBInit( ). Depending on the
  * mode (RTU or ASCII) the are set to the correct implementations.
  */
-static peMBFrameSend      peMBFrameSendCur;
-static pvMBFrameStart     pvMBFrameStartCur;
-static pvMBFrameStop      pvMBFrameStopCur;
-static peMBFrameReceive   peMBFrameReceiveCur;
-static pvMBFrameClose     pvMBFrameCloseCur;
+static peMBFrameSend peMBFrameSendCur;
+static pvMBFrameStart pvMBFrameStartCur;
+static pvMBFrameStop pvMBFrameStopCur;
+static peMBFrameReceive peMBFrameReceiveCur;
+static pvMBFrameClose pvMBFrameCloseCur;
 
 /* Callback functions required by the porting layer. They are called when
  * an external event has happend which includes a timeout or the reception
  * or transmission of a character.
  */
-BOOL( *pxMBFrameCBByteReceived ) ( void );
-BOOL( *pxMBFrameCBTransmitterEmpty ) ( void );
-BOOL( *pxMBPortCBTimerExpired ) ( void );
+BOOL ( *pxMBFrameCBByteReceived )( void );
+BOOL ( *pxMBFrameCBTransmitterEmpty )( void );
+BOOL ( *pxMBPortCBTimerExpired )( void );
 
-BOOL( *pxMBFrameCBReceiveFSMCur ) ( void );
-BOOL( *pxMBFrameCBTransmitFSMCur ) ( void );
+BOOL ( *pxMBFrameCBReceiveFSMCur )( void );
+BOOL ( *pxMBFrameCBTransmitFSMCur )( void );
 
 /* An array of Modbus functions handlers which associates Modbus function
  * codes with implementing functions.
@@ -148,7 +148,7 @@ eMBErrorCode
 eMBInit( eMBMode eMode, UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity )
 {
     //错误状态初始值
-    eMBErrorCode    eStatus = MB_ENOERR;
+    eMBErrorCode eStatus = MB_ENOERR;
 
     //验证从机地址
     if( ( ucSlaveAddress == MB_ADDRESS_BROADCAST ) ||
@@ -221,7 +221,7 @@ eMBInit( eMBMode eMode, UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eM
 eMBErrorCode
 eMBTCPInit( USHORT ucTCPPort )
 {
-    eMBErrorCode    eStatus = MB_ENOERR;
+    eMBErrorCode eStatus = MB_ENOERR;
 
     if( ( eStatus = eMBTCPDoInit( ucTCPPort ) ) != MB_ENOERR )
     {
@@ -250,8 +250,8 @@ eMBTCPInit( USHORT ucTCPPort )
 eMBErrorCode
 eMBRegisterCB( UCHAR ucFunctionCode, pxMBFunctionHandler pxHandler )
 {
-    int             i;
-    eMBErrorCode    eStatus;
+    int i;
+    eMBErrorCode eStatus;
 
     if( ( 0 < ucFunctionCode ) && ( ucFunctionCode <= 127 ) )
     {
@@ -297,7 +297,7 @@ eMBRegisterCB( UCHAR ucFunctionCode, pxMBFunctionHandler pxHandler )
 eMBErrorCode
 eMBClose( void )
 {
-    eMBErrorCode    eStatus = MB_ENOERR;
+    eMBErrorCode eStatus = MB_ENOERR;
 
     if( eMBState == STATE_DISABLED )
     {
@@ -316,7 +316,7 @@ eMBClose( void )
 eMBErrorCode
 eMBEnable( void )
 {
-    eMBErrorCode    eStatus = MB_ENOERR;
+    eMBErrorCode eStatus = MB_ENOERR;
 
     if( eMBState == STATE_DISABLED )
     {
@@ -334,7 +334,7 @@ eMBEnable( void )
 eMBErrorCode
 eMBDisable( void )
 {
-    eMBErrorCode    eStatus;
+    eMBErrorCode eStatus;
 
     if( eMBState == STATE_ENABLED )
     {
@@ -357,14 +357,14 @@ eMBErrorCode
 eMBPoll( void )
 {
     static UCHAR   *ucMBFrame;
-    static UCHAR    ucRcvAddress;
-    static UCHAR    ucFunctionCode;
-    static USHORT   usLength;
+    static UCHAR ucRcvAddress;
+    static UCHAR ucFunctionCode;
+    static USHORT usLength;
     static eMBException eException;
 
-    int             i;
-    eMBErrorCode    eStatus = MB_ENOERR;
-    eMBEventType    eEvent;
+    int i;
+    eMBErrorCode eStatus = MB_ENOERR;
+    eMBEventType eEvent;
 
     /* Check if the protocol stack is ready. */
     if( eMBState != STATE_ENABLED )
@@ -374,7 +374,7 @@ eMBPoll( void )
 
     /* Check if there is a event available. If not return control to caller.
      * Otherwise we will handle the event. */
-    
+
     //查询事件
     if( xMBPortEventGet( &eEvent ) == TRUE )
     {
@@ -430,7 +430,7 @@ eMBPoll( void )
                 if( ( eMBCurrentMode == MB_ASCII ) && MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS )
                 {
                     vMBPortTimersDelay( MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS );
-                }                
+                }
                 eStatus = peMBFrameSendCur( ucMBAddress, ucMBFrame, usLength );
             }
             break;

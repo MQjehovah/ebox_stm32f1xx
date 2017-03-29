@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    common.h
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    common.h
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 /**
  * Modification History:
  * -shentq                  -version 1.2(2016/08/17)
@@ -30,7 +30,7 @@
 #define __COMMON_H
 
 
-#include "ebox_core.h" 
+#include "ebox_core.h"
 #include "ebox_gpio.h"
 #include "ebox_analog.h"
 #include "ebox_mem.h"
@@ -62,23 +62,23 @@
 
 typedef struct
 {
-	uint8_t year;
-	uint8_t month;
-	uint8_t date;
-	uint8_t hour;
-	uint8_t min;
-	uint8_t sec;
-	uint8_t week;
+    uint8_t year;
+    uint8_t month;
+    uint8_t date;
+    uint8_t hour;
+    uint8_t min;
+    uint8_t sec;
+    uint8_t week;
 }date_time_t;
 
 
-void        random_seed(uint16_t seed);
-uint16_t    random();
-uint16_t    random(uint16_t max);
-uint16_t    random(uint16_t min, uint16_t max);
+void            random_seed(uint16_t seed);
+uint16_t        random();
+uint16_t        random(uint16_t max);
+uint16_t        random(uint16_t min, uint16_t max);
 
-void        shift_out(Gpio *data_pin, Gpio *clock_pin, uint8_t bit_order, uint8_t val);
-uint8_t     shift_in(Gpio *data_pin, Gpio *clock_pin, uint8_t bit_order);
+void            shift_out(Gpio *data_pin, Gpio *clock_pin, uint8_t bit_order, uint8_t val);
+uint8_t         shift_in(Gpio *data_pin, Gpio *clock_pin, uint8_t bit_order);
 
 
 #endif

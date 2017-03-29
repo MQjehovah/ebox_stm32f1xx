@@ -38,12 +38,12 @@ void IR_ENCODER::send(uint32_t data)
     delay_ms(4);
     delay_us(500);
 
-    send_byte((uint8_t)((data >> 24) & 0xff));	 // addr
-    send_byte((uint8_t)((data >> 16) & 0xff));	 // addr/
-    send_byte((uint8_t)((data >> 8) & 0xff));	 // cmd
-    send_byte((uint8_t)(data & 0xff));	 //cmd/
+    send_byte((uint8_t)((data >> 24) & 0xff));   // addr
+    send_byte((uint8_t)((data >> 16) & 0xff));   // addr/
+    send_byte((uint8_t)((data >> 8) & 0xff));    // cmd
+    send_byte((uint8_t)(data & 0xff));   //cmd/
 
-    p_pwm->set_duty(325);//end of last bit
+    p_pwm->set_duty(325); //end of last bit
     delay_us(560);
     p_pwm->set_duty(0);
 }

@@ -1,4 +1,4 @@
- /*
+/*
  * Dht11.cpp
  *
  * Version 0.6
@@ -29,7 +29,7 @@
  *       * Changed the error codes to an enumeration
  *       * Update the temp/humidity only if the checksum is correct
  *       * Added more comments
- *    - Link                            			  - Version 0.6 (2016/01/03)
+ *    - Link                                          - Version 0.6 (2016/01/03)
  *       * port from ardunio to eBox
  */
 #include "Dht11.h"
@@ -100,8 +100,8 @@ enum
 
 Dht11::ReadStatus Dht11::read()
 {
-    uint8_t    buffer[RESPONSE_SIZE] = { 0 };
-    uint8_t    bitIndex              = BYTE_MS_BIT;
+    uint8_t buffer[RESPONSE_SIZE] = { 0 };
+    uint8_t bitIndex              = BYTE_MS_BIT;
     ReadStatus status                = OK;
 
     // Request sample

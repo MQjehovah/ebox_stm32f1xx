@@ -6,53 +6,53 @@ class NRF24L01
 {
 public:
     NRF24L01(Gpio *irq, Gpio *ce, Gpio *cs, Spi *spi);
-    void    begin(uint8_t dev_num);
-    int     self_check();
+    void        begin(uint8_t dev_num);
+    int         self_check();
 
-    void    set_tx_mode();
-    void    set_rx_mode();
+    void        set_tx_mode();
+    void        set_rx_mode();
 
-    int     send(uint8_t *buf, uint8_t length);
-    int     recv(uint8_t *buf);
-    int     status(void);
-    int     read_test(void);
+    int         send(uint8_t *buf, uint8_t length);
+    int         recv(uint8_t *buf);
+    int         status(void);
+    int         read_test(void);
 
 
 private:
-    Gpio *irq;
-    Gpio *ce;
-    Gpio *cs;
-    Spi *spi;
-    SPI_CONFIG_TYPE spi_dev_nrf24l01;
+    Gpio *                  irq;
+    Gpio *                  ce;
+    Gpio *                  cs;
+    Spi *                   spi;
+    SPI_CONFIG_TYPE         spi_dev_nrf24l01;
 
-    uint8_t rx_aw;
+    uint8_t                 rx_aw;
 
-    uint8_t write_reg(uint8_t reg, uint8_t value);
-    uint8_t read_reg(uint8_t reg);
-    uint8_t write_buf(uint8_t reg, uint8_t *buf, uint8_t length);
-    uint8_t read_buf (uint8_t reg, uint8_t *buf, uint8_t length);
+    uint8_t                 write_reg(uint8_t reg, uint8_t value);
+    uint8_t                 read_reg(uint8_t reg);
+    uint8_t                 write_buf(uint8_t reg, uint8_t *buf, uint8_t length);
+    uint8_t                 read_buf (uint8_t reg, uint8_t *buf, uint8_t length);
 
-    void    set_rf_frq(uint8_t frq);
+    void                    set_rf_frq(uint8_t frq);
 
-    void    set_chanal(uint8_t ch, uint8_t enable);
-    void    set_chanal_ack(uint8_t ch, uint8_t enable);
+    void                    set_chanal(uint8_t ch, uint8_t enable);
+    void                    set_chanal_ack(uint8_t ch, uint8_t enable);
 
-    void    set_addr_width(uint8_t aw);
-    void    set_local_addr(uint8_t ch, uint8_t *addr);
-    void    set_destination_addr(uint8_t *addr);
+    void                    set_addr_width(uint8_t aw);
+    void                    set_local_addr(uint8_t ch, uint8_t *addr);
+    void                    set_destination_addr(uint8_t *addr);
 
-    void    set_pload_width(uint8_t ch, uint8_t width);
+    void                    set_pload_width(uint8_t ch, uint8_t width);
 
-    void    set_retry_gap(uint8_t gap);
-    void    set_retry(uint8_t times);
+    void                    set_retry_gap(uint8_t gap);
+    void                    set_retry(uint8_t times);
 
-    void    set_gain(uint8_t rf_gain);
-    void    set_baudrate(bool baudrate);
+    void                    set_gain(uint8_t rf_gain);
+    void                    set_baudrate(bool baudrate);
 
-    void    set_power(bool pwr);
-    void    set_tx_rx_mode(bool mode);
+    void                    set_power(bool pwr);
+    void                    set_tx_rx_mode(bool mode);
 
-    void    set_crc(bool crco, bool enable);
+    void                    set_crc(bool crco, bool enable);
 
 };
 //enum{
@@ -78,7 +78,7 @@ private:
 #define FLUSH_TX        0xE1  //清除TX FIFO寄存器.发射模式下用
 #define FLUSH_RX        0xE2  //清除RX FIFO寄存器.接收模式下用
 #define REUSE_TX_PL     0xE3  //重新使用上一包数据,CE为高,数据包被不断发送.
-#define NOP             0xFF  //空操作,可以用来读状态寄存器	 
+#define NOP             0xFF  //空操作,可以用来读状态寄存器
 //SPI(NRF24L01)寄存器地址
 #define CONFIG          0x00  //配置寄存器地址;bit0:1接收模式,0发射模式;bit1:电选择;bit2:CRC模式;bit3:CRC使能;
 //bit4:中断MAX_RT(达到最大重发次数中断)使能;bit5:中断TX_DS使能;bit6:中断RX_DR使能
@@ -90,9 +90,9 @@ private:
 #define RF_SETUP        0x06  //RF寄存器;bit3:传输速率(0:1Mbps,1:2Mbps);bit2:1,发射功率;bit0:低噪声放大器增益
 #define STATUS          0x07  //状态寄存器;bit0:TX FIFO满标志;bit3:1,接收数据通道号(最大:6);bit4,达到最多次重发
 //bit5:数据发送完成中断;bit6:接收数据中断;
-#define MAX_TX  	0x10  //达到最大发送次数中断
-#define TX_OK   	0x20  //TX发送完成中断
-#define RX_OK   	0x40  //接收到数据中断
+#define MAX_TX          0x10  //达到最大发送次数中断
+#define TX_OK           0x20  //TX发送完成中断
+#define RX_OK           0x40  //接收到数据中断
 
 #define OBSERVE_TX      0x08  //发送检测寄存器,bit7:4,数据包丢失计数器;bit3:0,重发计数器
 #define CD              0x09  //载波检测寄存器,bit0,载波检测;

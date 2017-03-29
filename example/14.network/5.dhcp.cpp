@@ -1,11 +1,11 @@
 /*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
+ *  file   : *.cpp
+ *  author : shentq
+ *  version: V1.0
+ *  date   : 2015/7/5
+ *
+ *  Copyright 2015 shentq. All Rights Reserved.
+ */
 
 //STM32 RUN IN eBox
 
@@ -34,10 +34,10 @@ void setup()
     ret = dhcp.begin(mac);
     if(ret == EOK)
     {
-        w5500.setSHAR(dhcp.net.mac);/*ÅäÖÃMacµØÖ·*/
-        w5500.setSIPR(dhcp.net.ip);/*ÅäÖÃIpµØÖ·*/
-        w5500.setSUBR(dhcp.net.subnet);/*ÅäÖÃ×ÓÍøÑÚÂë*/
-        w5500.setGAR(dhcp.net.gw);/*ÅäÖÃÄ¬ÈÏÍø¹Ø*/
+        w5500.setSHAR(dhcp.net.mac); /*ÅäÖÃMacµØÖ·*/
+        w5500.setSIPR(dhcp.net.ip); /*ÅäÖÃIpµØÖ·*/
+        w5500.setSUBR(dhcp.net.subnet); /*ÅäÖÃ×ÓÍøÑÚÂë*/
+        w5500.setGAR(dhcp.net.gw); /*ÅäÖÃÄ¬ÈÏÍø¹Ø*/
         w5500.getMAC (buf);
         uart1.printf("\r\nmac : %02x.%02x.%02x.%02x.%02x.%02x\r\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
         w5500.getIP (buf);
@@ -53,7 +53,7 @@ void setup()
 u16 len;
 int main(void)
 {
-  uint8_t dhcpret=0;
+    uint8_t dhcpret=0;
     setup();
 
     while(1)
@@ -62,7 +62,7 @@ int main(void)
 //        uart1.printf("\r\nret = %d",dhcpret);
     }
 
-    
+
 }
 
 

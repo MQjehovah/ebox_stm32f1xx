@@ -1,17 +1,17 @@
 /**
-  ******************************************************************************
-  * @file   : *.cpp
-  * @author : shentq
-  * @version: V1.2
-  * @date   : 2016/08/14
-
-  * @brief   ebox application example .
-  *
-  * Copyright 2016 shentq. All Rights Reserved.         
-  ******************************************************************************
+ ******************************************************************************
+ * @file   : *.cpp
+ * @author : shentq
+ * @version: V1.2
+ * @date   : 2016/08/14
+ *
+ * @brief   ebox application example .
+ *
+ * Copyright 2016 shentq. All Rights Reserved.
+ ******************************************************************************
  */
- 
- 
+
+
 #include "ebox.h"
 #include "lcd_1.8.h"
 #include "color_convert.h"
@@ -43,7 +43,7 @@ void setup()
     hsv.h = 0;
 
     lcd.front_color = RED;
-    if(index >= 0x50)index = 0x20;
+    if(index >= 0x50) index = 0x20;
     for(int i = 0; i < 160; i++)
     {
         hsv.h = i * 36 / 16;

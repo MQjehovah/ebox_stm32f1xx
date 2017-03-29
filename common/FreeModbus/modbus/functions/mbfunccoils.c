@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -68,13 +68,13 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 eMBException
 eMBFuncReadCoils( UCHAR * pucFrame, USHORT * usLen )
 {
-    USHORT          usRegAddress;
-    USHORT          usCoilCount;
-    UCHAR           ucNBytes;
+    USHORT usRegAddress;
+    USHORT usCoilCount;
+    UCHAR ucNBytes;
     UCHAR          *pucFrameCur;
 
-    eMBException    eStatus = MB_EX_NONE;
-    eMBErrorCode    eRegStatus;
+    eMBException eStatus = MB_EX_NONE;
+    eMBErrorCode eRegStatus;
 
     if( *usLen == ( MB_PDU_FUNC_READ_SIZE + MB_PDU_SIZE_MIN ) )
     {
@@ -86,7 +86,7 @@ eMBFuncReadCoils( UCHAR * pucFrame, USHORT * usLen )
         usCoilCount |= ( USHORT )( pucFrame[MB_PDU_FUNC_READ_COILCNT_OFF + 1] );
 
         /* Check if the number of registers to read is valid. If not
-         * return Modbus illegal data value exception. 
+         * return Modbus illegal data value exception.
          */
         if( ( usCoilCount >= 1 ) &&
             ( usCoilCount < MB_PDU_FUNC_READ_COILCNT_MAX ) )
@@ -100,7 +100,7 @@ eMBFuncReadCoils( UCHAR * pucFrame, USHORT * usLen )
             *usLen += 1;
 
             /* Test if the quantity of coils is a multiple of 8. If not last
-             * byte is only partially field with unused coils set to zero. */
+            * byte is only partially field with unused coils set to zero. */
             if( ( usCoilCount & 0x0007 ) != 0 )
             {
                 ucNBytes = ( UCHAR )( usCoilCount / 8 + 1 );
@@ -124,7 +124,7 @@ eMBFuncReadCoils( UCHAR * pucFrame, USHORT * usLen )
             else
             {
                 /* The response contains the function code, the starting address
-                 * and the quantity of registers. We reuse the old values in the 
+                 * and the quantity of registers. We reuse the old values in the
                  * buffer because they are still valid. */
                 *usLen += ucNBytes;;
             }
@@ -143,15 +143,15 @@ eMBFuncReadCoils( UCHAR * pucFrame, USHORT * usLen )
     return eStatus;
 }
 
-#if MB_FUNC_WRITE_COIL_ENABLED > 0
+ #if MB_FUNC_WRITE_COIL_ENABLED > 0
 eMBException
 eMBFuncWriteCoil( UCHAR * pucFrame, USHORT * usLen )
 {
-    USHORT          usRegAddress;
-    UCHAR           ucBuf[2];
+    USHORT usRegAddress;
+    UCHAR ucBuf[2];
 
-    eMBException    eStatus = MB_EX_NONE;
-    eMBErrorCode    eRegStatus;
+    eMBException eStatus = MB_EX_NONE;
+    eMBErrorCode eRegStatus;
 
     if( *usLen == ( MB_PDU_FUNC_WRITE_SIZE + MB_PDU_SIZE_MIN ) )
     {
@@ -195,19 +195,19 @@ eMBFuncWriteCoil( UCHAR * pucFrame, USHORT * usLen )
     return eStatus;
 }
 
-#endif
+ #endif
 
-#if MB_FUNC_WRITE_MULTIPLE_COILS_ENABLED > 0
+ #if MB_FUNC_WRITE_MULTIPLE_COILS_ENABLED > 0
 eMBException
 eMBFuncWriteMultipleCoils( UCHAR * pucFrame, USHORT * usLen )
 {
-    USHORT          usRegAddress;
-    USHORT          usCoilCnt;
-    UCHAR           ucByteCount;
-    UCHAR           ucByteCountVerify;
+    USHORT usRegAddress;
+    USHORT usCoilCnt;
+    UCHAR ucByteCount;
+    UCHAR ucByteCountVerify;
 
-    eMBException    eStatus = MB_EX_NONE;
-    eMBErrorCode    eRegStatus;
+    eMBException eStatus = MB_EX_NONE;
+    eMBErrorCode eRegStatus;
 
     if( *usLen > ( MB_PDU_FUNC_WRITE_SIZE + MB_PDU_SIZE_MIN ) )
     {
@@ -246,7 +246,7 @@ eMBFuncWriteMultipleCoils( UCHAR * pucFrame, USHORT * usLen )
             else
             {
                 /* The response contains the function code, the starting address
-                 * and the quantity of registers. We reuse the old values in the 
+                 * and the quantity of registers. We reuse the old values in the
                  * buffer because they are still valid. */
                 *usLen = MB_PDU_FUNC_WRITE_MUL_BYTECNT_OFF;
             }
@@ -265,6 +265,6 @@ eMBFuncWriteMultipleCoils( UCHAR * pucFrame, USHORT * usLen )
     return eStatus;
 }
 
-#endif
+ #endif
 
 #endif

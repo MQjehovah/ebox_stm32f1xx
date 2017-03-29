@@ -41,23 +41,23 @@ extern "C" {
 
 /* debug print function. Must be implement by user. */
 #ifdef SFUD_DEBUG_MODE
-#define SFUD_DEBUG(...) sfud_log_debug(__FILE__, __LINE__, __VA_ARGS__)
+ #define SFUD_DEBUG(...) sfud_log_debug(__FILE__, __LINE__, __VA_ARGS__)
 #else
-#define SFUD_DEBUG(...)
+ #define SFUD_DEBUG(...)
 #endif
 
 #define SFUD_INFO(...)  sfud_log_info(__VA_ARGS__)
 
 /* assert for developer. */
 #ifdef SFUD_DEBUG_MODE
-#define SFUD_ASSERT(EXPR)                                                      \
-if (!(EXPR))                                                                   \
-{                                                                              \
-    SFUD_DEBUG("(%s) has assert failed at %s.", #EXPR, __FUNCTION__);          \
-    while (1);                                                                 \
-}
+ #define SFUD_ASSERT(EXPR)                                                      \
+    if (!(EXPR))                                                                   \
+    {                                                                              \
+        SFUD_DEBUG("(%s) has assert failed at %s.", # EXPR, __FUNCTION__);          \
+        while (1) ;                                                                 \
+    }
 #else
-#define SFUD_ASSERT(EXPR)
+ #define SFUD_ASSERT(EXPR)
 #endif
 
 /**
@@ -69,8 +69,8 @@ if (!(EXPR))                                                                   \
  */
 #define SFUD_RETRY_PROCESS(delay, retry, result)                               \
     void (*__delay_temp)(void) = (void (*)(void))delay;                        \
-    if (retry == 0) {result = SFUD_ERR_TIMEOUT;break;}                         \
-    else {if (__delay_temp) {__delay_temp();} retry --;}
+    if (retry == 0) {result = SFUD_ERR_TIMEOUT; break; }                         \
+    else {if (__delay_temp) {__delay_temp(); } retry--; }
 
 /* software version number */
 #define SFUD_SW_VERSION                           "0.10.15"
@@ -78,80 +78,80 @@ if (!(EXPR))                                                                   \
  * all defined supported command
  */
 #ifndef SFUD_CMD_WRITE_ENABLE
-#define SFUD_CMD_WRITE_ENABLE                          0x06
+ #define SFUD_CMD_WRITE_ENABLE                          0x06
 #endif
 
 #ifndef SFUD_CMD_WRITE_DISABLE
-#define SFUD_CMD_WRITE_DISABLE                         0x04
+ #define SFUD_CMD_WRITE_DISABLE                         0x04
 #endif
 
 #ifndef SFUD_CMD_READ_STATUS_REGISTER
-#define SFUD_CMD_READ_STATUS_REGISTER                  0x05
+ #define SFUD_CMD_READ_STATUS_REGISTER                  0x05
 #endif
 
 #ifndef SFUD_VOLATILE_SR_WRITE_ENABLE
-#define SFUD_VOLATILE_SR_WRITE_ENABLE                  0x50
+ #define SFUD_VOLATILE_SR_WRITE_ENABLE                  0x50
 #endif
 
 #ifndef SFUD_CMD_WRITE_STATUS_REGISTER
-#define SFUD_CMD_WRITE_STATUS_REGISTER                 0x01
+ #define SFUD_CMD_WRITE_STATUS_REGISTER                 0x01
 #endif
 
 #ifndef SFUD_CMD_PAGE_PROGRAM
-#define SFUD_CMD_PAGE_PROGRAM                          0x02
+ #define SFUD_CMD_PAGE_PROGRAM                          0x02
 #endif
 
 #ifndef SFUD_CMD_AAI_WORD_PROGRAM
-#define SFUD_CMD_AAI_WORD_PROGRAM                      0xAD
+ #define SFUD_CMD_AAI_WORD_PROGRAM                      0xAD
 #endif
 
 #ifndef SFUD_CMD_ERASE_CHIP
-#define SFUD_CMD_ERASE_CHIP                            0xC7
+ #define SFUD_CMD_ERASE_CHIP                            0xC7
 #endif
 
 #ifndef SFUD_CMD_READ_DATA
-#define SFUD_CMD_READ_DATA                             0x03
+ #define SFUD_CMD_READ_DATA                             0x03
 #endif
 
 #ifndef SFUD_CMD_MANUFACTURER_DEVICE_ID
-#define SFUD_CMD_MANUFACTURER_DEVICE_ID                0x90
+ #define SFUD_CMD_MANUFACTURER_DEVICE_ID                0x90
 #endif
 
 #ifndef SFUD_CMD_JEDEC_ID
-#define SFUD_CMD_JEDEC_ID                              0x9F
+ #define SFUD_CMD_JEDEC_ID                              0x9F
 #endif
 
 #ifndef SFUD_CMD_READ_UNIQUE_ID
-#define SFUD_CMD_READ_UNIQUE_ID                        0x4B
+ #define SFUD_CMD_READ_UNIQUE_ID                        0x4B
 #endif
 
 #ifndef SFUD_CMD_READ_SFDP_REGISTER
-#define SFUD_CMD_READ_SFDP_REGISTER                    0x5A
+ #define SFUD_CMD_READ_SFDP_REGISTER                    0x5A
 #endif
 
 #ifndef SFUD_CMD_ENABLE_RESET
-#define SFUD_CMD_ENABLE_RESET                          0x66
+ #define SFUD_CMD_ENABLE_RESET                          0x66
 #endif
 
 #ifndef SFUD_CMD_RESET
-#define SFUD_CMD_RESET                                 0x99
+ #define SFUD_CMD_RESET                                 0x99
 #endif
 
 #ifndef SFUD_CMD_ENTER_4B_ADDRESS_MODE
-#define SFUD_CMD_ENTER_4B_ADDRESS_MODE                 0xB7
+ #define SFUD_CMD_ENTER_4B_ADDRESS_MODE                 0xB7
 #endif
 
 #ifndef SFUD_CMD_EXIT_4B_ADDRESS_MODE
-#define SFUD_CMD_EXIT_4B_ADDRESS_MODE                  0xE9
+ #define SFUD_CMD_EXIT_4B_ADDRESS_MODE                  0xE9
 #endif
 
 #ifndef SFUD_WRITE_MAX_PAGE_SIZE
-#define SFUD_WRITE_MAX_PAGE_SIZE                        256
+ #define SFUD_WRITE_MAX_PAGE_SIZE                        256
 #endif
 
 /* send dummy data for read data */
 #ifndef SFUD_DUMMY_DATA
-#define SFUD_DUMMY_DATA                                0xFF
+ #define SFUD_DUMMY_DATA                                0xFF
 #endif
 
 /* maximum number of erase type support on JESD216 (V1.0) */
@@ -213,7 +213,7 @@ typedef struct __sfud_spi {
     char *name;
     /* SPI bus write read data function */
     sfud_err (*wr)(const struct __sfud_spi *spi, const uint8_t *write_buf, size_t write_size, uint8_t *read_buf,
-            size_t read_size);
+                   size_t read_size);
     /* lock SPI bus */
     void (*lock)(const struct __sfud_spi *spi);
     /* unlock SPI bus */

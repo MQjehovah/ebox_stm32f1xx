@@ -1,20 +1,20 @@
 /**
-  ******************************************************************************
-  * @file    at24c02.cpp
-  * @author  shentq
-  * @version V1.2
-  * @date    2016/08/14
-  * @brief   
-  ******************************************************************************
-  * @attention
-  *
-  * No part of this software may be used for any commercial activities by any form 
-  * or means, without the prior written consent of shentq. This specification is 
-  * preliminary and is subject to change at any time without notice. shentq assumes
-  * no responsibility for any errors contained herein.
-  * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    at24c02.cpp
+ * @author  shentq
+ * @version V1.2
+ * @date    2016/08/14
+ * @brief
+ ******************************************************************************
+ * @attention
+ *
+ * No part of this software may be used for any commercial activities by any form
+ * or means, without the prior written consent of shentq. This specification is
+ * preliminary and is subject to change at any time without notice. shentq assumes
+ * no responsibility for any errors contained herein.
+ * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
+ ******************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -40,7 +40,7 @@ int8_t At24c02::write_byte(uint16_t byte_addr, uint8_t *buf, uint16_t num_to_wri
     for(uint16_t i = 0; i < num_to_write; i++)
     {
         write_byte(byte_addr++, buf[i]);
-        ret = i2c->wait_dev_busy(SLAVE_ADDR);//如果有错误再加此句
+        ret = i2c->wait_dev_busy(SLAVE_ADDR); //如果有错误再加此句
 
     }
 
@@ -58,7 +58,7 @@ uint8_t At24c02::read_byte(uint16_t byte_addr)
     return byte;
 }
 
-int8_t	At24c02::read_byte(uint16_t byte_addr, uint8_t *buf, uint16_t num_to_read)
+int8_t At24c02::read_byte(uint16_t byte_addr, uint8_t *buf, uint16_t num_to_read)
 {
     int8_t ret = 0;
     i2c->take_i2c_right(speed);

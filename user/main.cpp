@@ -1,16 +1,17 @@
 /**
-  ******************************************************************************
-  * @file   : *.cpp
-  * @author : shentq
-  * @version: V1.2
-  * @date   : 2016/08/14
-
-  * @brief   ebox application example .
-  *
-  * Copyright 2016 shentq. All Rights Reserved.         
-  ******************************************************************************
+ ******************************************************************************
+ * @file   : *.cpp
+ * @author : shentq
+ * @version: V1.2
+ * @date   : 2016/08/14
+ *
+ * @brief   ebox application example .
+ *
+ * Copyright 2016 shentq. All Rights Reserved.
+ ******************************************************************************
  */
 
+//STM32 RUN IN eBox
 #include "ebox.h"
 #include "ds18b20.h"
 Ds18b20 ds(&PA0);
@@ -22,7 +23,7 @@ void setup()
     PB8.mode(OUTPUT_PP);
     ret = ds.begin();
     uart1.printf("%d\n",ret);
-    
+
 }
 int main(void)
 {
@@ -37,5 +38,4 @@ int main(void)
     }
 
 }
-
 
